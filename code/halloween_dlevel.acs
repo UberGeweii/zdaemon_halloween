@@ -1,0 +1,361 @@
+////////////////////////////////////////
+/*
+    === DLEVEL by AF-Domains.net ===
+    For Halloween ZDS 2021
+*/  
+////////////////////////////////////////
+
+#define MIN_VAL                 20
+#define MAX_VAL                 255
+#define UL_ADD                  50
+#define DEF_LL                  40
+#define DEF_UL                  (DEF_LL+UL_ADD)
+#define RAND_UPD_INTV           512
+#define SECBREAK                65536
+#define DEFMINSECTOR            160
+#define SECMULT                 3
+#define DEFENDSECTOR            (DEFMINSECTOR*SECMULT)
+#define MINLIGHTLEVEL           31
+#define INTLIGHTLEVEL           63
+#define MIDLIGHTLEVEL           95
+#define GIBLIGHTLEVEL           127
+
+int endsec          = SECBREAK;
+int gdl             = DEF_LL;
+int dark_set        = 0;
+int running         = 0;
+int process_running = 0;
+int bring_down      = 1;
+
+
+
+function int dark_constraints(int n)
+{
+	int dl;
+	
+	if (GetCvar("sv_randdl"))
+	{
+		int ll = n;
+		if (ll < MIN_VAL)      ll = DEF_LL;
+		else if (ll > MAX_VAL) ll = MAX_VAL;
+		int ul = GetCvar("sv_dl_ul");
+		if (ul < MIN_VAL)      ul = DEF_UL;
+		else if (ul > MAX_VAL) ul = MAX_VAL;
+		if (ll>=ul)
+		{
+			//Log(s:"!sv_dl is equal to or above sv_dl_ul.");
+			if (ll>(MAX_VAL-UL_ADD))
+			{
+				//Log(s:"!sv_dl is set to a value of ", d:ll, s:", this breaches the upper constraint of ", d:MAX_VAL, s:" with a default sv_dl_ul of sv_dl+", d:UL_ADD, s:" ; setting to ", d:DEF_LL, s:" internally.");
+				ll = DEF_LL;
+			}
+			ul = (ll+UL_ADD);
+			//Log(s:"!using a default of ", d:ll, s:" and ", d:ul, s:" respectively. Please check your settings.");
+		}
+		dl = Random(ll, ul);
+	}
+	else
+	{
+		dl = n;
+		if (dl < MIN_VAL)      dl = DEF_LL;
+		else if (dl > MAX_VAL) dl = MAX_VAL;
+	}
+	
+	return dl;
+}
+
+function void dark_state(int j)
+{
+	if (j==0)               dark_set = 0;
+	if (running==1)         running = 2;
+	if (process_running==1) process_running = 2;
+	if (j==1)               endsec = SECBREAK;
+}
+
+function int is_enabled(int dummy)
+{
+	int en = GetCvar("sv_dl_enabled");
+	if (en!=0)
+	{
+		if (process_running==0)
+			process_running = -1;
+		return 1;
+	}
+	
+	if (process_running>0)
+	{
+		dark_state(1);
+		bring_down = 1;
+	}
+	return 0;
+}
+
+function int set_darkness(int reset)
+{
+	int dl = dark_constraints(GetCvar("sv_dl"));
+	
+	if (reset>0)
+	{
+		dark_state(0);
+	}
+	
+	return dl;
+}
+
+function int Sector_SetColor_Z(int sector, int baselight, int r, int g, int b, int desat)
+{
+	int n;
+	int dlm = GetCvar("sv_dl_mode");
+	
+	if (dlm==0 || dlm==2)
+	{
+		// Strictly speaking this check isn't needed, 
+		// however it's to avoid calling Sector_SetColor redundantly.
+		n = baselight;
+		if (n<0) return 1;
+		
+		//Log(s:"SetColor (", d:sector, s:") (", d:r, s:" ", d:g, s:" ", d:b, s:" ", d:desat, s:")");
+		return Sector_SetColor(sector, r, g, b, desat);
+	}
+	return 1;
+}
+
+function int Sector_SetLight_Z(int sector, int baselight, int inc)
+{
+	int j, k, n, v, mult;
+	int dlm = GetCvar("sv_dl_mode");
+	
+	if (dlm==1 || dlm==2)
+	{
+		n = baselight;
+		if (n>=0)
+		{
+			j = GetCvar("sv_ll_var");
+			if (j<MINLIGHTLEVEL)
+				j = MINLIGHTLEVEL;
+			else if (j>GIBLIGHTLEVEL+1)
+				j = GIBLIGHTLEVEL+1;
+			k = j;
+			
+			//    -> 79 (48-63)
+			// 80 -> 95 (32-47)
+			// 96 ->    (16-31)
+			if (k<n)
+			{
+				if (k<=INTLIGHTLEVEL+16)
+					k = Random(48, 63);
+				else if (k>INTLIGHTLEVEL+16 && k<=MIDLIGHTLEVEL)
+					k = Random(32, 47);
+				else
+					k = Random(16, 31);
+			}
+			else
+			{
+				if (k<=INTLIGHTLEVEL+16)
+					k = Random(16, 31);
+				else if (k>INTLIGHTLEVEL+16 && k<=MIDLIGHTLEVEL)
+					k = Random(32, 47);
+				else
+					k = Random(48, 63);
+			}
+			
+			if (j<n)  k = -k; // negative;
+			if (k<0)  v = (k + n);
+			else      v = (n - k);
+			if (v<0)  v = -v;
+			
+			if (v<INTLIGHTLEVEL+16 || v>MIDLIGHTLEVEL)
+			{
+				v = Random(INTLIGHTLEVEL+16, GIBLIGHTLEVEL-8);
+				if (k<0) k = -k;
+				else     v = (v - k);
+			}
+			v += inc;
+				
+			//Log(s:"Light Change (", d:sector, s:") (", d:n, s:" -> ", d:j, s:" -> ", d:k, s:" -> ", d:v, s:")");
+			return Light_ChangeToValue(sector, v);
+		}
+	}
+	return 1;
+}
+
+script ACS_DLVL_ENTER ENTER
+{
+	if (is_enabled(0)==0)
+		terminate;
+	ACS_ExecuteAlways(ACS_DLVL_MAIN, 0);
+}
+
+script ACS_DLVL_RESPAWN RESPAWN
+{
+	if (is_enabled(0)==0)
+		terminate;
+	if (process_running>0)
+	{
+		terminate;
+	}
+	if (dark_set>0)
+	{
+		dark_state(0);
+		Delay(2);
+	}
+    // This script must only call the script above. Do NOT add anything here.
+	Delay(3);
+    ACS_ExecuteAlways(ACS_DLVL_MAIN, 0);
+}
+
+//script 3 DEATH
+//{
+//	if (is_enabled(0)==0)
+//		terminate;
+//	if (process_running!=1)
+//	{
+//		terminate;
+//	}
+//	if (dark_set>0)
+//	{
+//		dark_state(1);
+//		Delay(2);
+//	}
+//	ACS_ExecuteAlways(ACS_DLBL_SET,0);
+//}
+
+script ACS_DLVL_DISCONNECT (int player) DISCONNECT
+{
+	if (is_enabled(0)==0)
+		terminate;
+	if (process_running!=1)
+		ACS_ExecuteAlways(ACS_DLBL_SET,0);
+}
+
+script ACS_DLVL_MAIN (int j)
+{
+	if (is_enabled(0)==0)
+	{
+		terminate;
+	}
+	if (process_running<=0)
+	{
+		Delay(2); // please keep it here
+		//Log(s:"Last Sector: ", d:endsec);
+		if (dark_set==0)
+		{
+			int n  = 0;
+			int dl = set_darkness(0);
+			int k  = 0;
+			int rd = 0;
+			int l  = 0;
+			int l1 = 0;
+			int bl = 0;
+			gdl    = dl;
+			if (process_running<1)
+			{
+				bring_down = 0;
+				process_running = 1;
+			}
+			int cendsec = (endsec*SECMULT); // This will make the processing/reoccurrence
+			                          // variable depending on the map. Doubled deliberately.
+			if (cendsec>SECBREAK)          cendsec = SECBREAK;
+			else if (cendsec<DEFENDSECTOR) cendsec = DEFENDSECTOR;
+			for (int i=0; i<=cendsec; i++)
+			{
+				l1 = 0;
+				if (running<1)      running = 1;
+				
+				if (n>10)           n  = 0;
+				
+				if (dl>128)         k  = dl+n;
+				else                k  = dl-n;
+				if (k<0)            k  = MIN_VAL;
+				else if (k>MAX_VAL) k  = MAX_VAL;
+				
+				bl = GetSectorLightLevel(i);
+				if (bl>=0) endsec = i;
+				
+				rd = GetCvar("sv_randdl");
+					
+				if (Sector_SetColor_Z(i, bl, k, k, k, 0))
+				{
+					l1++;
+				}
+				if (Sector_SetLight_Z(i, bl, n))
+				{
+					l1++;
+				}
+				Delay(1);
+				if (l1>0)
+				{
+					if (rd == 0)          l   = RAND_UPD_INTV;
+					if (l==RAND_UPD_INTV) gdl = dark_constraints(GetCvar("sv_dl"));
+				}
+				if (i>cendsec-1 || running==2 || process_running!=1 || gdl!=dl)
+				{
+					if (running==2)
+						Log(s:"Breaking...");
+					if (process_running==2)
+					{
+						Log(s:"Going down...");
+					}
+					if (i>cendsec-1)
+					{
+						//Log(s:"Last Sector End: ", d:i, s:" ", d:cendsec);
+					}
+					running = 0;
+				}
+				if (running==0)
+					break;
+				n++;
+				if (rd==1)
+				{
+					if (l<RAND_UPD_INTV) l++;
+					else                 l = 0;
+				}
+			}
+			Delay(5);
+			if (gdl!=dl || process_running==2 || cendsec!=SECBREAK)
+			{
+				if (process_running==2)
+				{
+					process_running = 0;
+					if (bring_down==1)
+					{
+						endsec = SECBREAK;
+						terminate;
+					}
+				}
+				if (GetCvar("sv_dl_mode")>=0)
+				{
+					Delay(2);
+					ACS_ExecuteAlways(ACS_DLBL_UNSET,0);
+				}
+				else
+				{
+					Log(s:"Last Sector Recorded: ", d:endsec);
+					terminate;
+				}
+			}
+		}
+		if (process_running==1)
+			process_running = 0;
+	}
+	else
+	{
+		terminate;
+	}
+}
+
+script ACS_DLBL_SET (int j)
+{
+	// Stop the previous cases.
+	dark_state(1);
+	bring_down = j;
+}
+
+script ACS_DLBL_UNSET (int j)
+{
+	if (is_enabled(0)==0)
+		terminate;
+	dark_state(0);
+	Delay(2);
+	ACS_ExecuteAlways(ACS_DLVL_MAIN,0);
+}
