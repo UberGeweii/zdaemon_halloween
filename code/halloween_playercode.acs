@@ -1,0 +1,167 @@
+////////////////////////////////////////
+/*
+    === PLAYER RELATED SCRIPTS ===
+*/
+////////////////////////////////////////
+
+script ACS_PLYR_RESPAWN RESPAWN
+{
+    // Make sure on respawn we also log data.
+    ACS_ExecuteAlways(ACS_DBASE_LOGDATA, 0);
+    
+    // Now trigger the main enter script.
+    ACS_executealways(ACS_PLYR_REENTER, NONE);
+}
+
+script ACS_PLYR_DEATH  DEATH
+{
+    // This script is run on player death. It must only call the script below.
+    // Do not do anything else here and yet again never call this script.
+    int player = PlayerNumber();
+    ACS_ExecuteAlways(ACS_PLYR_RESETVAR, NONE, player);
+}
+
+script ACS_PLYR_ENTER ENTER
+{
+	// === ONE-TIME INIT HERE ===
+    // This script must only be called ONCE when the player
+    // spawns in the game for the first time.
+    // Use this script for two kinds of things:
+    // 1. Print a welcome message
+    // 2. Init scripts which do not care about the player dying
+    //    and which run as long as the player is on the server.
+    // Do not do anything else here and never call this script.
+    int player = PlayerNumber();
+    
+    // We explicitly set the player level to initialize the HUD message.
+	// We actually grant level-related stuff in the respawn init.
+	SetPlayerLevel(player, GetPlayerLevel(player));
+    
+    SetFont("GARGWING");
+    HudMessage(s:"\cdHappy Halloween, \cj",n:SELF,s:"\cd!"; HUDMSG_FADEINOUT, 1, CR_RED, 0.5, 0.65, 2.0, 0.2, 0.2);
+}
+
+script ACS_PLYR_REENTER ENTER
+{
+	// === EVERY [RE]SPAWN INIT HERE ===
+    // This script is executed EACH TIME the player [re]spawns.
+    // Do not do anything else here and never call this script yourself.
+    
+	// Basic setup.
+    int player = PlayerNumber();
+    Thing_ChangeTID(PlayerTag(player), NONE); // untag the corpse (if it exists)
+    Thing_ChangeTID(SELF, PlayerTag(player)); // tag the player
+    Delay(2); // please keep it here
+    
+    // Basic database setup
+    ACS_ExecuteAlways(ACS_DBASE_ENTER, 0);
+    
+    delay(1); 
+    
+    //We remove all the ammo. After that we apply the player level.
+    //GiveInventory(   "Backpack",  1 );
+    TakeInventory("Staff", 1);
+    GrantPlayerLevel(player, GetPlayerLevel(player));
+    
+    SetEntered(player, JUSTLEFT_MONEYSYSTEM);
+    
+    ACS_ExecuteAlways(ACS_PLYR_MONEYLOOP, 0, player);   // Money loop script
+    ACS_ExecuteAlways(ACS_PLYR_LEVELLOOP, 0, player);   // Level loop script
+    
+    ACS_ExecuteAlways(ACS_PLYR_INVSPECIALS, 0);
+    ACS_ExecuteAlways(ACS_PLYR_PETLOOP, 0);             // Pet loop script
+    ACS_ExecuteAlways(ACS_PLYR_STARTMUSIC, 0);          // Music enter script
+    ACS_ExecuteAlways(ACS_PLYR_SAVEINVENTORY, 0);       // Save inventory on custom gamemodes or w/e
+    ACS_ExecuteAlways(ACS_PLYR_RETURNOLDINVENTORY, 0);  // Return old inventory
+}
+
+script ACS_PLYR_RESETVAR (int player)
+{
+	// === RESET ON DEATH HERE ===
+    // This script is supposed to be the central place where all player
+    // variables from other systems are reset when a player dies.
+
+    tmpSworddata[player] = 0;
+    tmpSoulhunterdata[player] = 0;
+    
+    if(!customGamemode)
+        inventorySaved[player] = 0;
+        
+    //SetMoney(player, 0);
+    SetDiscount(player, 0);
+
+}
+
+script ACS_PLYR_DISCNCT (int player) DISCONNECT
+{
+	//  === RESET ON DISCONNECT HERE ===
+    // This script is run on player disconnection.
+    // First of all, a disconnect is also considered a death so it
+    // executes the same reset code as the death script above does. 
+    ACS_ExecuteAlways(ACS_PLYR_RESETVAR, NONE, player);
+}
+
+script ACS_PLYR_INVSPECIALS (void)
+{
+    int player = PlayerNumber();
+    Setfont("GARGWING");
+    
+    while(PlayerAlive(player))
+    {        
+        if(CheckInventory("FWeapQuietus") && !tmpSworddata[player])
+        {
+            HudMessageBold(s:"\cd", n:player+1, s:"\cj assembled \cdHell's sword!"; 
+            HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 4.0, 0.2, 0.2);
+            tmpSworddata[player] = 1;
+            AmbientSound("misc/inventoryup", 127);
+        }   
+        
+        if(CheckInventory("CWeapWraithverge") && !tmpSoulhunterdata[player])
+        {
+            HudMessageBold(s:"\cd", n:player+1, s:"\cj assembled \cdthe Soul hunter!"; 
+            HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 4.0, 0.2, 0.2);
+            tmpSoulhunterdata[player] = 1;
+            AmbientSound("misc/inventoryup", 127);
+        }   
+        
+        if(CheckWeapon("Mace") && (GetMoney(player) <= 0))
+        {
+            HudMessage (s:"\ceYou don't have any ectoplasm left!";
+            HUDMSG_FADEOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3);
+            SetWeapon("Fist");    
+        }
+        delay(2);
+    }
+}
+
+script ACS_PLYR_RETURNOLDINVENTORY (void)
+{
+    int player = PlayerNumber();
+    Setfont("GARGWING");
+    
+    if(inventorySaved[player]) 
+    {   
+        RetrievePlayerFullInventory(player);
+        
+        if(GetCvar("sv_debugmode") > 0)
+            Log(s:"[DEBUG] Inventory successfully retreived for player: ", n:player+1, s:"!");
+        
+        inventorySaved[player] = false;
+    }
+}
+
+script ACS_PLYR_SAVEINVENTORY (void)
+{
+    int player = PlayerNumber();
+    Setfont("GARGWING");
+    
+    while(!customGamemode) delay(1);
+            
+    if(GetCvar("sv_debugmode") > 0)          
+        Log(s:"[DEBUG] Attempting to save inventory for player: ", n:player+1);
+            
+    SavePlayerFullInventory(player);
+    inventorySaved[player] = true;
+}
+
+

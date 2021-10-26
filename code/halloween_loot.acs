@@ -1,0 +1,235 @@
+
+// This is the randomness factor. Having this in code results
+// in overall better randomness - especially for rare items.
+#define SEARCH_RANDOMNESSFACTOR 3
+
+// This is how many different loot tables it is possible to define
+#define SEARCH_MAXTABLE 10
+
+// We allocate a shuffle bag array for each table. We also have two
+// helper arrays: one stores max item index in each table and
+// another one stores the pointer needed for shuffle bag algorithm.
+#define SEARCH_MAXBAG 5000
+str m_searchbag[SEARCH_MAXTABLE][SEARCH_MAXBAG];
+int m_searchmaxitem[SEARCH_MAXTABLE];
+int m_searchptr[SEARCH_MAXTABLE];
+
+// Adds 'count' of 'lootid' elements to table 'tableid'.
+function bool AddLoot(int tableid, int lootid, int count)
+{
+	if (tableid >= SEARCH_MAXTABLE || tableid < 0)
+	{
+		Log(s:"\ca[ERROR] AddLoot: bad tableid ",d:tableid);
+		return false;
+	}
+	count *= SEARCH_RANDOMNESSFACTOR;
+	int total = m_searchmaxitem[tableid];
+	if (total + count > SEARCH_MAXBAG)
+	{
+		Log(s:"\ca[ERROR] AddLoot: shuffle bag capacity (",d:SEARCH_MAXBAG,s:") exceeded for table ",d:tableid);
+		return false;
+	}
+	
+	for (int i=total; i<total+count; i++)
+		m_searchbag[tableid][i] = lootid;
+
+	m_searchmaxitem[tableid] += count;
+	m_searchptr[tableid] = m_searchmaxitem[tableid]-1;
+	return true;
+}
+
+// This the core of shuffle bag algorithm. This function selects a loot item from
+// the shuffle bag array, excludes it from the said array, and returns the item.
+function int RetrieveLoot(int tableid)
+{
+	if (tableid >= SEARCH_MAXTABLE || tableid < 0)
+	{
+		Log(s:"\ca[ERROR] RetrieveLoot: bad tableid ",d:tableid);
+		return -1;
+	}
+	if (m_searchmaxitem[tableid] == 0)
+	{
+		Log(s:"\ca[ERROR] RetrieveLoot: table ",d:tableid,s:" contains no loot items.");
+		return -1;
+	}
+	
+	int selection, result;
+	// Is there only the last remaining item left in the shuffle bag array?
+	if (m_searchptr[tableid] == 0)
+	{
+		// Yep. Let's return it and reset the pointer.
+		result = m_searchbag[tableid][0];
+		m_searchptr[tableid] = m_searchmaxitem[tableid]-1;
+	}
+	else
+	{
+		// Nope. In that case let's pick a random element from the array.
+		selection = zd_rand(0, m_searchptr[tableid]);
+		result = m_searchbag[tableid][selection];
+		
+		// Now let's swap it with the pointed elemented and decrement the pointer.
+		m_searchbag[tableid][selection] = m_searchbag[tableid][m_searchptr[tableid]];
+		m_searchbag[tableid][m_searchptr[tableid]] = result;
+		m_searchptr[tableid]--;
+	}
+	return result;
+}
+
+// Define loot tables
+#define LOOTTABLE_SMALL     0  // ammo, health
+#define LOOTTABLE_MEDIUM    1  // coins, ammo, etc
+#define LOOTTABLE_LARGE     2  // guns, ammo, armor, rare items.
+
+// Also define loot "nothing"
+#define LOOT_NOTHING        ""
+
+script ACS_WRLD_DEFINELOOTTABLES OPEN
+{
+	Delay(3);
+	// Set up the loot tables
+    
+    // ------------------------
+    // -- [SMALL LOOT TABLE] --
+    // ------------------------
+    
+	AddLoot(LOOTTABLE_SMALL, LOOT_NOTHING       ,  10);
+    // Ammo
+	AddLoot(LOOTTABLE_SMALL, "Clip"             ,  20);
+	AddLoot(LOOTTABLE_SMALL, "Shell"            ,  15);
+	AddLoot(LOOTTABLE_SMALL, "RocketAmmo"       ,  8);
+	AddLoot(LOOTTABLE_SMALL, "Cell"             ,  4);
+	AddLoot(LOOTTABLE_SMALL, "GoldWandAmmo"     ,  15);
+	AddLoot(LOOTTABLE_SMALL, "PhoenixRodAmmo"   ,  15);
+    
+    // Powerups
+    AddLoot(LOOTTABLE_SMALL, "ArmorBonus"       ,  10);
+    AddLoot(LOOTTABLE_SMALL, "HealthBonus"      ,  10);
+    
+    // Inventory
+    if(GetCvar("sv_alwaysdropmoney") == 0) 
+    {
+        AddLoot(LOOTTABLE_SMALL, "BlasterAmmo"      ,  25); 
+    }
+    
+ 	AddLoot(LOOTTABLE_SMALL, "PuzzBook1"           ,  1);
+ 	AddLoot(LOOTTABLE_SMALL, "PuzzBook2"           ,  1);
+    
+    // ------------------------- 
+    // -- [MEDIUM LOOT TABLE] --
+    // ------------------------- 
+    
+	AddLoot(LOOTTABLE_MEDIUM, LOOT_NOTHING      ,  5); 
+    // Ammo
+	AddLoot(LOOTTABLE_MEDIUM, "Clip"            ,  5);
+	AddLoot(LOOTTABLE_MEDIUM, "Shell"           ,  8);
+	AddLoot(LOOTTABLE_MEDIUM, "RocketAmmo"      ,  10);
+	AddLoot(LOOTTABLE_MEDIUM, "Cell"            ,  10);
+    
+	AddLoot(LOOTTABLE_MEDIUM, "GoldWandAmmo"     ,  6);
+	AddLoot(LOOTTABLE_MEDIUM, "PhoenixRodAmmo"   ,  10);
+    
+	AddLoot(LOOTTABLE_MEDIUM, "ClipBox"         ,  20);
+	AddLoot(LOOTTABLE_MEDIUM, "ShellBox"        ,  20);
+	AddLoot(LOOTTABLE_MEDIUM, "RocketBox"       ,  15);
+	AddLoot(LOOTTABLE_MEDIUM, "CellPack"        ,  10);
+    
+	AddLoot(LOOTTABLE_MEDIUM, "GoldWandHefty"     ,  25);
+	AddLoot(LOOTTABLE_MEDIUM, "PhoenixRodHefty"   ,  30);
+    
+    // Powerups
+    //AddLoot(LOOTTABLE_MEDIUM, "ArmorBonus"      ,  15);
+    //AddLoot(LOOTTABLE_MEDIUM, "HealthBonus"     ,  15);
+    
+    // Inventory
+    if(GetCvar("sv_alwaysdropmoney") == 0) 
+    {
+        AddLoot(LOOTTABLE_MEDIUM, "BlasterAmmo"     ,  40);
+        AddLoot(LOOTTABLE_MEDIUM, "BlasterHefty"    ,  35); 
+    }
+    
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear1"        ,  5);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear2"        ,  5);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear3"        ,  5);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear4"        ,  5);    
+
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzBook1"           ,  3);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzBook2"           ,  3);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGemBig"          ,  2);
+    
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzSkull"           ,  1);
+    
+    
+    // ------------------------ 
+    // -- [LARGE LOOT TABLE] --
+    // ------------------------	
+	AddLoot(LOOTTABLE_LARGE, LOOT_NOTHING       ,  2); 
+    // Ammo   
+	AddLoot(LOOTTABLE_LARGE, "ClipBox"          ,  5);
+	AddLoot(LOOTTABLE_LARGE, "ShellBox"         ,  5);
+	AddLoot(LOOTTABLE_LARGE, "RocketBox"        ,  5);
+	AddLoot(LOOTTABLE_LARGE, "CellPack"         ,  2);
+    
+	AddLoot(LOOTTABLE_LARGE, "GoldWandHefty"     ,  8);
+	AddLoot(LOOTTABLE_LARGE, "PhoenixRodHefty"   ,  8);
+    
+    // Powerups
+    //AddLoot(LOOTTABLE_LARGE, "ArmorBonus"       ,  5);
+    //AddLoot(LOOTTABLE_LARGE, "HealthBonus"      ,  5);
+    
+    // Inventory
+    if(GetCvar("sv_alwaysdropmoney") == 0) 
+    {
+        AddLoot(LOOTTABLE_LARGE, "BlasterHefty"     ,  15);
+        AddLoot(LOOTTABLE_LARGE, "BlasterAmmo"      ,  10);
+    }
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzBook1"       ,  20);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzBook2"       ,  20);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGemBig"       ,  15);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear1"        ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear2"        ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear3"        ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear4"        ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzSkull"        ,  15);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece1"    ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece2"    ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece3"    ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece1"    ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece2"    ,  10);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece3"    ,  10);  
+}
+
+function void GrantLoot(str classname, int minval, int maxval, int tableid, str itemdesc)
+{
+	int amount = 0;
+    
+    if(minval != maxval)
+        amount = zd_rand(minval, maxval);
+    else
+        amount = 1;
+        
+        if(GetCvar("sv_debugmode") > 0)
+        {
+            if (classname!="")
+                Log(s:"\cd[DEBUG] GrantLoot: ",n:0, s:" dropped: ",s:classname,s:"!\n\cb(tableid: ",d:tableid, s:", amount: ",d:amount,s:", itemdesc: '",s:itemdesc,s:"')");
+            else
+                Log(s:"\cd[DEBUG] GrantLoot: ",n:0, s:" dropped: LOOT_NOTHING!\n\cb\()");
+        }
+        
+        if(GetCvar("sv_alwaysdropmoney") > 0)
+        {
+            if(GetCvar("sv_debugmode") > 0)
+                Log(s:"\cd[DEBUG] GrantLoot: (CVAR sv_alwaysdropmoney OVERRIDE) ",n:0, s:" dropped money!");
+            
+            if(tableid >= LOOTTABLE_SMALL && tableid < LOOTTABLE_LARGE)
+                SpawnSpot ("BlasterAmmo", 0, 0, 0); 
+
+            if(tableid > LOOTTABLE_MEDIUM && tableid < LOOTTABLE_LARGE+1)
+                SpawnSpot ("BlasterHefty", 0, 0, 0); 
+        }  
+        
+    if (classname!="")
+    {                 
+        for(int i = 0; i < amount; i++)
+            SpawnSpot (classname, 0, 0, 0);
+    }
+}

@@ -1,0 +1,260 @@
+////////////////////////////////////////
+/*
+    === MAIN SHOP SCRIPT ===
+*/
+////////////////////////////////////////
+
+// You can define your purchase-able items here.
+#define ITEM_UNDEFINED            0
+#define PET_GRIMREAPER            1
+#define PET_ROBOTPUMPKIN          2
+#define PET_TREEPET               3
+#define ITEM_ALLMAP               4         
+#define ITEM_ARMORBONUS           5
+#define ITEM_BERSERK              6
+#define ITEM_BLUEARMOR            7 
+#define ITEM_BLURSPHERE           8
+#define ITEM_GREENARMOR           9
+#define ITEM_HEALTHBONUS          10
+#define ITEM_INFRARED             11
+#define ITEM_INVULNERABILITY      12
+#define ITEM_MEDIKIT              13
+#define ITEM_MEGASPHERE           14
+#define ITEM_RADSUIT              15
+#define ITEM_SOULSPHERE           16
+#define ITEM_STIMPACK             17
+#define ITEM_MEDIKITINV           18
+#define ITEM_SUPERMEDIKITINV      19
+#define ITEM_SHOTGUN              20
+#define ITEM_CHAINGUN             21
+#define ITEM_SSG                  22
+#define ITEM_ROCKETLAUNCHER       23
+#define ITEM_PLASMARIFLE          24
+#define ITEM_BFG9000              25
+#define ITEM_BACKPACK             26
+#define ITEM_CELL                 27
+#define ITEM_CLIP                 28
+#define ITEM_ROCKETAMMO           29
+#define ITEM_SHELL                30
+#define ITEM_GOLDWANDAMMO            31
+#define ITEM_JERRYCAN            32
+#define ITEM_PARTYFLUTE           33
+
+// Item cost initialization
+script ACS_WRLD_CREATESHOPITMS OPEN
+{
+    CreateItem(PET_GRIMREAPER       , "Grim Reaper Pet"                     ,   1000 );
+    CreateItem(PET_ROBOTPUMPKIN     , "Robot Pumpkin Pet"                   ,   1250 );
+    CreateItem(PET_TREEPET           , "Magical Tree Pet"                   ,   1500 );
+        
+    CreateItem(ITEM_ALLMAP          , "Computer Area Map (on this map)"     ,   25  );
+    CreateItem(ITEM_ARMORBONUS      , "Armor Helmet"                        ,   5   );
+    CreateItem(ITEM_BERSERK         , "Berserk Pack"                        ,   75  );    
+    CreateItem(ITEM_BLUEARMOR       , "Heavy Armor"                         ,   100 );
+    CreateItem(ITEM_BLURSPHERE      , "Partial Invisibility (inventory)"    ,   30  );
+    CreateItem(ITEM_GREENARMOR      , "Light Armor"                         ,   50  );   
+    CreateItem(ITEM_HEALTHBONUS     , "Health Potion"                       ,   5   );
+    CreateItem(ITEM_INFRARED        , "Light-Amp Goggles (inventory)"       ,   30  );
+    CreateItem(ITEM_INVULNERABILITY , "Invulnerability (inventory)"         ,   100 );   
+    CreateItem(ITEM_MEDIKIT         , "Medikit (+25 Health)"                ,   25  );
+    CreateItem(ITEM_MEGASPHERE      , "Megasphere (+200 Health/Armor)"      ,   150 );
+    CreateItem(ITEM_RADSUIT         , "Radiation Suit"                      ,   25 );
+    CreateItem(ITEM_SOULSPHERE      , "Soul Sphere (+100 Health)"           ,   100 );
+    CreateItem(ITEM_STIMPACK        , "Stimpack (+10 Health)"               ,   10 );
+    CreateItem(ITEM_MEDIKITINV      , "Medikit (Inventory - heals up to 25 hp)",   30 );
+    CreateItem(ITEM_SUPERMEDIKITINV , "Super Medikit (Inventory - heals up to 99 hp)"  ,  50 );
+    
+    CreateItem(ITEM_SHOTGUN         , "Shotgun"                             ,   25  );   
+    CreateItem(ITEM_CHAINGUN        , "Chaingun"                            ,   35   );
+    CreateItem(ITEM_SSG             , "Double-barreled Shotgun"             ,   150  );
+    CreateItem(ITEM_ROCKETLAUNCHER  , "Rocket Launcher"                     ,   350 );
+    CreateItem(ITEM_PLASMARIFLE     , "Plasma Gun"                          ,   400 );
+    CreateItem(ITEM_BFG9000         , "BFG9000"                             ,   1000 );  
+    
+    CreateItem(ITEM_BACKPACK       , "Backpack (Increase carrying capacity)"   ,   100 );   
+    CreateItem(ITEM_CELL            , "CellPack"                                ,   5  );
+    CreateItem(ITEM_CLIP            , "AmmoBox"                           ,   1 );
+    CreateItem(ITEM_ROCKETAMMO      , "RocketBox"                              ,   5 );
+    CreateItem(ITEM_SHELL           , "ShellBox"                            ,   4 );
+    
+    CreateItem(ITEM_GOLDWANDAMMO    , "Ecto vial (ammo)"                              ,   5 );
+    CreateItem(ITEM_JERRYCAN           , "Jerrycan (ammo)"                            ,   4 );
+
+}
+
+// Shop
+script 175 (int item)
+{
+    SetFont("GARGWING");
+    int player = PlayerNumber();
+    int cost = ApplyDiscount(GetItemCost(item),player);
+    str msg = StrParam(n:PlayerNumber()+1);
+    
+    int place = DataSlot(msg);
+    
+    if (CheckMoney(player,cost))
+    {
+        switch (item)
+        {
+            case PET_GRIMREAPER:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 1;
+                TakeMoney(player, cost);
+                break;
+                
+            case PET_ROBOTPUMPKIN:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 2;
+                TakeMoney(player, cost);
+                break;
+                
+            case PET_TREEPET:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 3;
+                TakeMoney(player, cost);
+                break;
+                    
+             // Powerups
+                
+            case ITEM_ALLMAP:
+                BuySingle("Allmap", player, item, cost);
+                break;
+                
+            case ITEM_ARMORBONUS:
+                BuySingle("ArmorBonus", player, item, cost);
+                break;
+                
+            case ITEM_BERSERK:
+                BuySingle("Berserk", player, item, cost);
+                break;
+                
+            case ITEM_BLUEARMOR:
+                BuySingle("BlueArmor", player, item, cost);
+                break;
+                
+            case ITEM_BLURSPHERE:
+                BuyLimit("ArtiInvisibility", 1, 25, player, item, cost);
+                break;
+                
+            case ITEM_GREENARMOR:
+                BuySingle("GreenArmor", player, item, cost);
+                break;
+                
+            case ITEM_HEALTHBONUS:
+                BuySingle("HealthBonus", player, item, cost);
+                break;
+                
+            case ITEM_INFRARED:
+                BuyLimit("ArtiTorch", 1, 25, player, item, cost);
+                break;
+                
+            case ITEM_INVULNERABILITY:
+                BuyLimit("ArtiInvulnerability", 1, 25, player, item, cost);
+                break;
+                
+            case ITEM_MEDIKIT :
+                BuySingle("Medikit", player, item, cost);
+                break;
+                
+            case ITEM_MEGASPHERE:
+                BuySingle("Megasphere", player, item, cost);
+                break;
+                
+            case ITEM_RADSUIT:
+                BuySingle("RadSuit", player, item, cost);
+                break;
+                
+            case ITEM_SOULSPHERE:
+                BuySingle("Soulsphere", player, item, cost);
+                break;
+                
+            case ITEM_STIMPACK:
+                BuySingle("Stimpack", player, item, cost);
+                break;
+                
+            case ITEM_MEDIKITINV:
+                BuyLimit("ArtiHealth", 1, 25, player, item, cost);
+                break;
+                
+            case ITEM_SUPERMEDIKITINV:
+                BuyLimit("ArtiSuperHealth", 1, 25, player, item, cost);
+                break;
+                
+          // Weapons
+                
+           case ITEM_SHOTGUN :
+                BuySingle("Shotgun", player, item, cost);
+                break;
+                
+            case ITEM_CHAINGUN:
+                BuySingle("Chaingun", player, item, cost);
+                break;
+                
+            case ITEM_SSG:
+                BuySingle("SuperShotgun", player, item, cost);
+                break;
+                
+            case ITEM_ROCKETLAUNCHER:
+                BuySingle("RocketLauncher", player, item, cost);
+                break;
+                
+            case ITEM_PLASMARIFLE:
+                BuySingle("PlasmaRifle", player, item, cost);
+                break;
+                
+            case ITEM_BFG9000:
+                BuySingle("BFG9000", player, item, cost);
+                break;
+                
+                
+            case ITEM_BACKPACK:
+                BuySingle("Backpack", player, item, cost);
+                break;
+                
+            case ITEM_CELL:
+                BuyLimit("CellPack", 1, 600, player, item, cost);
+                break;
+                
+            case ITEM_CLIP:
+                BuyLimit("ClipBox", 1, 400, player, item, cost);
+                break;
+                
+            case ITEM_ROCKETAMMO:
+                BuyLimit("RocketBox", 1, 100, player, item, cost);
+                break;
+                
+            case ITEM_SHELL:
+                BuyLimit("ShellBox", 1, 70, player, item, cost);
+                break;
+                
+            case ITEM_GOLDWANDAMMO:
+                BuyLimit("GoldWandAmmo", 1, 150, player, item, cost);
+                break;
+                
+            case ITEM_JERRYCAN:
+                BuyLimit("PhoenixRodAmmo", 1, 20, player, item, cost);
+                break;
+            
+        }
+    }
+    else
+    {
+        HudMessage (s:"\cgNot enough ectoplasm!";
+                    HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+    }
+}

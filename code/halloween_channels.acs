@@ -1,0 +1,95 @@
+
+// CHANNEL: TASKS
+// Task status has to be printed here. This channel may or
+// may not be split up to two subchannels later (we'll see).
+// x: 0.50
+// y: 0.10
+#define CHNL_TASK 10
+
+// CHANNEL: ARROW
+// Directional compass-like arrow.
+// x: 0.50
+// y: either 0.03 or ~0.13, we'll see
+#define CHNL_ARROW 11
+
+// CHANNEL: ANNOUNCEMENTS
+// Global announcements. Currently unused. That'll probably change.
+// x: 0.50
+// y: 0.15 - 0.20
+#define CHNL_ANNOUNCE1 20
+
+// x: 0.50
+// y: 0.25 - 0.30
+#define CHNL_ANNOUNCE2 21
+
+// CHANNEL: INTERACTION MAIN
+// Located just above the crosshair.
+// x: 0.50
+// y: 0.30 - 0.40
+#define CHNL_INTERACT1 30
+
+// CHANNEL: INTERACTION SECONDARY
+// Located just below the crosshair.
+// x: 0.50
+// y: 0.55 - 0.60
+#define CHNL_INTERACT2 31
+
+// CHANNEL: INTERACTION RESERVE
+// Located further below the crosshair.
+// x: 0.50
+// y: 0.65 - 0.75
+#define CHNL_INTERACT3 32
+
+// CHANNEL: ACHIEVEMENTS
+// At the bottom part of the screen.
+// x: 0.50
+// y: 0.83
+#define CHNL_ACHV 40
+
+// CHANNEL: LOCATION
+// At the very bottom of the screen.
+// x: 0.50
+// y: 0.95
+#define CHNL_LOCATION 50
+
+// CHANNEL: MUSIC
+// Also at the bottom of the screen, just above location.
+// x: 0.50
+// y: 0.90
+#define CHNL_MUSIC 60
+
+// CHANNEL: LOCAL
+// The left side of the HUD. Use this channel when
+// a player has to see some message only if he's in
+// a specific location (like impbrawl room). Note that
+// the messages shouldn't be located too low on the
+// screen in order to avoid it overlapping with sitrep.
+// x: 0.05
+// y: 0.30 - 0.45
+#define CHNL_LOCAL 80
+
+// CHANNEL: INVENTORY MONEY
+// Note that the little money given/taken effect requires
+// special handling. As such, it uses hudmessage id zero.
+// x: 0.95
+// y: 0.35
+#define CHNL_INVMONEY 90
+
+// CHANNEL: INVENTORY LEVEL
+// x: 0.95
+// y: 0.40
+#define CHNL_INVLEVEL 91
+
+// CHANNEL: INVENTORY LEVEL
+// x: 0.05
+// y: 0.55
+#define CHNL_INVDISCOUNT 92
+
+// CHANNEL SET: MONEY EFFECT
+// x: 0.95
+// y: 0.365 - 0.486
+// Set size: 20 (channels 100..120 are used)
+#define CHNL_MONEYEFFECTSETSTART 100
+
+
+

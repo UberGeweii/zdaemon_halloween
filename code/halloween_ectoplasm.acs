@@ -1,0 +1,347 @@
+////////////////////////////////////////
+/*
+    === DEFINITIONS ===
+*/
+////////////////////////////////////////
+
+// Maximum amount of money a player may have.
+// Must not be bigger than two billion.
+#define MAXMONEY 1000000
+
+// Money rate
+#define DEFMONEYRATE 2
+
+int moneyrate = DEFMONEYRATE;
+
+////////////////////////////////////////
+/*
+    === MONEY MANAGEMENT FUNCTIONS ===
+*/
+////////////////////////////////////////
+
+// Maximum number of different things that you can buy in shops.
+// I suggest not to change it because 255 must be more than enough.
+#define MAXSHOPITEMS 255
+
+// Ammo type that morphs itself into money
+#define AMMOMONEY "BlasterAmmo"
+#define MAXAMMO 400
+
+int m_money[MAXPLAYERS];
+
+// Returns how much money this player has.
+function int GetMoney(int player)
+{
+    return m_money[player];
+}
+
+// Gives money to this player.
+function void GiveMoney(int player, int amount)
+{
+    if (m_money[player]+amount > MAXMONEY) m_money[player]  = MAXMONEY;
+    else                                   m_money[player] += amount;
+}
+
+// Takes money away from this player.
+function void TakeMoney(int player, int amount)
+{
+    if (GetMoney(player) <= amount) m_money[player]  = 0;
+    else                            m_money[player] -= amount;
+    if (CheckInventory(AMMOMONEY)==MAXAMMO) TakeInventory(AMMOMONEY, MAXAMMO);
+}
+
+// Sets money to a specific amount regardless of how much the player had before.
+function void SetMoney(int player, int amount)
+{
+    m_money[player] = 0;
+    TakeInventory(AMMOMONEY, MAXAMMO);
+    GiveMoney(player, amount);
+}
+
+// Returns whether you have at least as much as 'amount' or not.
+function bool CheckMoney(int player, int amount)
+{
+    int remaining = GetMoney(player) - amount;
+    if (remaining<0) return false;
+    return true;
+}
+
+// Returns whether the player has maxed out his money amount.
+function bool HasMaxMoney(int player)
+{
+    return (GetMoney(player)==MAXMONEY);
+}
+
+
+////////////////////////////////////////
+/*
+    === DISCOUNT MANAGEMENT FUNCTIONS ===
+*/
+////////////////////////////////////////
+
+// The discount takes values from 0 to 100
+// 25 means 25% off every item, etc
+int m_discount[MAXPLAYERS];
+
+// Sets the discount
+function void SetDiscount(int player, int discount)
+{
+    if (discount <   0) discount =   0;
+    if (discount > 100) discount = 100;
+    m_discount[player] = discount;
+}
+
+// Reads the discount
+function int GetDiscount(int player)
+{
+    return m_discount[player];
+}
+
+function void ChangeDiscount(int player, int delta)
+{
+    SetDiscount(player, GetDiscount(player)+delta);
+}
+
+function int ApplyDiscount(int cost, int player)
+{
+    if (GetDiscount(player)==100) return 0; // cheater :p!
+    int newcost = cost * (100-GetDiscount(player)) / 100;
+    if (newcost < 1) return 1;
+    return newcost;
+}
+
+
+////////////////////////////////////////
+/*
+    === PER-PLAYER SCRIPTS ===
+*/
+////////////////////////////////////////
+
+#define MAX_JUSTLEFT_DETECTION 20
+
+int m_justleft[MAXPLAYERS][MAX_JUSTLEFT_DETECTION];
+
+function bool HasJustLeft(int player, int detection_id)
+{
+    return m_justleft[player][detection_id];
+}
+function void SetEntered(int player, int detection_id)
+{
+    m_justleft[player][detection_id] = false;
+}
+
+// If a player enters some kind of a mini-game but disconnects
+// before getting his reward we don't want someone who has joined
+// after him to get the rewarding money for free out of nowhere.
+script 796 (int player) DISCONNECT
+{
+    for (int i=0; i<MAX_JUSTLEFT_DETECTION; i++)
+    {
+        m_justleft[player][i] = true;
+    }
+    //SetMoney(player, 0);
+    //SetDiscount(player, 0);
+}
+
+// Moprhs the picked up ammo into money.
+function void UpdateAmmo(int player)
+{
+    if (HasMaxMoney(player)) return;
+    int ammo;
+    int money;
+    ammo = CheckInventory(AMMOMONEY);
+    if (ammo>0)
+    {
+        TakeInventory(AMMOMONEY, ammo);
+        //money = (ammo*MONEYRATE)>>16;
+        money = ammo/5 * moneyrate;
+        GiveMoney(player, money);
+        
+        for(int i = 0; i < PlayerTopIndex()+1; i++)
+        {
+            if(PlayerAlive(i) && i != player)
+                GiveMoney(i, money / 2);       
+        }
+        if (HasMaxMoney(player)) GiveInventory(AMMOMONEY, MAXAMMO);
+    }    
+}
+
+// Main loop script
+script ACS_PLYR_MONEYLOOP (int player)
+{
+    SetFont("GARGWING");
+    int oldmoney=0, newmoney=0;
+    while (GetActorProperty(0, APROP_HEALTH)>0 && !customGamemode)
+    {
+        oldmoney = GetMoney(player);
+        UpdateAmmo(player);
+        delay(1);
+        HudMessage (s:"\cdEctoplasm:  \cd", d:GetMoney(player);
+                    HUDMSG_PLAIN, CHNL_INVMONEY, CR_BLACK, 0.95, 0.35, 0.2);
+        if (GetDiscount(player))
+        {
+            HudMessage(s:"\ccDiscount: \cc", d:GetDiscount(player),s:"%";
+                       HUDMSG_PLAIN, CHNL_INVDISCOUNT, CR_BLACK, 0.05, 0.55, 0.2);
+        }
+        newmoney = GetMoney(player);
+        if (newmoney != oldmoney) Client_ExecuteAlways(player, ACS_PLYR_MONEYEFFECT, 0, player, newmoney-oldmoney);
+    }
+}
+
+script ACS_PLYR_MONEYEFFECT (int player, int amount)
+{
+    SetFont("GARGWING");
+    int i;
+    if (amount < 0)
+    {
+        for (i=0; i<20 && !HasJustLeft(player, JUSTLEFT_MONEYSYSTEM); i++)
+        {
+            HudMessage (s:"\cg         ", d:amount;
+                        HUDMSG_PLAIN, CHNL_MONEYEFFECTSETSTART+i, CR_BLACK, 0.95, 0.375 + i*362, 0.075);
+            delay(1);
+        }
+        HudMessage (s:"\cg         ", d:amount;
+                    HUDMSG_FADEINOUT, CHNL_MONEYEFFECTSETSTART+i, CR_BLACK, 0.95, 0.375 + i*362, 0.1, 0.0, 0.20);
+    }
+    else
+    {
+        for (i=0; i<20 && !HasJustLeft(player, JUSTLEFT_MONEYSYSTEM); i++)
+        {
+            HudMessage (s:"\cj         +", d:amount;
+                        HUDMSG_PLAIN, CHNL_MONEYEFFECTSETSTART+i, CR_BLACK, 0.95, 0.325 - i*362, 0.075);
+            delay(1);
+        }
+        HudMessage (s:"\cj         +", d:amount;
+                    HUDMSG_FADEINOUT, CHNL_MONEYEFFECTSETSTART+i, CR_BLACK, 0.95, 0.325 - i*362, 0.1, 0.0, 0.20);
+    }
+}
+
+////////////////////////////////////////
+/*
+    === CUSTOM ITEMS ===
+*/
+////////////////////////////////////////
+
+int m_itemcost[MAXSHOPITEMS];
+str m_itemdesc[MAXSHOPITEMS];
+
+function void CreateItem(int item, str desc, int cost)
+{
+    m_itemcost[item] = cost;
+    m_itemdesc[item] = desc;
+}
+
+function str GetItemDesc(int item)
+{
+    return m_itemdesc[item];
+}
+
+function int GetItemCost(int item)
+{
+    return m_itemcost[item];
+}
+
+////////////////////////////////////////
+/*
+    === BUYING SCRIPTS ===
+*/
+////////////////////////////////////////
+
+#define FIRSTSPOT 35000
+
+// Show cost
+script 176 (int item, int spot, int maxradius)
+{
+    spot += FIRSTSPOT;
+    int cost, player;
+    player = PlayerNumber();
+    SetFont("GARGWING");
+    
+    while (IsClose(0, spot, maxradius))
+    {
+        cost = ApplyDiscount(GetItemCost(item), player); // discount
+        if (CheckMoney(player, cost))
+        {
+            if (GetDiscount(player))
+            {
+                HudMessage (s:"\cf",s:GetItemDesc(item),
+                            s:"\n\n\ccCost: \cg",d:cost,s:" \ce(",d:GetDiscount(player),s:"% off)",
+                            s:"\n\ccYou have: \cd",d:GetMoney(player);
+                            HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.4, 0.15);
+            }
+            else
+            {
+                HudMessage (s:"\cf",s:GetItemDesc(item),
+                            s:"\n\n\ccCost: \cg",d:cost,
+                            s:"\n\ccYou have: \cd",d:GetMoney(player);
+                            HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.4, 0.15);
+            }
+        }
+        else
+        {
+            if (GetDiscount(PlayerNumber()))
+            {
+                HudMessage (s:"\cf",s:GetItemDesc(item),
+                            s:"\n\n\ccCost: \cg",d:cost,s:" \ce(",d:GetDiscount(player),s:"% off)",
+                            s:"\n\ccYou have: \ce",d:GetMoney(player);
+                            HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.4, 0.15);
+            }
+            else
+            {
+                HudMessage (s:"\cf",s:GetItemDesc(item),
+                            s:"\n\n\ccCost: \cg",d:cost,
+                            s:"\n\ccYou have: \ce",d:GetMoney(player);
+                            HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.4, 0.15);
+            }
+        }
+        
+        delay(3);
+    }
+}
+
+// Basic buying function.
+function void Buy(str itemname, int quantity, int player, int item, int cost)
+{
+    TakeMoney(player, cost);
+    GiveInventory(itemname, quantity);
+    //print(s:"\cdYou bought ",s:GetItemDesc(item),s:".");
+    SetFont("GARGWING");
+    HudMessage (s:"\cdYou bought ",s:GetItemDesc(item),s:".";
+                HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+}
+
+// This is for items which can only be acquired once (like weapons).
+function void BuySingle(str itemname, int player, int item, int cost)
+{
+    if (CheckInventory(itemname))
+    {
+        //print(s:"\cgYou already have ",s:itemname,s:"!");
+        SetFont("GARGWING");
+        HudMessage (s:"\ceYou already have ",s:itemname,s:"!";
+                    HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+    }
+    else
+    {
+        Buy(itemname, 1, player, item, cost);
+    }
+}
+
+// This is for items which can only hold a certain amount of.
+function void BuyLimit(str itemname, int quantity, int limit, int player, int item, int cost)
+{
+    int canbuy = limit - CheckInventory(itemname);
+    if (canbuy<=0)
+    {
+        //print(s:"\cgYou have maxed out your ",s:itemname,s:" count!");
+        SetFont("GARGWING");
+        HudMessage (s:"\ceYou have maxed out your ",s:itemname,s:" count!";
+                    HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+    }
+    else
+    {
+        int newquantity = quantity;
+        if (canbuy < quantity) newquantity = canbuy;
+        Buy(itemname, newquantity, player, item, cost);
+    }
+}
+  

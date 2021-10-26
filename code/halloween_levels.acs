@@ -1,0 +1,220 @@
+#define LEVEL_MAX 15
+
+// Levels' descriptions and costs.
+//str m_levelname[LEVEL_MAX+1]; // levels no longer have names.
+int m_tmplevelplayer[MAXPLAYERS];
+str m_leveldesc[LEVEL_MAX+1];
+int m_levelcost[LEVEL_MAX+1];
+
+// Initializing function.
+function void CreateLevel(int level, int cost, str desc)
+{
+	m_levelcost[level] = cost;
+	m_leveldesc[level] = desc;
+}
+
+// Returns player level.
+function int GetPlayerLevel(int player)
+{
+    return m_tmplevelplayer[player];
+	//return GetData(GetDBID(player), DB_LEVEL);
+}
+
+// Sets player level and updates the HUD.
+function void SetPlayerLevel(int player, int level)
+{
+    m_tmplevelplayer[player] = level;
+    
+	if (PlayerInGame(player))
+	{
+		SetActivator(PlayerTag(player));
+        SetFont("GARGWING");
+        HudMessage (s:"\cdLevel: \cd", d:GetPlayerLevel(player);
+                    HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);
+	}
+}
+
+function void GrantPlayerLevel(int player, int level)
+{
+	SetActivator(PlayerTag(player));
+	
+	// Now grant the stuff. Notes:
+	// 1. There's is NO "else" statement. A player of level N gets
+	//    all the benefits of levels 1, 2, ..., N-1, N.
+	// 2. This function is also called the moment player buys their
+	//    next level. We do not simply give stuff like ammo etc;
+	//    we check that the player does not have enough of it first.
+	int has, needs;
+	if (level >= 1)
+	{
+		GiveActorInventory(PlayerTag(player), "Health", 100);
+	}
+	if (level >= 2)
+	{
+        GiveActorInventory(PlayerTag(player), "Armor", 25);
+        GiveActorInventory(PlayerTag(player), "CWeapMace", 50);
+	}
+	if (level >= 3)
+	{
+        GiveActorInventory(PlayerTag(player), "Armor", 50);
+		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
+		GiveActorInventory(PlayerTag(player), "Shell", 25);
+	}
+	if (level >= 4)
+	{
+    
+        GiveActorInventory(PlayerTag(player), "Armor", 75);
+		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
+		GiveActorInventory(PlayerTag(player), "Shell", 50);
+		GiveActorInventory(PlayerTag(player), "Mace", 1);
+	}
+	if (level >= 5)
+	{
+        GiveActorInventory(PlayerTag(player), "Health", 100);
+        GiveActorInventory(PlayerTag(player), "Armor", 75);
+		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
+		GiveActorInventory(PlayerTag(player), "Shell", 50);
+		GiveActorInventory(PlayerTag(player), "Mace", 1);
+		GiveActorInventory(PlayerTag(player), "PhoenixRodAmmo", 5);
+		GiveActorInventory(PlayerTag(player), "CWeapStaff", 1);
+	}
+	if (level >= 6)
+	{
+        GiveActorInventory(PlayerTag(player), "Health", 100);
+        GiveActorInventory(PlayerTag(player), "Armor", 75);
+		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
+		GiveActorInventory(PlayerTag(player), "Shell", 50);
+		GiveActorInventory(PlayerTag(player), "Mace", 1);
+		GiveActorInventory(PlayerTag(player), "PhoenixRodAmmo", 10);
+		GiveActorInventory(PlayerTag(player), "CWeapStaff", 1);
+		GiveActorInventory(PlayerTag(player), "CWeapFlame", 1);
+	}    
+}
+
+// This script is invoked when a player attemps to buy a level.
+script 177 (int level)
+{
+    int player = PlayerNumber();
+	int cost = m_levelcost[level];
+	
+	if (level>=7) terminate; // [ZDCITY_ALPHA]
+	
+	if (GetPlayerLevel(player) == level-1)
+	{
+		if (CheckMoney(player, cost))
+		{
+			TakeMoney(player, cost);
+			SetPlayerLevel(player, level);
+			GrantPlayerLevel(player, level); // immediately provide everything too!
+			ThingSound(PlayerTag(player), "misc/levelup", 127);
+			LocalAmbientSound("misc/levelup", 80);
+            SetFont("GARGWING");
+			HudMessage(s:"\cdYou are now level ",d:level,s:"!" ;
+					   HUDMSG_FADEINOUT, CHNL_INTERACT3, NONE, 0.5+1.0, 0.65, 4.0, 0.2, 0.2);
+			Log(s:"\cf",n:0,s:"\cc is now level \cf",d:level,s:"!");
+		}
+		else
+		{
+            SetFont("GARGWING");
+			HudMessage(s:"\caNot enough money!";
+					   HUDMSG_FADEINOUT, CHNL_INTERACT3, NONE, 0.5+1.0, 0.65, 2.0, 0.2, 0.2);
+		}
+	}
+	else if (GetPlayerLevel(player) < level-1)
+	{
+		// Do nothing
+		//HudMessage (s:"\ccNot available for your level!";
+		//			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5+1.0, 0.55, 2.0, 0.2, 0.2);
+	}
+	else
+	{
+		// Do nothing
+		//HudMessage (s:"\ccYou already have this level!";
+		//			HUDMSG_FADEINOUT, CHNL_INTERACT3, NONE, 0.5+1.0, 0.65, 2.0, 0.2, 0.2);
+	}
+}
+
+// This script shows the description and the cost of a level.
+script 178 (int level, int spot, int maxradius)
+{
+    spot += 35000;
+    int player = PlayerNumber();
+    
+    SetFont("GARGWING");
+	if (level >= 7)
+	{
+		HudMessage(s:"\cfLevel ",d:level,s:"\n\n\caNot available in this version.\n" ;
+				   HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.37, 0);
+	}
+	else if (GetPlayerLevel(player) >= level-1)
+	{
+		HudMessage(s:"\cfLevel ",d:level,s:"\n\n\ccOn respawn you get this for free:\n",s:m_leveldesc[level] ;
+				   HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.37, 0);
+		if (GetPlayerLevel(player) == level-1)
+		{
+			HudMessage(s:"\n\n\ccCost: \cg",d:m_levelcost[level],s:"\n\ciBuy level ",d:level,s:"?" ;
+					   HUDMSG_PLAIN, CHNL_INTERACT2, NONE, 0.5+1.0, 0.55, 0);
+		}
+		else
+		{
+			HudMessage(s:"\caYou already have this level.";
+						HUDMSG_PLAIN, CHNL_INTERACT2, NONE, 0.5+1.0, 0.55, 0);
+		}
+	}
+	else
+	{
+		HudMessage(s:"\cfLevel ",d:level,s:"\n\n\ccOn respawn you get this for free:\n",s:"\cf???" ;
+				   HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.37, 0);
+		HudMessage (s:"\caBuy level ",d:level-1,s:" first!";
+					HUDMSG_PLAIN, CHNL_INTERACT2, NONE, 0.5+1.0, 0.55, 0);
+	}
+	
+    while (true)
+	{
+		if (!PlayerInGame(player)) terminate;
+		if (!IsClose(SELF, spot, maxradius) || !PlayerAlive(player)) break;
+		Delay(1);
+    }
+	
+	HudMessage(s:""; HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.55, 0);
+	HudMessage(s:""; HUDMSG_PLAIN, CHNL_INTERACT2, NONE, 0.5+1.0, 0.55, 0);
+}
+
+// Init script
+script ACS_WRLD_CREATELEVELS OPEN
+{
+	Delay(4);
+	CreateLevel(  1,    0, "\cd100 health");
+	CreateLevel(  2,  200, "\cf100 health, \cd25 armor,\n\cdMace");
+	CreateLevel(  3,  500, "\cf100 health, 50 armor\n\cfMace, \cdShotgun,\n\cd25 shells,");
+	CreateLevel(  4, 1000, "\cf100 health, 50 armor\n\cfMace, \cfShotgun,\n\cd50 shells,\n\cdThe Expeller of Ectoplasm,"); //Expeller of ectoplasm
+	CreateLevel(  5, 1250, "\cf125 health, 75 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cd Pulse rifle,");
+	CreateLevel(  6, 1500, "\cf125 health, 75 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Pulse rifle,\n\cdVaporizer");
+	CreateLevel(  7,   -1, "\cfa lot of stuff!!!");
+	CreateLevel(  8,   -1, "\cfa lot of stuff!!!!");
+	CreateLevel(  9,   -1, "\cfa lot of stuff!1!1!");
+	CreateLevel( 10,   -1, "\cfa lot of stuff!11!!1!1");
+	CreateLevel( 11,   -1, "\cfa lot of stuff!11one!11!");
+	CreateLevel( 12,   -1, "\cfa lot of stuff!11!eleven!1");
+	CreateLevel( 13,   -1, "\cfa lot of stuff!1one!1eleven!1");
+	CreateLevel( 14,   -1, "\cfa lot of stuff!!11eleven!1one!one");
+	CreateLevel( 15,   -1, "\cfa lot of stuff!1onehundredeleven!1!1!");
+}
+
+script ACS_PLYR_LEVELLOOP (void)
+{
+int player = PlayerNumber();
+
+    SetFont("GARGWING");
+
+    while(PlayerAlive(player) && !customGamemode)
+    {
+        HudMessage (s:"\cdLevel: \cd", d:GetPlayerLevel(player);
+                    HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);    
+        delay(1);
+    }
+    HudMessage (s:"";
+        HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);  
+}                         
+
+
