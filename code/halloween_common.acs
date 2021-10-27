@@ -35,6 +35,7 @@
 #define ACS_PLYR_STARTMUSIC         411
 #define ACS_PLYR_RETURNOLDINVENTORY 412
 #define ACS_PLYR_SAVEINVENTORY      413
+#define ACS_PLYR_CBOWAMMO           414
 
 // Database related code
 
@@ -530,7 +531,7 @@ script 207 enter
 {
     int player = PlayerNumber();
     
-    if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == 01)
+    if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == SHOPMAP_NUM)
     {
         while(gExit != true)
         {

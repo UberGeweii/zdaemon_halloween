@@ -227,6 +227,9 @@ str m_itemdesc[MAXSHOPITEMS];
 
 function void CreateItem(int item, str desc, int cost)
 {
+    if (GetCvar("sv_rateaffectshop")) 
+        cost = cost * moneyrate;
+        
     m_itemcost[item] = cost;
     m_itemdesc[item] = desc;
 }

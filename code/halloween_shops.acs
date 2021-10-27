@@ -42,6 +42,7 @@
 #define PET_RATPET                34
 #define PET_PUMPKINCACODEMON      35
 #define PET_GHOSTPET              36
+#define ITEM_CROSSBOW             37
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
@@ -86,6 +87,7 @@ script ACS_WRLD_CREATESHOPITMS OPEN
     CreateItem(PET_RATPET           , "Rat Pet"                             ,   500 );
     CreateItem(PET_PUMPKINCACODEMON , "CacodemonPumpkin Pet"                ,   3500 );
     CreateItem(PET_GHOSTPET         , "Ghost Pet"                           ,   4000 );
+    CreateItem(ITEM_CROSSBOW        , "Crossbow"                            ,   125 );
 
 }
 
@@ -133,6 +135,39 @@ script 175 (int item)
                   terminate;
                   }
                 Data[(DATASIZE*(place+1))-PETDATA] = 3;
+                TakeMoney(player, cost);
+                break;
+                
+            case PET_RATPET:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 4;
+                TakeMoney(player, cost);
+                break;
+                
+            case PET_PUMPKINCACODEMON:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 5;
+                TakeMoney(player, cost);
+                break;
+                
+            case PET_GHOSTPET:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 6;
                 TakeMoney(player, cost);
                 break;
                     
@@ -228,6 +263,10 @@ script 175 (int item)
                 BuySingle("BFG9000", player, item, cost);
                 break;
                 
+            case ITEM_CROSSBOW:
+                BuySingle("Crossbow", player, item, cost);
+                break;
+                
                 
             case ITEM_BACKPACK:
                 BuySingle("Backpack", player, item, cost);
@@ -255,43 +294,7 @@ script 175 (int item)
                 
             case ITEM_JERRYCAN:
                 BuyLimit("PhoenixRodAmmo", 1, 20, player, item, cost);
-                break;
-                
-            // More pets
-            
-            case PET_RATPET:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 4;
-                TakeMoney(player, cost);
-                break;
-                
-            case PET_PUMPKINCACODEMON:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 5;
-                TakeMoney(player, cost);
-                break;
-                
-            case PET_GHOSTPET:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 6;
-                TakeMoney(player, cost);
-                break;
-            
+                break;   
         }
     }
     else
