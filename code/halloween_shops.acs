@@ -136,15 +136,15 @@ script 175 (int item)
                 break;
                 
             case ITEM_ARMORBONUS:
-                BuySingle("ArmorBonus", player, item, cost);
+                BuyLimit("ArmorBonus", 1, 200, player, item, cost);
                 break;
                 
             case ITEM_BERSERK:
-                BuySingle("Berserk", player, item, cost);
+                BuyLimit("Berserk", 1, 100, player, item, cost);
                 break;
                 
             case ITEM_BLUEARMOR:
-                BuySingle("BlueArmor", player, item, cost);
+                BuyLimit("BlueArmor", 200, 200, player, item, cost);
                 break;
                 
             case ITEM_BLURSPHERE:
@@ -152,11 +152,11 @@ script 175 (int item)
                 break;
                 
             case ITEM_GREENARMOR:
-                BuySingle("GreenArmor", player, item, cost);
+                BuyLimit("GreenArmor", 100, 100, player, item, cost);
                 break;
                 
             case ITEM_HEALTHBONUS:
-                BuySingle("HealthBonus", player, item, cost);
+                BuyLimit("HealthBonus", 1, 200, player, item, cost);
                 break;
                 
             case ITEM_INFRARED:
@@ -168,11 +168,11 @@ script 175 (int item)
                 break;
                 
             case ITEM_MEDIKIT :
-                BuySingle("Medikit", player, item, cost);
+                BuyLimit("Medikit", 25, 100, player, item, cost);
                 break;
                 
             case ITEM_MEGASPHERE:
-                BuySingle("Megasphere", player, item, cost);
+                BuyLimit("Megasphere", 200, 200, player, item, cost);
                 break;
                 
             case ITEM_RADSUIT:
@@ -180,11 +180,11 @@ script 175 (int item)
                 break;
                 
             case ITEM_SOULSPHERE:
-                BuySingle("Soulsphere", player, item, cost);
+                BuyLimit("Soulsphere", 100, 100, player, item, cost);
                 break;
                 
             case ITEM_STIMPACK:
-                BuySingle("Stimpack", player, item, cost);
+                BuyLimit("Stimpack", 10, 100, player, item, cost);
                 break;
                 
             case ITEM_MEDIKITINV:

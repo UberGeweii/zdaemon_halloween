@@ -683,12 +683,14 @@ Script 801 (void)
             TotalPagesCollected[i] = TempCount; 
             If(GetCvar("sv_debugmodepages") > 0) { Log(s:"[DEBUG] ", n:i+1, s:" has a total of ", d:TotalPagesCollected[i]); }
             
-            If(TempCount >= TotalPages)
+            If(TempCount >= TotalPages
+                && !gExit)
             {
 				HudMessageBold(s:"\crMORTALS HAVE WON! ", n:i+1, s:" found all pages!";
 				HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_WHITE, 0.50, 0.25, 2.0, 1.0, 1.0); 
 				Delay(4*SEC);
 				gExit = true;
+                
             }
             else
             {
@@ -709,6 +711,9 @@ Script 801 (void)
         
         If(GetCvar("sv_chosenspeed") > 0) { ChosenSpeed = GetCvar("sv_chosenspeed"); }
         If(GetCvar("sv_chosendamage") > 0) { chosen_dmg_value = GetCvar("sv_chosendamage"); }
+        
+        If (gExit)
+            break;
 
 		delay(1);
     }

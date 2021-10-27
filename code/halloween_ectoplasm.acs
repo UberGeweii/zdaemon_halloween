@@ -329,8 +329,31 @@ function void BuySingle(str itemname, int player, int item, int cost)
 // This is for items which can only hold a certain amount of.
 function void BuyLimit(str itemname, int quantity, int limit, int player, int item, int cost)
 {
-    int canbuy = limit - CheckInventory(itemname);
-    if (canbuy<=0)
+    int canbuy;
+    int invAmount;
+    
+    if (itemname == "Soulsphere" 
+        || itemname == "Megasphere" 
+        || itemname == "HealthBonus"
+        || itemname == "Medikit" 
+        || itemname == "Stimpack")
+    {
+          invAmount = CheckInventory("Health");
+    }
+    else if (itemname == "ArmorBonus" 
+        || itemname == "GreenArmor" 
+        || itemname == "BlueArmor") 
+    {
+        invAmount = CheckInventory("Armor");
+    }
+    else
+    {
+        invAmount = CheckInventory(itemname);
+    }
+    
+    canbuy = limit - CheckInventory(itemname);
+    
+    if (invAmount >= limit)
     {
         //print(s:"\cgYou have maxed out your ",s:itemname,s:" count!");
         SetFont("GARGWING");
