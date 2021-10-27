@@ -36,16 +36,19 @@
 #define ITEM_CLIP                 28
 #define ITEM_ROCKETAMMO           29
 #define ITEM_SHELL                30
-#define ITEM_GOLDWANDAMMO            31
-#define ITEM_JERRYCAN            32
+#define ITEM_GOLDWANDAMMO         31
+#define ITEM_JERRYCAN             32
 #define ITEM_PARTYFLUTE           33
+#define PET_RATPET                34
+#define PET_PUMPKINCACODEMON      35
+#define PET_GHOSTPET              36
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
 {
-    CreateItem(PET_GRIMREAPER       , "Grim Reaper Pet"                     ,   1000 );
-    CreateItem(PET_ROBOTPUMPKIN     , "Robot Pumpkin Pet"                   ,   1250 );
-    CreateItem(PET_TREEPET           , "Magical Tree Pet"                   ,   1500 );
+    CreateItem(PET_GRIMREAPER       , "Grim Reaper Pet"                     ,   1500 );
+    CreateItem(PET_ROBOTPUMPKIN     , "Robot Pumpkin Pet"                   ,   2250 );
+    CreateItem(PET_TREEPET           , "Magical Tree Pet"                   ,   3000 );
         
     CreateItem(ITEM_ALLMAP          , "Computer Area Map (on this map)"     ,   25  );
     CreateItem(ITEM_ARMORBONUS      , "Armor Helmet"                        ,   5   );
@@ -72,13 +75,17 @@ script ACS_WRLD_CREATESHOPITMS OPEN
     CreateItem(ITEM_BFG9000         , "BFG9000"                             ,   1000 );  
     
     CreateItem(ITEM_BACKPACK       , "Backpack (Increase carrying capacity)"   ,   100 );   
-    CreateItem(ITEM_CELL            , "CellPack"                                ,   5  );
-    CreateItem(ITEM_CLIP            , "AmmoBox"                           ,   1 );
+    CreateItem(ITEM_CELL            , "CellPack"                               ,   5  );
+    CreateItem(ITEM_CLIP            , "AmmoBox"                                ,   1 );
     CreateItem(ITEM_ROCKETAMMO      , "RocketBox"                              ,   5 );
-    CreateItem(ITEM_SHELL           , "ShellBox"                            ,   4 );
+    CreateItem(ITEM_SHELL           , "ShellBox"                               ,   4 );
     
-    CreateItem(ITEM_GOLDWANDAMMO    , "Ecto vial (ammo)"                              ,   5 );
-    CreateItem(ITEM_JERRYCAN           , "Jerrycan (ammo)"                            ,   4 );
+    CreateItem(ITEM_GOLDWANDAMMO    , "Ecto vial (ammo)"                       ,   5 );
+    CreateItem(ITEM_JERRYCAN        , "Jerrycan (ammo)"                        ,   4 );
+    
+    CreateItem(PET_RATPET           , "Rat Pet"                             ,   500 );
+    CreateItem(PET_PUMPKINCACODEMON , "CacodemonPumpkin Pet"                ,   3500 );
+    CreateItem(PET_GHOSTPET         , "Ghost Pet"                           ,   4000 );
 
 }
 
@@ -248,6 +255,41 @@ script 175 (int item)
                 
             case ITEM_JERRYCAN:
                 BuyLimit("PhoenixRodAmmo", 1, 20, player, item, cost);
+                break;
+                
+            // More pets
+            
+            case PET_RATPET:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 4;
+                TakeMoney(player, cost);
+                break;
+                
+            case PET_PUMPKINCACODEMON:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 5;
+                TakeMoney(player, cost);
+                break;
+                
+            case PET_GHOSTPET:
+
+                  if (place == -1)
+                  {
+                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+                  terminate;
+                  }
+                Data[(DATASIZE*(place+1))-PETDATA] = 6;
+                TakeMoney(player, cost);
                 break;
             
         }

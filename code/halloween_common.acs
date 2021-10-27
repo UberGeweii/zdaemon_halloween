@@ -81,7 +81,7 @@
 
 // -- Shop defines --
 
-#define SHOPMAP_NUM             40
+#define SHOPMAP_NUM             00
 #define SHOP_EXITVOTE_CNTDWN    30  // in seconds
 #define SHOP_MAXTIME            900 // in seconds
 

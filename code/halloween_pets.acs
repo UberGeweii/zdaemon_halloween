@@ -10,9 +10,9 @@ str PossiblePets[MAX_VARIETY_PETS] = {"",
 "SerpentTorch", 
 "FireBrazier", 
 "SorcFX1", 
-"", 
-"", 
-"", 
+"Rock1", 
+"Rock2", 
+"Rock3", 
 "", 
 "",
 "ExplosiveBarrel",
@@ -52,6 +52,7 @@ script ACS_PLYR_PETLOOP (void)
     int followspd;
     
     PetSpawnHeight[2] = 16;
+    PetSpawnHeight[6] = 8;
 
     // check player slot within the database.
     if (slot != -1)
