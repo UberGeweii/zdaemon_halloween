@@ -104,27 +104,27 @@ script 175 (int item)
         switch (item)
         {
             case PET_GRIMREAPER:
-                BuyPet(1, player, item, cost);
+                BuyPet(item, player, 1, cost);
                 break;
                 
             case PET_ROBOTPUMPKIN:
-                BuyPet(2, player, item, cost);
+                BuyPet(item, player, 2, cost);
                 break;
                 
             case PET_TREEPET:
-                BuyPet(3, player, item, cost);
+                BuyPet(item, player, 3, cost);
                 break;
                 
             case PET_RATPET:
-                BuyPet(4, player, item, cost);
+                BuyPet(item, player, 4, cost);
                 break;
                 
             case PET_PUMPKINCACODEMON:
-                BuyPet(5, player, item, cost);
+                BuyPet(item, player, 5, cost);
                 break;
                 
             case PET_GHOSTPET:
-                BuyPet(6, player, item, cost);
+                BuyPet(item, player, 6, cost);
                 break;
                     
              // Powerups
