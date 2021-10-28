@@ -56,10 +56,10 @@
 #define ACS_WRLD_MUSICPLAYER        757
 
 // Darkness level code
-#define ACS_DLVL_MAIN               801
-#define ACS_DLBL_SET                802
-#define ACS_DLBL_SEC                803
-#define ACS_DLBL_HALT               804
+#define ACS_DLVL_MAIN               851
+#define ACS_DLBL_SET                852
+#define ACS_DLBL_SEC                853
+#define ACS_DLBL_HALT               854
 
 #define ACS_ADMIN_PLAYERPET         904
 #define ACS_ADMN_CHANGEMUSIC        920
