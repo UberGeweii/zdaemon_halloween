@@ -1,7 +1,7 @@
 // [PET SCRIPTS SETTINGS]
 
 #define MAX_VARIETY_PETS            20+1 //Because 0 means no pet.
-#define PETTIDBASE                  11000
+#define PET_TIDBASE                  11000
 
 #define FOLLOW_TID 800
 #define FOLLOW_SPEED 7.0    // fixed pixels per tick
@@ -33,86 +33,104 @@ int PetSpawnHeight[MAX_VARIETY_PETS];
 
 // [PET SCRIPTS]
 
-/*
-Actual piece of code that spawns the pet and then follow the player.
-[$] Pretty old code could be done much cleaner.
-*/
-
 script ACS_PLYR_PETLOOP (void)
 {
     int player = PlayerNumber();
-    int oldX, oldY, oldZ;
-    int dist, vang;
-    int makesound = -1;
-
+    
     // Loading data
     str msg = StrParam(n:PlayerNumber()+1);
-    int slot = DataSlot(msg);
-    int oldpet = Data[(DATASIZE*(slot+1))-PETDATA]; 
-    int followspd;
+    int hasSlot = DataSlot(msg);
+    int curPet = Data[(DATASIZE*(slot+1))-PETDATA];
     
-    PetSpawnHeight[2] = 16;
-    PetSpawnHeight[6] = 8;
-
-    // check player slot within the database.
-    if (slot != -1)
+    // Player has no slot.
+    if (hasSlot == -1)
     {
-        oldX = GetActorX(PlayerTag(player));
-        oldY = GetActorY(PlayerTag(player));
-        oldZ = GetActorZ(PlayerTag(player));
+        if(GetCvar("sv_debugmode") > 0) 
+            Log(s:"Something went wrong fetching database slot for: ", n:player+1, s:"!"); 
+              
+        terminate;
+    } 
+    
+    int oldX, oldY, oldZ;
+    int dist, vang;
+	int angle;
+    int makeSound = -1;
+    int followSpd;
+	oldX = GetActorX(PlayerTag(player));
+	oldY = GetActorY(PlayerTag(player));
+	oldZ = GetActorZ(PlayerTag(player));
+	
+	SetFont("BIGFONT");
       
-        While(Data[(DATASIZE*(slot+1))-PETDATA] == oldpet && PlayerAlive(player) && Data[(DATASIZE*(slot+1))-PETDATA] != 0 && !customGamemode)
-        {
-            dist = DistancePet(GetActorX(PlayerTag(player)), GetActorY(PlayerTag(player)), oldX, oldY);
-            followspd = ((GetVelocity(PlayerTag(player)) >> 16) * 8 / 10) << 16;
-            if(followspd < 7.0) followspd = 7.0;
-            
-            // There's no pet, spawn one..
-            if(thingcount(0,player+PETTIDBASE) < 1)
+	While(PlayerAlive(player)
+		 && curPet)
+	{
+		dist = GetDistance(GetActorX(PlayerTag(player)), GetActorY(PlayerTag(player)), oldX, oldY);
+		
+		followSpd = (GetVelocity(PlayerTag(player)) * 8 / 10);
+		if(followSpd < DEFAULT_FOLLOWSPEED) followSpd = DEFAULT_FOLLOWSPEED; // Never go below this value.
+		
+		// There's no pet, spawn one..
+		if(!ThingCount(0, PET_TIDBASE+player))
+		{
+			if(AvailablePets[curPet] != "") 
+				Spawn(AvailablePets[curPet], oldX, oldY, GetActorZ(PlayerTag(player)), PET_TIDBASE+player, 0); 
+		}
+	
+		makeSound = Random (0, 128);
+	
+		if (ThingCount(0, player+PET_TIDBASE) && makeSound == 10)
+			ThingSound(PET_TIDBASE+player, PetActiveSounds[curPet], 127 -dist);
+		
+		// Break out when the distance becomes too big or the pet changed.
+		if (dist > 500 || Data[(DATASIZE*(slot+1))-PETDATA] != curPet)
+		break;
+			
+		
+		// The player moved, update pet position.
+		if (dist > 60 && ThingCount(0, PET_TIDBASE+player))
+		{  
+			// Update the position.                   
+			SetActorPosition(PET_TIDBASE+player, oldX, oldY, oldZ, 0);
+	
+			// Update actor angle.
+			vang = VectorAngle (GetActorX (PET_TIDBASE+player) - GetActorX (PlayerTag(player)), GetActorY (PET_TIDBASE+player) - GetActorY (PlayerTag(player)));
+			SetActorAngle (PET_TIDBASE+player, vang -0.50);
+	
+	
+			if (GetActorX(PlayerTag(player)) > oldX) oldX += followSpd;
+			if (GetActorX(PlayerTag(player)) < oldX) oldX -= followSpd;
+	
+			if (GetActorY(PlayerTag(player)) > oldY) oldY += followSpd;
+			if (GetActorY(PlayerTag(player)) < oldY) oldY -= followSpd;
+		}
+		
+		// Update height outside of the distance check.
+		if (GetActorZ(PlayerTag(player)) > oldZ) oldZ = GetActorZ(PlayerTag(player));
+		if (GetActorZ(PlayerTag(player)) < oldZ) oldZ -= followSpd;   
+                
+		angle = GetActorAngle(PlayerTag(player)) - VectorAngle(GetActorX(PET_TIDBASE+player)-GetActorX(PlayerTag(player)), GetActorY(PET_TIDBASE+player)-GetActorY(PlayerTag(player)));
+
+		if      (angle < -0.5) angle += 1.0;
+		else if (angle >  0.5) angle -= 1.0;
+		if (abs(angle) < 0.05)
+		{
+			if(ThingCount(0, PET_TIDBASE+player))
+				HudMessage(s:"\cj", s:AvailablePets[curPet], s:"\n\n\cjPress \ck'use' \cjto pet!"; HUDMSG_PLAIN, 200, CR_WHITE, 1.5, 0.7, 0.1); 
+				
+            if (GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE)
             {
-                if(PossiblePets[Data[(DATASIZE*(slot+1))-PETDATA]] != "") 
-                    Spawn(PossiblePets[Data[(DATASIZE*(slot+1))-PETDATA]], oldX, oldY, GetActorZ(PlayerTag(player)) + PetSpawnHeight[Data[(DATASIZE*(slot+1))-PETDATA]]*65536, player+PETTIDBASE, 0); 
+				HudMessage(s:"You gave your pet a pat on its head!"; HUDMSG_PLAIN, 201, CR_GREEN, 1.5, 0.5, 2.0); 
             }
-
-            makesound = Random (0, 128);
-     
-            if (makesound == 10 && ThingCount(0, player+PETTIDBASE))
-                ThingSound(player+PETTIDBASE, PetActiveSounds[Data[(DATASIZE*(slot+1))-PETDATA]], 127 -dist);
-                
-            if (dist > 500)
-               break;
-                
-            
-            // The player moved, update pet position.
-            if (dist > 60 && ThingCount(0, player+PETTIDBASE))
-            {  
-                // Update the position.                   
-                SetActorPosition(player+PETTIDBASE, oldX, oldY, oldZ + PetSpawnHeight[Data[(DATASIZE*(slot+1))-PETDATA]]*65536, 0);
+		}
+			
+		Delay(1);
+	}
     
-                // Update actor angle.
-                vang = VectorAngle (GetActorX (player+PETTIDBASE) - GetActorX (PlayerTag(player)), GetActorY (player+PETTIDBASE) - GetActorY (PlayerTag(player)));
-                SetActorAngle (player+PETTIDBASE, vang -0.50);
-
+    if(ThingCount(0, PET_TIDBASE+player)) 
+        thing_remove(PET_TIDBASE+player);
         
-                if (GetActorX(PlayerTag(player)) > oldX) oldX += followspd;
-                if (GetActorX(PlayerTag(player)) < oldX) oldX -= followspd;
-        
-                if (GetActorY(PlayerTag(player)) > oldY) oldY += followspd;
-                if (GetActorY(PlayerTag(player)) < oldY) oldY -= followspd;
-            }
-            
-            // Update height outside of the distance check.
-            if (GetActorZ(PlayerTag(player)) > oldZ) oldZ = GetActorZ(PlayerTag(player));
-            if (GetActorZ(PlayerTag(player)) < oldZ) oldZ -= followspd;       
-                
-            Delay(1);
-        }
-    }
-    
-    if(ThingCount(0, player+PETTIDBASE)) 
-        thing_remove(player+PETTIDBASE);
-        
-    delay(1);
+    Delay(1);
     
     If(PlayerAlive(player))
         restart;
@@ -143,6 +161,7 @@ function void BuyPet(int item, int player, int petNum, int cost)
     {
         HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
             HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+        return;
     }
     
     //print(s:"\cdYou bought ",s:GetItemDesc(item),s:".");

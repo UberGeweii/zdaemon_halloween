@@ -256,14 +256,29 @@ function int GetVelocity (int id)
 
     int ang = vectorangle(x,y);
    
-   if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(y, sin(ang));
-   else len = fixeddiv(x, cos(ang));
+    if(((ang+0.125)%0.5) > 0.25) 
+        len = fixeddiv(y, sin(ang));
+    else 
+        len = fixeddiv(x, cos(ang));
 
-   ang = vectorangle(len, z);
-   if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(z, sin(ang));
-   else len = fixeddiv(len, cos(ang));
+    ang = vectorangle(len, z); 4
+    
+    if(((ang+0.125)%0.5) > 0.25) 
+        len = fixeddiv(z, sin(ang));
+    else 
+        len = fixeddiv(len, cos(ang));
 
-return len;
+    return len;
+}
+
+function int GetHeightDifference(int tid1, int tid2)
+{
+	int height_diff;
+
+	height_diff = GetActorZ(tid1) - GetActorZ(tid2);
+	height_diff=-height_diff; //negative to positive
+
+	return height_diff >> 16; //convert to map units
 }
 
 #define INVENTORYDATASIZE MAX_INV_ITEM_NAMES
