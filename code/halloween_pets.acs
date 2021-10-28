@@ -35,85 +35,83 @@ int PetSpawnHeight[MAX_VARIETY_PETS];
 
 script ACS_PLYR_PETLOOP (void)
 {
-    int player = PlayerNumber();
-    
-    // Loading data
-    str msg = StrParam(n:PlayerNumber()+1);
-    int hasSlot = DataSlot(msg);
-    int curPet = Data[(DATASIZE*(hasSlot+1))-PETDATA];
-    
-    // Player has no slot.
-    if (hasSlot == -1)
-    {
-        if(GetCvar("sv_debugmode") > 0) 
-            Log(s:"Something went wrong fetching database slot for: ", n:player+1, s:"!"); 
-              
-        terminate;
-    } 
-    
-    // Define custom spawn height.
-    PetSpawnHeight[2] = 16;
-    PetSpawnHeight[6] = 8;
-        
-    int oldX, oldY, oldZ;
-    int dist, vang;
+	int player = PlayerNumber();
+	
+	// Loading data
+	str msg = StrParam(n:PlayerNumber()+1);
+	int hasSlot = DataSlot(msg);
+	int curPet = Data[(DATASIZE*(hasSlot+1))-PETDATA];
+	
+	// Player has no slot.
+	if (hasSlot == -1)
+	{
+		if(GetCvar("sv_debugmode") > 0) 
+			Log(s:"Something went wrong fetching database slot for: ", n:player+1, s:"!"); 
+
+		terminate;
+	} 
+
+	// Define custom spawn height.
+	PetSpawnHeight[2] = 16;
+	PetSpawnHeight[6] = 8;
+
+	int oldX, oldY, oldZ;
+	int dist, vang;
 	int angle;
-    int makeSound = -1;
-    int followSpd;
+	int makeSound = -1;
+	int followSpd;
 	oldX = GetActorX(PlayerTag(player));
 	oldY = GetActorY(PlayerTag(player));
 	oldZ = GetActorZ(PlayerTag(player));
-	
-    SetFont("GARGWING");
-      
+
+	SetFont("GARGWING");
+
 	While(PlayerAlive(player)
 		 && curPet)
 	{
 		dist = GetDistance(GetActorX(PlayerTag(player)), GetActorY(PlayerTag(player)), oldX, oldY);
-		
+
 		followSpd = (GetVelocity(PlayerTag(player)) * 8 / 10);
 		if(followSpd < DEFAULT_FOLLOWSPEED) followSpd = DEFAULT_FOLLOWSPEED; // Never go below this value.
-		
+
 		// There's no pet, spawn one..
 		if(!ThingCount(0, PET_TIDBASE+player))
 		{
 			if(AvailablePets[curPet] != "") 
 				Spawn(AvailablePets[curPet], oldX, oldY, GetActorZ(PlayerTag(player)) + (PetSpawnHeight[curPet] << 16), PET_TIDBASE+player, 0); 
 		}
-	
+
 		makeSound = Random (0, 128);
-	
+
 		if (ThingCount(0, player+PET_TIDBASE) && makeSound == 10)
 			ThingSound(PET_TIDBASE+player, PetActiveSounds[curPet], 127 -dist);
-		
+
 		// Break out when the distance becomes too big or the pet changed.
 		if (dist > 500 || Data[(DATASIZE*(hasSlot+1))-PETDATA] != curPet)
 		break;
-			
-		
+
 		// The player moved, update pet position.
 		if (dist > 60 && ThingCount(0, PET_TIDBASE+player))
-		{  
+		{
 			// Update the position.                   
 			SetActorPosition(PET_TIDBASE+player, oldX, oldY, oldZ + (PetSpawnHeight[curPet] << 16), 0);
-            Print(d:PetSpawnHeight[curPet] << 16);
-	
+			Print(d:PetSpawnHeight[curPet] << 16);
+
 			// Update actor angle.
 			vang = VectorAngle (GetActorX (PET_TIDBASE+player) - GetActorX (PlayerTag(player)), GetActorY (PET_TIDBASE+player) - GetActorY (PlayerTag(player)));
 			SetActorAngle (PET_TIDBASE+player, vang -0.50);
-	
-	
+
 			if (GetActorX(PlayerTag(player)) > oldX) oldX += followSpd;
 			if (GetActorX(PlayerTag(player)) < oldX) oldX -= followSpd;
-	
+
 			if (GetActorY(PlayerTag(player)) > oldY) oldY += followSpd;
 			if (GetActorY(PlayerTag(player)) < oldY) oldY -= followSpd;
 		}
-		
+
 		// Update height outside of the distance check.
 		if (GetActorZ(PlayerTag(player)) > oldZ) oldZ = GetActorZ(PlayerTag(player));
 		if (GetActorZ(PlayerTag(player)) < oldZ) oldZ -= followSpd;   
-                
+
 		angle = GetActorAngle(PlayerTag(player)) - VectorAngle(GetActorX(PET_TIDBASE+player)-GetActorX(PlayerTag(player)), GetActorY(PET_TIDBASE+player)-GetActorY(PlayerTag(player)));
 
 		if      (angle < -0.5) angle += 1.0;
@@ -122,57 +120,57 @@ script ACS_PLYR_PETLOOP (void)
 		{
 			if(ThingCount(0, PET_TIDBASE+player))
 				HudMessage(s:"\cj", s:AvailablePets[curPet], s:"\n\n\cjPress \ck'use' \cjto pet!"; HUDMSG_PLAIN, 200, CR_WHITE, 1.5, 0.7, 0.1); 
-				
-            if (GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE)
-            {
+
+			if (GetPlayerInput(-1, INPUT_BUTTONS) & BT_USE)
+			{
 				HudMessage(s:"You gave your pet a pat on its head!"; HUDMSG_PLAIN, 201, CR_GREEN, 1.5, 0.5, 2.0); 
-            }
+			}
 		}
-			
+
 		Delay(1);
 	}
-    
-    if(ThingCount(0, PET_TIDBASE+player)) 
-        thing_remove(PET_TIDBASE+player);
-        
-    Delay(1);
-    
-    If(PlayerAlive(player))
-        restart;
+
+	if(ThingCount(0, PET_TIDBASE+player)) 
+		thing_remove(PET_TIDBASE+player);
+
+	Delay(1);
+
+	If(PlayerAlive(player))
+		restart;
 }
 
 // Pet buying function.
 function void BuyPet(int item, int player, int petNum, int cost)
 {
-    str msg = StrParam(n:player+1);    
-    int hasSlot = DataSlot(msg);
+	str msg = StrParam(n:player+1);    
+	int hasSlot = DataSlot(msg);
 
-    // Player present in database?
-    if (hasSlot == -1)
-    {
-        Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-        return;
-    }
-    
-    // Now fetch the item name.
-    int itemName = GetItemDesc(item);
-    
-    if (petnum != Data[(DATASIZE*(hasSlot+1))-PETDATA])
-    {
-        Data[(DATASIZE*(hasSlot+1))-PETDATA] = petNum;
-        TakeMoney(player, cost);
-    }
-    else
-    {
-        HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
-            HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
-        return;
-    }
-    
-    //print(s:"\cdYou bought ",s:GetItemDesc(item),s:".");
-    SetFont("GARGWING");
-    HudMessage (s:"\cdYou bought ",s:itemName,s:".";
-        HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+	// Player present in database?
+	if (hasSlot == -1)
+	{
+		Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+		return;
+	}
+	
+	// Now fetch the item name.
+	int itemName = GetItemDesc(item);
+	
+	if (petnum != Data[(DATASIZE*(hasSlot+1))-PETDATA])
+	{
+		Data[(DATASIZE*(hasSlot+1))-PETDATA] = petNum;
+		TakeMoney(player, cost);
+	}
+	else
+	{
+		HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+		return;
+	}
+	
+	//print(s:"\cdYou bought ",s:GetItemDesc(item),s:".");
+	SetFont("GARGWING");
+	HudMessage (s:"\cdYou bought ",s:itemName,s:".";
+		HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
 }
 
 
