@@ -73,7 +73,7 @@ script ACS_PLYR_REENTER ENTER
     ACS_ExecuteAlways(ACS_PLYR_STARTMUSIC, 0);          // Music enter script
     ACS_ExecuteAlways(ACS_PLYR_SAVEINVENTORY, 0);       // Save inventory on custom gamemodes or w/e
     ACS_ExecuteAlways(ACS_PLYR_RETURNOLDINVENTORY, 0);  // Return old inventory
-    ACS_ExecuteAlways(ACS_PLYR_CBOWAMMO, 0);            // Crowwbow script
+    ACS_ExecuteAlways(ACS_PLYR_CBOWAMMO, 0);            // Crossbow script
 }
 
 script ACS_PLYR_RESETVAR (int player)
@@ -166,21 +166,22 @@ script ACS_PLYR_SAVEINVENTORY (void)
 }
 
 /* 
-Crossbow ammo script
-Runs for every player, arrow projectiles drop CrossbowAmmo.
-But CrossbowAmmo gives 5 arrows.
-Instead, we want the player to pick 1 arrow back up, not five.
+    Crossbow ammo script
+    Runs for every player, arrow projectiles drop CrossbowAmmo.
+    But CrossbowAmmo gives 5 arrows.
+    Instead, we want the player to pick 1 arrow back up, not five.
 */
 
 script ACS_PLYR_CBOWAMMO (void)
 {
-int player = PlayerNumber();
-int old_ammo;
-int new_ammo;
-int difference;
-//CheckInventory("CrossbowAmmo");
+    int player = PlayerNumber();
+    int old_ammo;
+    int new_ammo;
+    int difference;
+    
+    old_ammo = CheckInventory("CrossbowAmmo");
 
-    while (PlayerAlive(player) != false)
+    while (!PlayerAlive(player))
     {
         if (CheckInventory("CrossbowAmmo") > old_ammo) // take ammo
         {
@@ -200,7 +201,7 @@ int difference;
         if (CheckInventory("CrossbowAmmo") < old_ammo) // shoot ammo
             old_ammo = CheckInventory("CrossbowAmmo");
         
-	Delay(1);
+	   Delay(1);
 	}
 }
 

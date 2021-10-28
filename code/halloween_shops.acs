@@ -96,79 +96,35 @@ script 175 (int item)
 {
     SetFont("GARGWING");
     int player = PlayerNumber();
-    int cost = ApplyDiscount(GetItemCost(item),player);
-    str msg = StrParam(n:PlayerNumber()+1);
     
-    int place = DataSlot(msg);
+    int cost = ApplyDiscount(GetItemCost(item),player);
     
     if (CheckMoney(player,cost))
     {
         switch (item)
         {
             case PET_GRIMREAPER:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 1;
-                TakeMoney(player, cost);
+                BuyPet(1, player, item, cost);
                 break;
                 
             case PET_ROBOTPUMPKIN:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 2;
-                TakeMoney(player, cost);
+                BuyPet(2, player, item, cost);
                 break;
                 
             case PET_TREEPET:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 3;
-                TakeMoney(player, cost);
+                BuyPet(3, player, item, cost);
                 break;
                 
             case PET_RATPET:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 4;
-                TakeMoney(player, cost);
+                BuyPet(4, player, item, cost);
                 break;
                 
             case PET_PUMPKINCACODEMON:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 5;
-                TakeMoney(player, cost);
+                BuyPet(5, player, item, cost);
                 break;
                 
             case PET_GHOSTPET:
-
-                  if (place == -1)
-                  {
-                  Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
-                  terminate;
-                  }
-                Data[(DATASIZE*(place+1))-PETDATA] = 6;
-                TakeMoney(player, cost);
+                BuyPet(6, player, item, cost);
                 break;
                     
              // Powerups

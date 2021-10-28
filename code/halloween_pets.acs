@@ -118,4 +118,26 @@ script ACS_PLYR_PETLOOP (void)
         restart;
 }
 
+// Pet buying function.
+function void BuyPet(int petNum, int player, int item, int cost)
+{
+    str msg = StrParam(n:player+1);
+    
+    int hasSlot = DataSlot(msg);
+
+    if (hasSlot == -1)
+    {
+        Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+        return;
+    }
+    
+    Data[(DATASIZE*(hasSlot+1))-PETDATA] = petNum;
+    TakeMoney(player, cost);
+    
+    //print(s:"\cdYou bought ",s:GetItemDesc(item),s:".");
+    SetFont("GARGWING");
+    HudMessage (s:"\cdYou bought ",s:GetItemDesc(item),s:".";
+                HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+}
+
 
