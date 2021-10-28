@@ -1,12 +1,12 @@
 // [PET SCRIPTS SETTINGS]
 
 #define MAX_VARIETY_PETS            20+1 //Because 0 means no pet.
-#define PET_TIDBASE                  11000
+#define PET_TIDBASE                 11000
 
-#define FOLLOW_TID 800
-#define FOLLOW_SPEED 7.0    // fixed pixels per tick
+#define FOLLOW_TID                  800
+#define DEFAULT_FOLLOWSPEED         7.0    // fixed pixels per tick
 
-str PossiblePets[MAX_VARIETY_PETS] = {"", 
+str AvailablePets[MAX_VARIETY_PETS] = {"", 
 "SerpentTorch", 
 "FireBrazier", 
 "SorcFX1", 
@@ -40,7 +40,7 @@ script ACS_PLYR_PETLOOP (void)
     // Loading data
     str msg = StrParam(n:PlayerNumber()+1);
     int hasSlot = DataSlot(msg);
-    int curPet = Data[(DATASIZE*(slot+1))-PETDATA];
+    int curPet = Data[(DATASIZE*(hasSlot+1))-PETDATA];
     
     // Player has no slot.
     if (hasSlot == -1)
@@ -83,7 +83,7 @@ script ACS_PLYR_PETLOOP (void)
 			ThingSound(PET_TIDBASE+player, PetActiveSounds[curPet], 127 -dist);
 		
 		// Break out when the distance becomes too big or the pet changed.
-		if (dist > 500 || Data[(DATASIZE*(slot+1))-PETDATA] != curPet)
+		if (dist > 500 || Data[(DATASIZE*(hasSlot+1))-PETDATA] != curPet)
 		break;
 			
 		

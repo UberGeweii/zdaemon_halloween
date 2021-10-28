@@ -51,7 +51,7 @@ script ACS_ADMIN_PLAYERPET (int player, int targetPlayer)
        
         While(PlayerInGame(targetPlayer) && PlayerInGame(player) && GetCvar("sv_allowplayerpet"))
         {
-            dist = DistancePet(GetActorX(PlayerTag(player)), GetActorY(PlayerTag(player)), oldX, oldY);
+            dist = GetDistance(GetActorX(PlayerTag(player)), GetActorY(PlayerTag(player)), oldX, oldY);
             followspd = ((GetVelocity(PlayerTag(player)) >> 16) * 8 / 10) << 16;
             if(followspd < 7.0) followspd = 7.0;
             

@@ -182,7 +182,7 @@ function bool PlayerAlive(int player)
 	return (GetActorProperty(PlayerTag(player), APROP_Health) > 0);
 }
 
-function int DistancePet (int x1, int y1, int x2, int y2)
+function int GetDistance (int x1, int y1, int x2, int y2)
 {
     int len;
     int x = x1 - x2;
@@ -261,7 +261,7 @@ function int GetVelocity (int id)
     else 
         len = fixeddiv(x, cos(ang));
 
-    ang = vectorangle(len, z); 4
+    ang = vectorangle(len, z);
     
     if(((ang+0.125)%0.5) > 0.25) 
         len = fixeddiv(z, sin(ang));
@@ -586,7 +586,7 @@ script 209 (void)
     else
         cur_adminpet = 0;
         
-    print(s:"current pet: ", d:cur_adminpet, s:" - ", s:PossiblePets[cur_adminpet]);
+    print(s:"current pet: ", d:cur_adminpet, s:" - ", s:AvailablePets[cur_adminpet]);
 }
 
 script 210 (int tid)
