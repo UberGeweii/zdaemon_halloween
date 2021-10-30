@@ -74,6 +74,8 @@ script ACS_PLYR_REENTER ENTER
     ACS_ExecuteAlways(ACS_PLYR_SAVEINVENTORY, 0);       // Save inventory on custom gamemodes or w/e
     ACS_ExecuteAlways(ACS_PLYR_RETURNOLDINVENTORY, 0);  // Return old inventory
     ACS_ExecuteAlways(ACS_PLYR_CBOWAMMO, 0);            // Crossbow script
+    
+    hadFirstSpawn[player] = true;
 }
 
 script ACS_PLYR_RESETVAR (int player)
@@ -100,6 +102,8 @@ script ACS_PLYR_DISCNCT (int player) DISCONNECT
     // First of all, a disconnect is also considered a death so it
     // executes the same reset code as the death script above does. 
     ACS_ExecuteAlways(ACS_PLYR_RESETVAR, NONE, player);
+    
+    hadFirstSpawn[player] = false;
 }
 
 script ACS_PLYR_INVSPECIALS (void)

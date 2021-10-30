@@ -190,12 +190,12 @@ script ACS_WRLD_DEFINELOOTTABLES OPEN
  	AddLoot(LOOTTABLE_LARGE, "PuzzGear3"        ,  10);
  	AddLoot(LOOTTABLE_LARGE, "PuzzGear4"        ,  10);
  	AddLoot(LOOTTABLE_LARGE, "PuzzSkull"        ,  15);
- 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece1"    ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece2"    ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece3"    ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece1"    ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece2"    ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece3"    ,  10);  
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece1"    ,  25);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece2"    ,  25);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece3"    ,  25);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece1"    ,  25);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece2"    ,  25);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece3"    ,  25);  
 }
 
 function void GrantLoot(str classname, int minval, int maxval, int tableid, str itemdesc)

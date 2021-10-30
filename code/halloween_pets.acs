@@ -96,7 +96,7 @@ script ACS_PLYR_PETLOOP (void)
 		{
 			// Update the position.                   
 			SetActorPosition(PET_TIDBASE+player, oldX, oldY, oldZ + (PetSpawnHeight[curPet] << 16), 0);
-			Print(d:PetSpawnHeight[curPet] << 16);
+			//Print(d:PetSpawnHeight[curPet] << 16);
 	
 			// Update actor angle.
 			vang = VectorAngle (GetActorX (PET_TIDBASE+player) - GetActorX (PlayerTag(player)), GetActorY (PET_TIDBASE+player) - GetActorY (PlayerTag(player)));

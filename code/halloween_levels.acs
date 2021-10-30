@@ -64,7 +64,7 @@ function void GrantPlayerLevel(int player, int level)
 	{
     
         ProvideInventoryCustom(player, "Armor", 50);
-		ProvideInventoryCustom(player, "Shotgun", 1);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
 		ProvideInventoryCustom(player, "Shell", 20);
 		ProvideInventoryCustom(player, "Mace", 1);
 	}
@@ -72,10 +72,10 @@ function void GrantPlayerLevel(int player, int level)
 	{
         //ProvideInventoryCustom(player, "Health", 100);
         ProvideInventoryCustom(player, "Armor", 75);
-		ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Chaingun", 1);
 		ProvideInventoryCustom(player, "Shell", 25);
-		//ProvideInventoryCustom(player, "Mace", 1);
-		ProvideInventoryCustom(player, "PhoenixRodAmmo", 5);
+		ProvideInventoryCustom(player, "Clip", 25);
+		//ProvideInventoryCustom(player, "PhoenixRodAmmo", 5);
 		ProvideInventoryCustom(player, "CWeapStaff", 1);
 	}
 	if (level >= 6)
@@ -84,22 +84,92 @@ function void GrantPlayerLevel(int player, int level)
         ProvideInventoryCustom(player, "Armor", 75);
 		//ProvideInventoryCustom(player, "Shotgun", 1);
 		ProvideInventoryCustom(player, "Shell", 30);
+		ProvideInventoryCustom(player, "Clip", 50);
 		//ProvideInventoryCustom(player, "Mace", 1);
-		ProvideInventoryCustom(player, "PhoenixRodAmmo", 10);
-		ProvideInventoryCustom(player, "CWeapStaff", 1);
+		//ProvideInventoryCustom(player, "PhoenixRodAmmo", 10);
+		//ProvideInventoryCustom(player, "CWeapStaff", 1);
+        ProvideInventoryCustom(player, "Chaingun", 1);
 		//ProvideInventoryCustom(player, "CWeapFlame", 1);
 	}
 	if (level >= 7)
 	{
         ProvideInventoryCustom(player, "Health", 125);
         ProvideInventoryCustom(player, "Armor", 75);
-		ProvideInventoryCustom(player, "Shotgun", 1);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
 		ProvideInventoryCustom(player, "Shell", 35);
-		ProvideInventoryCustom(player, "Mace", 1);
+		//ProvideInventoryCustom(player, "Mace", 1);
+		//ProvideInventoryCustom(player, "Clip", 50);
+		//ProvideInventoryCustom(player, "PhoenixRodAmmo", 10);
+		//ProvideInventoryCustom(player, "CWeapStaff", 1);
+		ProvideInventoryCustom(player, "CWeapStaff", 1);
+		ProvideInventoryCustom(player, "Cell", 25);
+	}
+	if (level >= 8)
+	{
+        ProvideInventoryCustom(player, "Health", 125);
+        ProvideInventoryCustom(player, "Armor", 100);
+        ProvideInventoryCustom(player, "Clip", 75);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Shell", 40);
+		//ProvideInventoryCustom(player, "Mace", 1);
 		ProvideInventoryCustom(player, "PhoenixRodAmmo", 15);
 		//ProvideInventoryCustom(player, "CWeapStaff", 1);
+		//ProvideInventoryCustom(player, "CWeapFlame", 1);
+    		ProvideInventoryCustom(player, "Cell", 50);
+	}
+	if (level >= 9)
+	{
+        //ProvideInventoryCustom(player, "Health", 125);
+        ProvideInventoryCustom(player, "Armor", 100);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Shell", 50);
+        ProvideInventoryCustom(player, "Clip", 100);
+		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "PhoenixRodAmmo", 20);
+		//ProvideInventoryCustom(player, "CWeapStaff", 1);
+		//ProvideInventoryCustom(player, "CWeapFlame", 1);
+		ProvideInventoryCustom(player, "Cell", 75);
+	}
+	if (level >= 10)
+	{
+        ProvideInventoryCustom(player, "Health", 125);
+        ProvideInventoryCustom(player, "Armor", 125);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
+		//ProvideInventoryCustom(player, "Shell", 50);
+        //ProvideInventoryCustom(player, "Clip", 100);
+		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "PhoenixRodAmmo", 25);
+		//ProvideInventoryCustom(player, "CWeapStaff", 1);
 		ProvideInventoryCustom(player, "CWeapFlame", 1);
-	}    
+		//ProvideInventoryCustom(player, "Cell", 75);
+	}
+	if (level >= 11)
+	{
+        ProvideInventoryCustom(player, "Health", 150);
+        ProvideInventoryCustom(player, "Armor", 125);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
+		//ProvideInventoryCustom(player, "Shell", 50);
+        ProvideInventoryCustom(player, "Clip", 125);
+		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "PhoenixRodAmmo", 50);
+		//ProvideInventoryCustom(player, "CWeapStaff", 1);
+		//ProvideInventoryCustom(player, "CWeapFlame", 1);
+		ProvideInventoryCustom(player, "Cell", 100);
+	}
+	if (level >= 12)
+	{
+        //ProvideInventoryCustom(player, "Health", 150);
+        ProvideInventoryCustom(player, "Armor", 125);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
+		//ProvideInventoryCustom(player, "Shell", 50);
+		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "PhoenixRodAmmo", 50);
+		//ProvideInventoryCustom(player, "CWeapStaff", 1);
+		//ProvideInventoryCustom(player, "CWeapFlame", 1);
+		ProvideInventoryCustom(player, "Cell", 125);
+		ProvideInventoryCustom(player, "Crossbow", 1);
+		ProvideInventoryCustom(player, "CrossbowAmmo", 5);
+	}          
 }
 
 // This script is invoked when a player attemps to buy a level.
@@ -108,7 +178,7 @@ script 177 (int level)
     int player = PlayerNumber();
 	int cost = m_levelcost[level];
 	
-	if (level>=8) terminate;
+	if (level>=13) terminate;
 	
 	if (GetPlayerLevel(player) == level-1)
 	{
@@ -152,7 +222,7 @@ script 178 (int level, int spot, int maxradius)
     int player = PlayerNumber();
     
     SetFont("GARGWING");
-	if (level >= 8)
+	if (level >= 13)
 	{
 		HudMessage(s:"\cfLevel ",d:level,s:"\n\n\caNot available in this version.\n" ;
 				   HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.37, 0);
@@ -199,14 +269,14 @@ script ACS_WRLD_CREATELEVELS OPEN
 	CreateLevel(  2,  200, "\cf100 health, \cd25 armor,\n\cdMace.");
 	CreateLevel(  3,  500, "\cf100 health, \cd50 armor\n\cfMace, \cdShotgun,\n\cd15 shells.");
 	CreateLevel(  4, 1000, "\cf100 health, \cf50 armor\n\cfMace, \cfShotgun,\n\cd20 shells,\n\cdThe Expeller of Ectoplasm."); //Expeller of ectoplasm
-	CreateLevel(  5, 1250, "\cf100 health, \cd75 armor\n\cfMace, \cfShotgun,\n\cd25 shells,\n\cfThe Expeller of Ectoplasm,\cd Pulse rifle.");
-	CreateLevel(  6, 1500, "\cf100 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd30 shells,\n\cfThe Expeller of Ectoplasm,\cf Pulse rifle.");
-	CreateLevel(  7, 2000, "\cf100 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd35 shells,\n\cfThe Expeller of Ectoplasm,\cf Pulse rifle,\n\cdVaporizer");
-	CreateLevel(  8,   -1, "\cfa lot of stuff!!!!");
-	CreateLevel(  9,   -1, "\cfa lot of stuff!1!1!");
-	CreateLevel( 10,   -1, "\cfa lot of stuff!11!!1!1");
-	CreateLevel( 11,   -1, "\cfa lot of stuff!11one!11!");
-	CreateLevel( 12,   -1, "\cfa lot of stuff!11!eleven!1");
+	CreateLevel(  5, 1250, "\cf100 health, \cd75 armor\n\cfMace, \cfShotgun,\n\cd25 shells,\n\cfThe Expeller of Ectoplasm,\cd Chaingun, \cd25 Clips");
+	CreateLevel(  6, 1500, "\cf100 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd30 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd50 Clips");
+	CreateLevel(  7, 2000, "\cd120 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd35 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cf50 Clips\n\cdPulse Rifle \cd25 Cells");
+	CreateLevel(  8, 2250, "\cd125 health, \cd100 armor\n\cfMace, \cfShotgun,\n\cd40 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd75 Clips\n\cfPulse Rifle\cd50 Cells");
+	CreateLevel(  9, 2500, "\cf125 health, \cf100 armor\n\cfMace, \cfShotgun,\n\cd50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd100 Clips\n\cfPulse Rifle\cd75 Cells");
+	CreateLevel( 10, 3000, "\cf125 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd100 Clips\n\cfPulse Rifle\cf75 Cells\n\cdVaporizer \cd25 Gas Canisters");
+	CreateLevel( 11, 3250, "\cd150 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd125 Clips\n\cfPulse Rifle\cf100 Cells\n\cfVaporizer \cd50 Gas Canisters");
+	CreateLevel( 12, 3500, "\cf150 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cf125 Clips\n\cfPulse Rifle\cd125 Cells\n\cfVaporizer \cf50 Gas Canisters \cdCrossbow \cd5 Arrows");
 	CreateLevel( 13,   -1, "\cfa lot of stuff!1one!1eleven!1");
 	CreateLevel( 14,   -1, "\cfa lot of stuff!!11eleven!1one!one");
 	CreateLevel( 15,   -1, "\cfa lot of stuff!1onehundredeleven!1!1!");

@@ -3,7 +3,7 @@
     === GLOBAL STRING VARIABLES ===
 */
 ////////////////////////////////////////
-#define MAX_INV_ITEM_NAMES 47
+#define MAX_INV_ITEM_NAMES 49
 
 str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "Clip",
@@ -52,7 +52,9 @@ str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "PuzzGear3",
 "PuzzGear4",
 "PuzzSkull",
-"GoldWand"
+"GoldWand",
+"Health",
+"Armor"
 };
 
 #define THING 888

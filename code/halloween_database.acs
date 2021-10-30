@@ -149,7 +149,7 @@ script ACS_DBASE_DISTRDATA (void)
 		terminate;
 
 	// In case we end up playing with multiple lives..
-	if (GetPlayerInfo(player, PLAYERINFO_DEATHS) <= 0) 
+	if (!hadFirstSpawn[player] && GetPlayerInfo(player, PLAYERINFO_DEATHS) <= 0) 
 		GiveMoney(player, Data[(DATASIZE*(place+1))-MONEYDATA]);
 		
 	m_tmplevelplayer[player] = Data[(DATASIZE*(place+1))-LEVELDATA];

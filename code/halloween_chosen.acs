@@ -509,7 +509,7 @@ script 701 ENTER
     Acs_ExecuteAlways(805, NONE);
     Acs_ExecuteAlways(806, NONE);
     Acs_ExecuteAlways(816, NONE);
-    Acs_ExecuteAlways(819, NONE);     
+    Acs_ExecuteAlways(819, NONE);
 }
 
 script 702 DEATH
@@ -620,16 +620,16 @@ Script 801 (void)
     
     If(PageCount > PAGES_MAXSPAWNS) { PageCount = PAGES_MAXSPAWNS; }
     
-    While(TotalPages != PageCount)
+    While (TotalPages != PageCount)
     {
         Rand_Spot = ZD_Rand(0, PAGES_MAXSPAWNS);
         
-		if(ThingCount(0, PAGES_TID+Rand_Spot) == 0)
+		if (ThingCount(0, PAGES_TID+Rand_Spot) == 0)
 		{
 			TotalPages++;
 			SpawnSpot("MaceAmmo", PAGES_SPAWN_TID+Rand_Spot, PAGES_TID+Rand_Spot, 0);
                 
-			If(ThingCount(0, PAGES_TID+Rand_Spot) == 0) //Make sure the page has spawned.
+			If (!ThingCount(0, PAGES_TID+Rand_Spot)) //Make sure the page has spawned.
 			{
 				Log(s:"\cr[ERROR] Cannot spawn page: ", d:Rand_Spot);
 				TotalPages--;
@@ -638,11 +638,19 @@ Script 801 (void)
 		delay(1);
     }
     
-    If(GetCvar("sv_debugmode") > 0)
+    If (GetCvar("sv_debugmode") > 0)
     {
 		delay(1);
-		Log(s:"[DEBUG] A total of ", d:ThingCount(0, PAGES_TID), s:" pages have spawned!"); 
+		Log(s:"[DEBUG] A total of ", d:ThingCountName("MaceAmmo", 0), s:" pages have spawned!"); 
 		Log(s:"[DEBUG] A total of ", d:TotalPages, s:" pages have been registered!"); 
+    }
+    
+    // [$] I have no idea what went wrong last time but looking at the code above
+    // I think I know what was going on.. But we're in a rush so this'll have to do for now.
+    If (ThingCountName("MaceAmmo", 0) != TotalPages)
+    {
+        Log(s:"[DEBUG] Thingcount: ", d:ThingCountName("MaceAmmo", 0), s:" does not match TotalPages:", d:TotalPages, s:", correcting..");
+        TotalPages = ThingCountName("MaceAmmo", 0); 
     }
     
     PagesSpawned = true;
@@ -666,17 +674,17 @@ Script 801 (void)
 	// Save current playercount.
 	Old_TotalPlayers = GetTotalPlayers();
 
-    If(GetCvar("sv_debugmode") > 0) { Log(s:"[DEBUG] A total of ", d:Old_TotalPlayers, s:" runners participating!"); }
+    If (GetCvar("sv_debugmode") > 0) { Log(s:"[DEBUG] A total of ", d:Old_TotalPlayers, s:" runners participating!"); }
 
-    While(gamestarted == true)
+    While (gamestarted == true)
     {
 		TotalPlayers = GetTotalPlayers();
     
-        for(i = 0; i < PlayerTopIndex()+1; i++)
+        for (i = 0; i < PlayerTopIndex()+1; i++)
         {
-            for(page = 0; page < PAGES_MAXSPAWNS+1; page++)
+            for (page = 0; page < PAGES_MAXSPAWNS+1; page++)
             {
-                If(PagesCollected[i][page] > 0)
+                If (PagesCollected[i][page] > 0)
 					TempCount++;
             }
             
@@ -989,7 +997,24 @@ Script 806 (void)
 
     // Take all inventory stuff.
     for (int i = 0; i < MAX_INV_ITEM_NAMES; i++)
-		TakeInventory(inv_item_names[i], 666);
+    {
+        if (inv_item_names[i] != "Armor" 
+            || inv_item_names[i] != "Health")
+        {
+            TakeInventory(inv_item_names[i], 666);
+        }
+    }
+    
+    // Make sure we have a fair start for everyone during custom gamemodes.
+    if (GetActorProperty(PlayerTag(player), APROP_Health) != 100)
+    {
+        SetActorProperty(PlayerTag(player), APROP_Health, 100);
+    }
+    if (CheckActorInventory(PlayerTag(player), "ArmorBonus") > 0)
+    {
+        int armAmount = CheckActorInventory(PlayerTag(player), "ArmorBonus");
+        TakeActorInventory(PlayerTag(player), "ArmorBonus", armAmount);
+    }
         
     delay(1);
         

@@ -116,6 +116,7 @@ global int 3:Data[];
 global int 4:InvData[];
 
 int player_exit[MAXPLAYERS];
+bool hadFirstSpawn[MAXPLAYERS];
 int total_player_exit = 0;
 int percentage = 70;
 
@@ -297,8 +298,8 @@ function void SavePlayerFullInventory(int player)
 		{
 			for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
 			{
-				if(CheckActorInventory(PlayerTag(player), inv_item_names[i]))
-					InvData[(INVENTORYDATASIZE*(slot+1))-i] = CheckActorInventory(PlayerTag(player), inv_item_names[i]);       
+				if(CheckInventoryCustom(player, inv_item_names[i]))
+					InvData[(INVENTORYDATASIZE*(slot+1))-i] = CheckInventoryCustom(player, inv_item_names[i]);       
 			}
 		}
 	}
@@ -319,7 +320,7 @@ function void RetrievePlayerFullInventory(int player)
 			for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
 			{
 				if(InvData[(INVENTORYDATASIZE*(slot+1))-i] != 0)
-					GiveActorInventory(PlayerTag(player), inv_item_names[i], InvData[(INVENTORYDATASIZE*(slot+1))-i]);       
+					ProvideInventoryCustom(PlayerTag(player), inv_item_names[i], InvData[(INVENTORYDATASIZE*(slot+1))-i]);       
 			}
 		}
 	}
@@ -339,6 +340,18 @@ function void ProvideInventoryCustom(int player, str itemclass, int needs)
 		if (itemclass == "Health") itemclass = "HealthBonus"; // another hack
 		GiveInventory(itemclass, needs-has);
 	}
+}
+
+function int CheckInventoryCustom(int player, str itemclass)
+{
+	SetActivator(PlayerTag(player));
+
+    if (itemclass == "Armor") itemclass = "ArmorBonus"; // hack
+    if (itemclass == "Health") itemclass = "HealthBonus"; // another hack
+    
+	int has = CheckInventory(itemclass);
+    return has;
+
 }
 
 ////////////////////////////////////////
