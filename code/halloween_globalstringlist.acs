@@ -3,7 +3,7 @@
     === GLOBAL STRING VARIABLES ===
 */
 ////////////////////////////////////////
-#define MAX_INV_ITEM_NAMES 45
+#define MAX_INV_ITEM_NAMES 47
 
 str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "Clip",
@@ -45,6 +45,8 @@ str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "ArtiTeleport",
 "ArtiTeleportOther",
 "PuzzGemBig",
+"PuzzBook1",
+"PuzzBook2",
 "PuzzGear1",
 "PuzzGear2",
 "PuzzGear3",

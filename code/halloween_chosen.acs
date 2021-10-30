@@ -426,7 +426,7 @@ function int GetTotalPlayers(void)
 
     for(int i = 0; i < PlayerTopIndex()+1; i++)
     {
-        If(PlayerInGame(i) == true && i != chosen_one)
+        If(PlayerAlive(i) && i != chosen_one)
 			TempPCount++;
     }
 	return TempPCount;
@@ -496,13 +496,13 @@ script 701 ENTER
 
     //Thing_ChangeTID(SELF, PlayerTag(player)); // tag the player
         
-        // Kill the player if he joins too late.
-        if(gamestarted == true && !GetCvar("sv_chosenmultiplelives"))
-        {
+    // Kill the player if he joins too late.
+    if(gamestarted == true && !GetCvar("sv_chosenmultiplelives"))
+    {
         Thing_damage(PlayerTag(player), 666, MOD_UNKNOWN);
         //Thing_ChangeTID(PlayerTag(player), NONE); // untag the corpse. 
         terminate;
-        }
+    }
 
     Delay(1); // please keep it here
     Acs_ExecuteAlways(802, NONE);
