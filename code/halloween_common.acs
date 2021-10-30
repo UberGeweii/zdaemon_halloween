@@ -1,6 +1,6 @@
 ////////////////////////////////////////
 /*
-    === GLOBAL SCRIPT DEFINING ===
+	=== GLOBAL SCRIPT DEFINING ===
 */
 ////////////////////////////////////////
 
@@ -66,7 +66,7 @@
 
 ////////////////////////////////////////
 /*
-    === DEFINITIONS ===
+	=== DEFINITIONS ===
 */
 ////////////////////////////////////////
 
@@ -90,7 +90,7 @@
 
 ////////////////////////////////////////
 /*
-    === HUDMESSAGE CHANNELS ===
+	=== HUDMESSAGE CHANNELS ===
 */
 ////////////////////////////////////////
 
@@ -98,10 +98,10 @@
 
 ////////////////////////////////////////
 /*
-    === GLOBAL VARIABLES ===
+	=== GLOBAL VARIABLES ===
 */
 ////////////////////////////////////////
-                            
+							
 #define DATASIZE 	        15
 
 global int 1:DataNames[];
@@ -117,7 +117,7 @@ global int 4:InvData[];
 
 int player_exit[MAXPLAYERS];
 int total_player_exit = 0;
-int percentage = 90;
+int percentage = 70;
 
 global int 10:gExit;
 global int 11:gSavedata;
@@ -137,7 +137,7 @@ global bool 17:stopMusicbox;
 
 ////////////////////////////////////////
 /*
-    === GLOBAL STRING VARIABLES ===
+	=== GLOBAL STRING VARIABLES ===
 */
 ////////////////////////////////////////
 
@@ -145,7 +145,7 @@ global bool 17:stopMusicbox;
 
 ////////////////////////////////////////
 /*
-    === GLOBAL INCLUDES ===
+	=== GLOBAL INCLUDES ===
 */
 ////////////////////////////////////////
 
@@ -167,7 +167,7 @@ global bool 17:stopMusicbox;
 
 ////////////////////////////////////////
 /*
-    === GLOBAL FUNCTIONS ===
+	=== GLOBAL FUNCTIONS ===
 */
 ////////////////////////////////////////
 
@@ -184,30 +184,30 @@ function bool PlayerAlive(int player)
 
 function int GetDistance (int x1, int y1, int x2, int y2)
 {
-    int len;
-    int x = x1 - x2;
-    int y = y1 - y2;
+	int len;
+	int x = x1 - x2;
+	int y = y1 - y2;
 
-    int ang = vectorangle(x,y);                    
+	int ang = vectorangle(x,y);                    
 
-    if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(y, sin(ang));
-    else len = fixeddiv(x, cos(ang));
+	if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(y, sin(ang));
+	else len = fixeddiv(x, cos(ang));
 
-    return len >> 16;
+	return len >> 16;
 }
 
 function int Distance(int object1, int object2)
 {
 	return ((abs(GetActorX(object1)-GetActorX(object2))>>16) +
-	        (abs(GetActorY(object1)-GetActorY(object2))>>16));
+			(abs(GetActorY(object1)-GetActorY(object2))>>16));
 }
 
 function bool strcomp (str str1, str str2)
 {
-    int len = strlen(str1);
-    bool match = true;
+	int len = strlen(str1);
+	bool match = true;
 	
-    int i = 0;
+	int i = 0;
 
 	while (i < len && match)
 	{
@@ -224,14 +224,14 @@ function bool strcomp (str str1, str str2)
 
 function int abs(int x)
 {
-    if (x<0) return -x;
-    return x;
+	if (x<0) return -x;
+	return x;
 }
 
 function bool IsClose(int object1, int object2, int maxradius)
 {
-    return ( abs(GetActorX(object1)-GetActorX(object2))>>16 <= maxradius &&
-             abs(GetActorY(object1)-GetActorY(object2))>>16 <= maxradius  );
+	return ( abs(GetActorX(object1)-GetActorX(object2))>>16 <= maxradius &&
+			 abs(GetActorY(object1)-GetActorY(object2))>>16 <= maxradius  );
 }
 
 // A hack that checks if a sector exists.
@@ -242,33 +242,33 @@ function bool SectorExists(int tag)
 
 function void DisplayShopTimeLeft(int time)
 {
-    log(d:time, s:" seconds until the exit is open to voting..");
-    HudMessage(s:"\cj", d:time, s:" seconds until the exit is open to voting.."; 
-    HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
+	log(d:time, s:" seconds until the exit is open to voting..");
+	HudMessage(s:"\cj", d:time, s:" seconds until the exit is open to voting.."; 
+	HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
 }
 
 function int GetVelocity (int id)
 {
-    int len;
-    int x = getactorvelx(id);
-    int y = getactorvely(id);
-    int z = getactorvelz(id);
+	int len;
+	int x = getactorvelx(id);
+	int y = getactorvely(id);
+	int z = getactorvelz(id);
 
-    int ang = vectorangle(x,y);
-   
-    if(((ang+0.125)%0.5) > 0.25) 
-        len = fixeddiv(y, sin(ang));
-    else 
-        len = fixeddiv(x, cos(ang));
+	int ang = vectorangle(x,y);
 
-    ang = vectorangle(len, z);
-    
-    if(((ang+0.125)%0.5) > 0.25) 
-        len = fixeddiv(z, sin(ang));
-    else 
-        len = fixeddiv(len, cos(ang));
+	if(((ang+0.125)%0.5) > 0.25) 
+		len = fixeddiv(y, sin(ang));
+	else 
+		len = fixeddiv(x, cos(ang));
 
-    return len;
+	ang = vectorangle(len, z);
+	
+	if(((ang+0.125)%0.5) > 0.25) 
+		len = fixeddiv(z, sin(ang));
+	else 
+		len = fixeddiv(len, cos(ang));
+
+	return len;
 }
 
 function int GetHeightDifference(int tid1, int tid2)
@@ -285,49 +285,49 @@ function int GetHeightDifference(int tid1, int tid2)
 
 function void SavePlayerFullInventory(int player)
 {
-    // Loading data
-    str msg = StrParam(n:player+1);
-    int slot = DataSlot(msg);
-    
-    if (slot != -1)
-    {
-        if(GetCvar("sv_debugmode") > 0) Log(s:"Saving inventory items for: ", n:player+1, s:"!");   
-         
-	    if(PlayerAlive(player) || PlayerInGame(player))
-        {
-            for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
-            {
-                if(CheckActorInventory(PlayerTag(player), inv_item_names[i]))
-                    InvData[(INVENTORYDATASIZE*(slot+1))-i] = CheckActorInventory(PlayerTag(player), inv_item_names[i]);       
-            }     
-        }
-    }
+	// Loading data
+	str msg = StrParam(n:player+1);
+	int slot = DataSlot(msg);
+	
+	if (slot != -1)
+	{
+		if(GetCvar("sv_debugmode") > 0) Log(s:"Saving inventory items for: ", n:player+1, s:"!");   
+		 
+		if(PlayerAlive(player) || PlayerInGame(player))
+		{
+			for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
+			{
+				if(CheckActorInventory(PlayerTag(player), inv_item_names[i]))
+					InvData[(INVENTORYDATASIZE*(slot+1))-i] = CheckActorInventory(PlayerTag(player), inv_item_names[i]);       
+			}
+		}
+	}
 }
 
 function void RetrievePlayerFullInventory(int player)
 {
-    // Loading data
-    str msg = StrParam(n:player+1);
-    int slot = DataSlot(msg);
-    
-    if (slot != -1)
-    {       
-        if(GetCvar("sv_debugmode") > 0) Log(s:"Returning inventory items for: ", n:player+1, s:"!"); 
-        
-        if(PlayerAlive(player) || PlayerInGame(player))
-        {
-            for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
-            {
-                if(InvData[(INVENTORYDATASIZE*(slot+1))-i] != 0)
-                    GiveActorInventory(PlayerTag(player), inv_item_names[i], InvData[(INVENTORYDATASIZE*(slot+1))-i]);       
-            }     
-        }
-    }
+	// Loading data
+	str msg = StrParam(n:player+1);
+	int slot = DataSlot(msg);
+	
+	if (slot != -1)
+	{       
+		if(GetCvar("sv_debugmode") > 0) Log(s:"Returning inventory items for: ", n:player+1, s:"!"); 
+		
+		if(PlayerAlive(player) || PlayerInGame(player))
+		{
+			for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
+			{
+				if(InvData[(INVENTORYDATASIZE*(slot+1))-i] != 0)
+					GiveActorInventory(PlayerTag(player), inv_item_names[i], InvData[(INVENTORYDATASIZE*(slot+1))-i]);       
+			}
+		}
+	}
 }
 
 ////////////////////////////////////////
 /*
-    === GLOBAL SCRIPTS ===
+	=== GLOBAL SCRIPTS ===
 */
 ////////////////////////////////////////
 
@@ -335,156 +335,157 @@ function void RetrievePlayerFullInventory(int player)
 
 script ACS_INTR_SHOPEXITTRIG (void)
 {
-    int player = PlayerNumber();
+	int player = PlayerNumber();
 
-    if(player_exit[player] != 1)
-    {
-        Log(n:0, s:" wants to exit the map.");
-        player_exit[player] = 1;
-        total_player_exit++;
-    }
+	if(player_exit[player] != 1)
+	{
+		Log(n:0, s:" wants to exit the map.");
+		player_exit[player] = 1;
+		total_player_exit++;
+	}
 
-    delay(1*SEC);
+	delay(1*SEC);
 } 
 
 // Exit checker
 script ACS_WRLD_EXITLOOP open
 {
-    delay(1);
-    SetFont("GARGWING");
+	delay(1);
+	SetFont("GARGWING");
 
-    // Wait for the exit to be triggered.
-    while(gExit != true)
-        delay(1);
-  
-    if (GetCVar("sv_nocountdown") != 1)
-    {
-        for (int i=5; i > 0; i--)
-        {
+	// Wait for the exit to be triggered.
+	while(gExit != true)
+		delay(1);
+
+	if (GetCVar("sv_nocountdown") != 1)
+	{
+		for (int i=5; i > 0; i--)
+		{
 			HudMessageBold(s:"\cdMap will end in: \cj", d:i, s:" ..";
 			0, CHNL_ANNOUNCE1, CR_GOLD, 0.50, 0.15, 2.0); 
-            delay(SEC); 
-        }
-    }
-    
-    // Right, now give a sign to save data.
-    if(!customGamemode)
-        gSavedata = true;
-     
-    delay(10);
-    gExit = false;
-    gSavedata = false;
-    stopMusicbox = false;
-    customGamemode = false;  
-    delay(1);
-    Exit_Normal(0);
+			delay(SEC); 
+		}
+	}
+	
+	// Right, now give a sign to save data.
+	if(!customGamemode)
+		gSavedata = true;
+	 
+	delay(10);
+	gExit = false;
+	gSavedata = false;
+	stopMusicbox = false;
+	customGamemode = false;  
+	delay(1);
+	Exit_Normal(0);
 }
 
 Script ACS_WRLD_SHOPEXITTIME open
 {
-    delay(1);
-    int shoptime = 180;
+	delay(1);
+	int shoptime = 180;
 	SetFont("GARGWING");
-                                                                                          
-    if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == SHOPMAP_NUM )
+
+	if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == SHOPMAP_NUM )
 	{
 		if(GetCvar("sv_shoptime") > SHOP_EXITVOTE_CNTDWN && GetCvar("sv_shoptime") <= SHOP_MAXTIME)
 			shoptime = GetCvar("sv_shoptime");
-	
+
 		for (int i = shoptime; i > 0; i--)
 		{
-            if(gExit)
-                break;
-        
+			if(gExit)
+				break;
+
 			HudMessageBold(s:"\cdTime left: \cj", d:i/60, s:" : ", d:(i%60)/10, d:i%10, s:" ..";
 			0, CHNL_ANNOUNCE1, CR_GOLD, 0.50, 0.15, 2.0); 
-			delay(1*SEC);   
+			delay(1*SEC);
 		}
 		delay(1);
-        gExit = true;
-        
+		gExit = true;
+		
 	}
-}              
+}
 
 script ACS_WRLD_SHOPEXITVOTE open
 {
-    delay(1);
+	delay(1);
 	SetFont("GARGWING");
 
-    if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == SHOPMAP_NUM )
-    {
-        for (int i=SHOP_EXITVOTE_CNTDWN; i > 0; i--)
-        {
-  
-            if(i == 30)
-                DisplayShopTimeLeft(i);
+	if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == SHOPMAP_NUM )
+	{
+		for (int i=SHOP_EXITVOTE_CNTDWN; i > 0; i--)
+		{
 
-            if(i == 15)
-                DisplayShopTimeLeft(i);
-            
-            if(i == 5)
-                DisplayShopTimeLeft(i);
-    
-            if(i == 1)
-            {
-                SetLineBlocking(EXIT_LINE_ID, OFF);
-                //SetLineSpecial (EXIT_LINE_ID, ACS_Execute, ACS_INTR_SHOPEXITTRIG);
-                SetLineTexture(101, SIDE_FRONT, TEXTURE_MIDDLE, "EXTAL2");
-                SetLineTexture(101, SIDE_BACK, TEXTURE_MIDDLE, "EXTAL2"); 
-                HudMessageBold(s:"\cdExit is open, you may now vote!"; 
-                HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
-                log(s:"\cdExit is open, you may now vote!");
-                AmbientSound("misc/exitopen", 127);
-            }
-        delay(SEC);
-        }
-  
-        while (gExit != true)
-        {
-            if(PlayerCount() != 0 && PlayerCount() <= 1)
-            {   
-                if(total_player_exit == PlayerCount())
-                {
-                    HudMessageBold(s:"\cdOnly one player present, exiting.."; 
-                    HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
-                    Log(s:"\cdOnly one player present, exiting..");
-                    gExit = true;
-                }
-            }
-            else if(total_player_exit >= PlayerCount() * percentage / 100)
-            {
-                HudMessageBold(s:"\cdAtleast \cj",d:percentage, s:"% \cdof the players ready!\n\cdWill now exit!"; 
-                HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
-                Log(s:"\cdAtleast \cj",d:percentage, s:"% \cdof the players ready!\n\cdWill now exit!");
-                gExit = true;
-            }
-            delay(1);
-        }
-    }
+			if(i == 30)
+				DisplayShopTimeLeft(i);
+
+			if(i == 15)
+				DisplayShopTimeLeft(i);
+
+			if(i == 5)
+				DisplayShopTimeLeft(i);
+
+			if(i == 1)
+			{
+				SetLineBlocking(EXIT_LINE_ID, OFF);
+				//SetLineSpecial (EXIT_LINE_ID, ACS_Execute, ACS_INTR_SHOPEXITTRIG);
+				SetLineTexture(101, SIDE_FRONT, TEXTURE_MIDDLE, "EXTAL2");
+				SetLineTexture(101, SIDE_BACK, TEXTURE_MIDDLE, "EXTAL2"); 
+				HudMessageBold(s:"\cdExit is open, you may now vote!"; 
+				HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
+				log(s:"\cdExit is open, you may now vote!");
+				AmbientSound("misc/exitopen", 127);
+			}
+		delay(SEC);
+		}
+
+		while (!gExit)
+		{
+			if(PlayerCount() != 0)
+			{
+				if(total_player_exit == PlayerCount())
+				{
+					HudMessageBold(s:"\cdOnly one player present, exiting.."; 
+					HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
+					Log(s:"\cdOnly one player present, exiting..");
+					gExit = true;
+				}
+				else if(PlayerCount() > 1 && total_player_exit >= PlayerCount() * percentage / 100)
+				{
+					HudMessageBold(s:"\cdAtleast \cj",d:percentage, s:"% \cdof the players ready!\n\cdWill now exit!"; 
+						HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
+
+					Log(s:"\cdAtleast \cj",d:percentage, s:"% \cdof the players ready!\n\cdWill now exit!");
+					gExit = true;
+				}
+			}
+			Delay(1);
+		}
+	}
 }
 
 script ACS_WRLD_CVARCHECKER open
 {
-    delay(1);
-    
-    //if(GetCvar("maxlives") > 0 && !GetCvar("sv_multiplelives"))
-    //    Log(s:"[WARNING] MAXLIVES IS MORE THAN 0, YOU HAVE TO SET SV_MULTIPLELIVES TO TRUE!");
-    
-    while(true)
-    {
-        if(GetCvar("sv_moneyrate") > 0 && GetCvar("sv_moneyrate") <= 100)
-            moneyrate = GetCvar("sv_moneyrate");
-            
-        if(GetCvar("sv_exitplayerpercentage") > 0 && GetCvar("sv_exitplayerpercentage") <= 90)
-            percentage = GetCvar("sv_exitplayerpercentage");
-        
-        delay(10);
-    }
+	delay(1);
+	
+	//if(GetCvar("maxlives") > 0 && !GetCvar("sv_multiplelives"))
+	//    Log(s:"[WARNING] MAXLIVES IS MORE THAN 0, YOU HAVE TO SET SV_MULTIPLELIVES TO TRUE!");
+	
+	while(true)
+	{
+		if(GetCvar("sv_moneyrate") > 0 && GetCvar("sv_moneyrate") <= 100)
+			moneyrate = GetCvar("sv_moneyrate");
+			
+		if(GetCvar("sv_exitplayerpercentage") > 0 && GetCvar("sv_exitplayerpercentage") <= 90)
+			percentage = GetCvar("sv_exitplayerpercentage");
+		
+		delay(10);
+	}
 } 
    
 ////////////////////////////////////////
 /*
-         === MUSIC PLAYER ===
+		 === MUSIC PLAYER ===
 */
 ////////////////////////////////////////
 
@@ -502,132 +503,132 @@ int randmus;
 // manual music change
 script ACS_ADMN_CHANGEMUSIC (int track)
 {
-    if ((track > 0) && (track < MAXTRACKS))
-	   {
-	   SetMusic(all_music[0], 0);
-	   Delay(35);
-	   SetMusic(all_music[track], 0);
-	   }
-    else
-	   PrintBold(s:"DJ is a noob!");
+	if ((track > 0) && (track < MAXTRACKS))
+	{
+		SetMusic(all_music[0], 0);
+		Delay(35);
+		SetMusic(all_music[track], 0);
+	}
+	else
+		PrintBold(s:"DJ is a noob!");
 }
 
 //new music each map
 script ACS_WRLD_MUSICPLAYER open
 {
-    SetMusic(all_music[0], 0);
-    Delay(2*SEC);
-    
-    if(!stopMusicbox) // Check whether we should play music.
-    {
-        randmus = ZD_rand(2, MAXTRACKS);                // Don't play MUS00
-        if (!randmus) randmus = Random(2, MAXTRACKS);   // Non ZDaemon engines
-        SetMusic(all_music[randmus - 1], 0);
-    }
+	SetMusic(all_music[0], 0);
+	Delay(2*SEC);
+	
+	if(!stopMusicbox) // Check whether we should play music.
+	{
+		randmus = ZD_rand(2, MAXTRACKS);                // Don't play MUS00
+		if (!randmus) randmus = Random(2, MAXTRACKS);   // Non ZDaemon engines
+		SetMusic(all_music[randmus - 1], 0);
+	}
 }
 
 
 //set music for entering players
 script ACS_PLYR_STARTMUSIC (void)
 {
-    Delay(3 * SEC);
-    
-    if(!stopMusicbox)
-        SetMusic(all_music[randmus - 1], 0);
+	Delay(3 * SEC);
+
+	if(!stopMusicbox)
+		SetMusic(all_music[randmus - 1], 0);
 }
 
 ////////////////////////////////////////
 /*
-    === SHOP MAP RELATED CODE ===
+	=== SHOP MAP RELATED CODE ===
 */
 ////////////////////////////////////////
 
 script 207 enter
 {
-    int player = PlayerNumber();
-    
-    if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == SHOPMAP_NUM)
-    {
-        while(gExit != true)
-        {
-            if(Distance(PlayerTag(player), 77) < 500)
-            {
-                GiveMoney(player, 10);
-                Delay(2*SEC);
-            }
-            delay(1);
-        } 
-    }
+	int player = PlayerNumber();
+	
+	if ( getlevelinfo ( LEVELINFO_LEVELNUM ) == SHOPMAP_NUM)
+	{
+		while(gExit != true)
+		{
+			if(Distance(PlayerTag(player), 77) < 500)
+			{
+				GiveMoney(player, 10);
+				Delay(2*SEC);
+			}
+			delay(1);
+		}
+	}
 }
 
 int cur_adminpet = 0;
 
 script 208 (void)
 {
-    int player = PlayerNumber();
+	int player = PlayerNumber();
 
-    // Loading data
-    str msg = StrParam(n:PlayerNumber()+1);
-    int slot = DataSlot(msg);
-    
-    int place = DataSlot(msg);
+	// Loading data
+	str msg = StrParam(n:PlayerNumber()+1);
+	int slot = DataSlot(msg);
+	
+	int place = DataSlot(msg);
 
-    // check player slot within the database.
-    if (slot != -1)
-    {
-        Data[(DATASIZE*(place+1))-PETDATA] = cur_adminpet;
-    }
+	// check player slot within the database.
+	if (slot != -1)
+	{
+		Data[(DATASIZE*(place+1))-PETDATA] = cur_adminpet;
+	}
 }
 
 script 209 (void)
 {
-    if(cur_adminpet < MAX_VARIETY_PETS-1)
-        cur_adminpet++; 
-    else
-        cur_adminpet = 0;
-        
-    print(s:"current pet: ", d:cur_adminpet, s:" - ", s:AvailablePets[cur_adminpet]);
+	if(cur_adminpet < MAX_VARIETY_PETS-1)
+		cur_adminpet++; 
+	else
+		cur_adminpet = 0;
+		
+	print(s:"current pet: ", d:cur_adminpet, s:" - ", s:AvailablePets[cur_adminpet]);
 }
 
 script 210 (int tid)
 {
 	int player = PlayerNumber();
-    int rand_amount = zd_rand(400, 800);
-    
-    SetFont("GARGWING");
-    
+	int rand_amount = zd_rand(400, 800);
+
+	SetFont("GARGWING");
+
 	GiveMoney(player, rand_amount);
 	Thing_Activate(tid);
-    
-    HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed in their \cdDiamond!\n\cjEveryone received a bit of Ectoplasm!"; 
-    HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
-    
-    for(int i = 0; i < PlayerTopIndex()+1; i++)
-    {
-        if(PlayerInGame(i) && i != player)           
-            GiveMoney(i, rand_amount/2);        
-    }
+
+	HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed in their \cdDiamond!\n\cjEveryone received a bit of Ectoplasm!"; 
+	HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
+
+	for(int i = 0; i < PlayerTopIndex()+1; i++)
+	{
+		if(PlayerInGame(i) && i != player)
+			GiveMoney(i, rand_amount/2);
+	}
 
 }
 
 script 211 (int tid)
 {
 	int player = PlayerNumber();
-    int rand_amount = zd_rand(200, 400);
-    
-    SetFont("GARGWING");
-    
+	int rand_amount = zd_rand(200, 400);
+
+	SetFont("GARGWING");
+
 	GiveMoney(player, rand_amount);
 	Thing_Activate(tid);
-    
-    HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed a \cdBook!\n\cjEveryone received a bit of Ectoplasm!"; 
-    HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
-    
-    for(int i = 0; i < PlayerTopIndex()+1; i++)
-    {
-        if(PlayerInGame(i) && i != player)           
-            GiveMoney(i, rand_amount/2);        
-    }
+
+	HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed a \cdBook!\n\cjEveryone received a bit of Ectoplasm!"; 
+	HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
+
+	for(int i = 0; i < PlayerTopIndex()+1; i++)
+	{
+		if(PlayerInGame(i) && i != player)           
+			GiveMoney(i, rand_amount/2);        
+	}
 
 }
 
@@ -638,32 +639,32 @@ script 211 (int tid)
 
 script 212 (void)
 {
-    int player = PlayerNumber();
-    
-    if(GetDiscount(player) < 100)
-        SetDiscount(player, GetDiscount(player)+1);
-    else
-        SetDiscount(player, 0);
+	int player = PlayerNumber();
+
+	if(GetDiscount(player) < 100)
+		SetDiscount(player, GetDiscount(player)+1);
+	else
+		SetDiscount(player, 0);
 }
 
 script 213 (int tid)
 {
 	int player = PlayerNumber();
-    int rand_amount = zd_rand(600, 1000);
-    
-    SetFont("GARGWING");
-    
+	int rand_amount = zd_rand(600, 1000);
+
+	SetFont("GARGWING");
+
 	GiveMoney(player, rand_amount);
 	Thing_Activate(tid);
-    
-    HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed in \cdA SKULL!\n\cjEveryone received a bit of Ectoplasm!"; 
-    HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
-    
-    for(int i = 0; i < PlayerTopIndex()+1; i++)
-    {
-        if(PlayerInGame(i) && i != player)           
-            GiveMoney(i, rand_amount/2);        
-    }
+
+	HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed in \cdA SKULL!\n\cjEveryone received a bit of Ectoplasm!"; 
+	HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
+
+	for(int i = 0; i < PlayerTopIndex()+1; i++)
+	{
+		if(PlayerInGame(i) && i != player)           
+			GiveMoney(i, rand_amount/2);        
+	}
 
 }
 
@@ -679,99 +680,99 @@ script 213 (int tid)
 script 214 (void)
 {
 	int player = PlayerNumber();
-    int rand_amount = zd_rand(5000, 10000);
-    
-    SetFont("GARGWING");
-    
-    If(!CheckInventory("PuzzGear1") &&  !CheckInventory("PuzzGear2") && !CheckInventory("PuzzGear3") && !CheckInventory("PuzzGear4"))  
-    {
-        SetActorProperty (PlayerTag(player), APROP_Speed, 0.0);
-    
-        HudMessage(s:"\cjKing: \n\cjYou know what grinds my gears?";
-        HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
-    
-        Delay(3*SEC);
-    
-        HudMessage(s:"\cjKing: \n\cjHaving all the Hexen puzzle item gears!";
-        HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
-    
-        Delay(3*SEC);
-    
-        HudMessage(s:"\cjKing: \n\cjSo you're going to get them for me & I'll reward you!";
-        HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
-    
-        SetActorProperty (PlayerTag(player), APROP_Speed, 1.0);
-    }
-    else
-    {   
-    
-        HudMessage(s:"\cjKing: \n\cjOh my lord! All the gears! *geargasm*";
-        HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
-        
-        GiveMoney(player, rand_amount);
-    
-        HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed in \cdALL THE GEARS!\n\cjEveryone received a bit of Ectoplasm!"; 
-        HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
-        AmbientSound("PuzzleSuccess", 127);
-        
-        TakeInventory("PuzzGear1", 1);
-        TakeInventory("PuzzGear2", 1);
-        TakeInventory("PuzzGear3", 1);
-        TakeInventory("PuzzGear4", 1);
-        
-        int discount = 25;
-        
-        Log(s:"Discount of ", d:discount, s:"% set for ", n:player+1);
-        SetDiscount(player, discount);
-    
-        for(int i = 0; i < PlayerTopIndex()+1; i++)
-        {
-            if(PlayerInGame(i) && i != player)           
-             GiveMoney(i, rand_amount/2);        
-        }
-    }
+	int rand_amount = zd_rand(5000, 10000);
+
+	SetFont("GARGWING");
+
+	If(!CheckInventory("PuzzGear1") &&  !CheckInventory("PuzzGear2") && !CheckInventory("PuzzGear3") && !CheckInventory("PuzzGear4"))  
+	{
+		SetActorProperty (PlayerTag(player), APROP_Speed, 0.0);
+
+		HudMessage(s:"\cjKing: \n\cjYou know what grinds my gears?";
+		HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
+
+		Delay(3*SEC);
+
+		HudMessage(s:"\cjKing: \n\cjHaving all the Hexen puzzle item gears!";
+		HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
+
+		Delay(3*SEC);
+
+		HudMessage(s:"\cjKing: \n\cjSo you're going to get them for me & I'll reward you!";
+		HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
+
+		SetActorProperty (PlayerTag(player), APROP_Speed, 1.0);
+	}
+	else
+	{
+
+		HudMessage(s:"\cjKing: \n\cjOh my lord! All the gears! *geargasm*";
+		HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
+
+		GiveMoney(player, rand_amount);
+
+		HudMessageBold(s:"\cd", n:player+1, s:"\cj just handed in \cdALL THE GEARS!\n\cjEveryone received a bit of Ectoplasm!"; 
+		HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
+		AmbientSound("PuzzleSuccess", 127);
+		
+		TakeInventory("PuzzGear1", 1);
+		TakeInventory("PuzzGear2", 1);
+		TakeInventory("PuzzGear3", 1);
+		TakeInventory("PuzzGear4", 1);
+
+		int discount = 25;
+
+		Log(s:"Discount of ", d:discount, s:"% set for ", n:player+1);
+		SetDiscount(player, discount);
+
+		for(int i = 0; i < PlayerTopIndex()+1; i++)
+		{
+			if(PlayerInGame(i) && i != player)           
+			 GiveMoney(i, rand_amount/2);        
+		}
+	}
 
 }
 
 
 script 215 (void)
-{    
-    SetFont("GARGWING");
+{
+	SetFont("GARGWING");
 
-    HudMessage(s:"\cjDark Messenger: \n\cjThe books you find, please put them in the bookcases!";
-    HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
+	HudMessage(s:"\cjDark Messenger: \n\cjThe books you find, please put them in the bookcases!";
+	HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
 }
 
 // [ADMIN CRIB CHECKER]
 
 Script 216 (int angle)
 {
-    int player = PlayerNumber();
+	int player = PlayerNumber();
 
-    // Loading data
-    str msg = StrParam(n:PlayerNumber()+1);
-    int slot = DataSlot(msg);
-    
-    int place = DataSlot(msg);
-    
-  // check player slot
-    if (slot != -1)
-    {
-        SetFont("GARGWING");
-        
-        If(Data[(DATASIZE*(slot+1))-ADMINDATA] == 1)
-        {
-            HudMessage(s:"\cdWelcome to the admin crib!";
-            HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_GOLD, 0.50, 0.40, 2.0, 0.5, 0.5);
-        }
-        else
-        {
-            //ThrustThing(angle, 32, 0, 0);
-            Thing_Move (PlayerTag(player), 16, 0);
-            HudMessage(s:"\caGo away, You are not an admin!";
-            HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_RED, 0.50, 0.40, 2.0, 0.5, 0.5);
-        }     
-    }
+	// Loading data
+	str msg = StrParam(n:PlayerNumber()+1);
+	int slot = DataSlot(msg);
+
+	int place = DataSlot(msg);
+
+	// check player slot
+	if (slot != -1)
+	{
+		SetFont("GARGWING");
+
+		If(Data[(DATASIZE*(slot+1))-ADMINDATA] == 1)
+		{
+			HudMessage(s:"\cdWelcome to the admin crib!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_GOLD, 0.50, 0.40, 2.0, 0.5, 0.5);
+		}
+		else
+		{
+			//ThrustThing(angle, 32, 0, 0);
+			Thing_Move (PlayerTag(player), 16, 0);
+			HudMessage(s:"\caGo away, You are not an admin!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_RED, 0.50, 0.40, 2.0, 0.5, 0.5);
+		}
+	}
 }
 
 int cur_player = 0;
@@ -779,45 +780,44 @@ int cur_player = 0;
 script 217 (void)
 {
 
-    if(cur_player <= PlayerTopIndex())
-        cur_player++;
-    else
-        cur_player = 0;
-        
-    print(s:"current player selected: ", n:cur_player+1);       
+	if(cur_player <= PlayerTopIndex())
+		cur_player++;
+	else
+		cur_player = 0;
+
+	print(s:"current player selected: ", n:cur_player+1);       
 
 }
 
 script 218 (int args1)
 {
-    int player = PlayerNumber();
-    
-    SetFont("GARGWING");
-    
-    if(GetCvar("sv_allowplayerpet") && args1)
-    {
-        ACS_Execute(ACS_ADMIN_PLAYERPET, 0, player, cur_player);
-        AmbientSound("misc/muhaha", 127);
-        HudMessageBold(s:"\cj", n:cur_player+1, s:" \cahas been set as ", n:player+1, s:" his pet!"; 
-        HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
-    }
-    else
-    {
-        ACS_Terminate(ACS_ADMIN_PLAYERPET, 0);
-    }
+	int player = PlayerNumber();
+
+	SetFont("GARGWING");
+
+	if(GetCvar("sv_allowplayerpet") && args1)
+	{
+		ACS_Execute(ACS_ADMIN_PLAYERPET, 0, player, cur_player);
+		AmbientSound("misc/muhaha", 127);
+		HudMessageBold(s:"\cj", n:cur_player+1, s:" \cahas been set as ", n:player+1, s:" his pet!"; 
+		HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
+	}
+	else
+	{
+		ACS_Terminate(ACS_ADMIN_PLAYERPET, 0);
+	}
 }
 
 script 219 (void)
 {
 
-   SetFont("GARGWING");
-    
-    Thing_Move (PlayerTag(cur_player), 19, 0);
-    AmbientSound("misc/muhaha", 127);
-    HudMessageBold(s:"\cj", n:cur_player+1, s:" \cahas been jailed by the admins for 60 seconds!"; 
-    HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
-    ACS_ExecuteAlways(220, 0, cur_player, 1);
+	SetFont("GARGWING");
 
+	Thing_Move (PlayerTag(cur_player), 19, 0);
+	AmbientSound("misc/muhaha", 127);
+	HudMessageBold(s:"\cj", n:cur_player+1, s:" \cahas been jailed by the admins for 60 seconds!"; 
+	HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 1.5, 0.25, 4.0, 0.2, 0.2);
+	ACS_ExecuteAlways(220, 0, cur_player, 1);
 
 }
 
@@ -827,32 +827,40 @@ script 220 (int player, int time)
 {
 int countdown = time*60;
 
-    while(countdown != 0)
-    {
-    Delay(SEC);
-    countdown--;
-    } 
-Thing_move(PlayerTag(player), 16, 1);
+	while(countdown != 0)
+	{
+		Delay(SEC);
+		countdown--;
+	} 
+	Thing_move(PlayerTag(player), 16, 1);
 }
   
 ////////////////////////////////////////
 /*
-    === DOOMX LUMP EXIT SCRIPT ===
+	=== DOOMX LUMP EXIT SCRIPT ===
 */
 ////////////////////////////////////////  
 
 script 244 (void)
 {
-    int player = PlayerNumber(); 
-    Log(n:player+1, s:" found the exit!");
-    gExit = true;
+	int player = PlayerNumber();
+	
+	if (!gExit)
+	{
+		Log(n:player+1, s:" found the exit!");
+		gExit = true;
+	}
 }
 
 script 243 (void)
 {
-    int player = PlayerNumber();
-    Log(n:player+1, s:" found the exit!");
-    gExit = true;
+	int player = PlayerNumber();
+	
+	if (!gExit)
+	{
+		Log(n:player+1, s:" found the exit!");
+		gExit = true;
+	}
 }
 
 
