@@ -47,47 +47,58 @@ function void GrantPlayerLevel(int player, int level)
 	int has, needs;
 	if (level >= 1)
 	{
-		GiveActorInventory(PlayerTag(player), "Health", 100);
+		ProvideInventoryCustom(player, "Health", 100);
 	}
 	if (level >= 2)
 	{
-        GiveActorInventory(PlayerTag(player), "Armor", 25);
-        GiveActorInventory(PlayerTag(player), "CWeapMace", 50);
+        ProvideInventoryCustom(player, "Armor", 25);
+        ProvideInventoryCustom(player, "CWeapMace", 50);
 	}
 	if (level >= 3)
 	{
-        GiveActorInventory(PlayerTag(player), "Armor", 50);
-		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
-		GiveActorInventory(PlayerTag(player), "Shell", 25);
+        ProvideInventoryCustom(player, "Armor", 50);
+		ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Shell", 15);
 	}
 	if (level >= 4)
 	{
     
-        GiveActorInventory(PlayerTag(player), "Armor", 75);
-		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
-		GiveActorInventory(PlayerTag(player), "Shell", 50);
-		GiveActorInventory(PlayerTag(player), "Mace", 1);
+        ProvideInventoryCustom(player, "Armor", 75);
+		ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Shell", 20);
+		ProvideInventoryCustom(player, "Mace", 1);
 	}
 	if (level >= 5)
 	{
-        GiveActorInventory(PlayerTag(player), "Health", 100);
-        GiveActorInventory(PlayerTag(player), "Armor", 75);
-		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
-		GiveActorInventory(PlayerTag(player), "Shell", 50);
-		GiveActorInventory(PlayerTag(player), "Mace", 1);
-		GiveActorInventory(PlayerTag(player), "PhoenixRodAmmo", 5);
-		GiveActorInventory(PlayerTag(player), "CWeapStaff", 1);
+        //ProvideInventoryCustom(player, "Health", 100);
+        ProvideInventoryCustom(player, "Armor", 75);
+		ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Shell", 25);
+		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "PhoenixRodAmmo", 5);
+		ProvideInventoryCustom(player, "CWeapStaff", 1);
 	}
 	if (level >= 6)
 	{
-        GiveActorInventory(PlayerTag(player), "Health", 100);
-        GiveActorInventory(PlayerTag(player), "Armor", 75);
-		GiveActorInventory(PlayerTag(player), "Shotgun", 1);
-		GiveActorInventory(PlayerTag(player), "Shell", 50);
-		GiveActorInventory(PlayerTag(player), "Mace", 1);
-		GiveActorInventory(PlayerTag(player), "PhoenixRodAmmo", 10);
-		GiveActorInventory(PlayerTag(player), "CWeapStaff", 1);
-		GiveActorInventory(PlayerTag(player), "CWeapFlame", 1);
+        //ProvideInventoryCustom(player, "Health", 100);
+        ProvideInventoryCustom(player, "Armor", 75);
+		//ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Shell", 30);
+		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "PhoenixRodAmmo", 10);
+		ProvideInventoryCustom(player, "CWeapStaff", 1);
+		//ProvideInventoryCustom(player, "CWeapFlame", 1);
+	}
+	if (level >= 7)
+	{
+        ProvideInventoryCustom(player, "Health", 125);
+        ProvideInventoryCustom(player, "Armor", 75);
+		ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Shell", 35);
+		ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "PhoenixRodAmmo", 15);
+		//ProvideInventoryCustom(player, "CWeapStaff", 1);
+		ProvideInventoryCustom(player, "CWeapFlame", 1);
 	}    
 }
 
@@ -97,7 +108,7 @@ script 177 (int level)
     int player = PlayerNumber();
 	int cost = m_levelcost[level];
 	
-	if (level>=7) terminate; // [ZDCITY_ALPHA]
+	if (level>=8) terminate;
 	
 	if (GetPlayerLevel(player) == level-1)
 	{
@@ -141,7 +152,7 @@ script 178 (int level, int spot, int maxradius)
     int player = PlayerNumber();
     
     SetFont("GARGWING");
-	if (level >= 7)
+	if (level >= 8)
 	{
 		HudMessage(s:"\cfLevel ",d:level,s:"\n\n\caNot available in this version.\n" ;
 				   HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.37, 0);
@@ -184,13 +195,13 @@ script 178 (int level, int spot, int maxradius)
 script ACS_WRLD_CREATELEVELS OPEN
 {
 	Delay(4);
-	CreateLevel(  1,    0, "\cd100 health");
-	CreateLevel(  2,  200, "\cf100 health, \cd25 armor,\n\cdMace");
-	CreateLevel(  3,  500, "\cf100 health, 50 armor\n\cfMace, \cdShotgun,\n\cd25 shells,");
-	CreateLevel(  4, 1000, "\cf100 health, 50 armor\n\cfMace, \cfShotgun,\n\cd50 shells,\n\cdThe Expeller of Ectoplasm,"); //Expeller of ectoplasm
-	CreateLevel(  5, 1250, "\cf125 health, 75 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cd Pulse rifle,");
-	CreateLevel(  6, 1500, "\cf125 health, 75 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Pulse rifle,\n\cdVaporizer");
-	CreateLevel(  7,   -1, "\cfa lot of stuff!!!");
+	CreateLevel(  1,    0, "\cd100 health.");
+	CreateLevel(  2,  200, "\cf100 health, \cd25 armor,\n\cdMace.");
+	CreateLevel(  3,  500, "\cf100 health, \cd50 armor\n\cfMace, \cdShotgun,\n\cd15 shells.");
+	CreateLevel(  4, 1000, "\cf100 health, \cf50 armor\n\cfMace, \cfShotgun,\n\cd20 shells,\n\cdThe Expeller of Ectoplasm."); //Expeller of ectoplasm
+	CreateLevel(  5, 1250, "\cf100 health, \cd75 armor\n\cfMace, \cfShotgun,\n\cd25 shells,\n\cfThe Expeller of Ectoplasm,\cd Pulse rifle.");
+	CreateLevel(  6, 1500, "\cf100 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd30 shells,\n\cfThe Expeller of Ectoplasm,\cf Pulse rifle.");
+	CreateLevel(  7, 2000, "\cf100 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd35 shells,\n\cfThe Expeller of Ectoplasm,\cf Pulse rifle,\n\cdVaporizer");
 	CreateLevel(  8,   -1, "\cfa lot of stuff!!!!");
 	CreateLevel(  9,   -1, "\cfa lot of stuff!1!1!");
 	CreateLevel( 10,   -1, "\cfa lot of stuff!11!!1!1");

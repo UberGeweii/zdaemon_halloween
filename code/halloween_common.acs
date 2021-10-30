@@ -325,6 +325,22 @@ function void RetrievePlayerFullInventory(int player)
 	}
 }
 
+// This function makes sure that you have at least a certain
+// number of inventory items. Say, if a player has 10 shells and
+// you 'provide' them 40 shells they will receive 30 shells.
+// If they already have at least 40, nothing is given.
+function void ProvideInventoryCustom(int player, str itemclass, int needs)
+{
+	SetActivator(PlayerTag(player));
+	int has = CheckInventory(itemclass);
+	if (has < needs)
+	{
+		if (itemclass == "Armor") itemclass = "ArmorBonus"; // hack
+		if (itemclass == "Health") itemclass = "HealthBonus"; // another hack
+		GiveInventory(itemclass, needs-has);
+	}
+}
+
 ////////////////////////////////////////
 /*
 	=== GLOBAL SCRIPTS ===
