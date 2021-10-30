@@ -181,7 +181,7 @@ script ACS_PLYR_CBOWAMMO (void)
     
     old_ammo = CheckInventory("CrossbowAmmo");
 
-    while (!PlayerAlive(player))
+    while (PlayerAlive(player))
     {
         if (CheckInventory("CrossbowAmmo") > old_ammo) // take ammo
         {

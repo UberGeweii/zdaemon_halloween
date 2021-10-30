@@ -1,90 +1,90 @@
 ////////////////////////////////////////
 /*
-    === DATABASE RELATED FUNCTIONS ===
+	=== DATABASE RELATED FUNCTIONS ===
 */
 ////////////////////////////////////////
 
 function int DataSlot (str msg)
 {
-    int i = 0;
-    int match;
-    int length = StrLen(msg);
-    bool isIn = false;
+	int i = 0;
+	int match;
+	int length = StrLen(msg);
+	bool isIn = false;
 	
 	while (i < DataIndex && !isIn)
-  	{
-        str compname = "";
+	{
+		str compname = "";
 	
-        for (int j = 0; j < length; j++)
-            compname = StrParam(s:compname, c:DataNames[j + (i*DATASIZE)]);
+		for (int j = 0; j < length; j++)
+			compname = StrParam(s:compname, c:DataNames[j + (i*DATASIZE)]);
 
-        isIn = strcomp(msg, compname);
+		isIn = strcomp(msg, compname);
 		
 		i++;
 	}
 	
 	if (isIn)
 	   match = i-1;
-    else
-        match = -1;
-  	
+	else
+		match = -1;
+	
 	return match;
 }
 
 // Returns player level.
 function int GetPlayerLevelDatabase(int player)
 {
-    str msg = StrParam(n:player+1);
-    int length = StrLen(msg);
-    int level;
-	
-    // Is there an account present for this player?
-    int place = DataSlot(msg);
+	str msg = StrParam(n:player+1);
+	int length = StrLen(msg);
+	int level;
+
+	// Is there an account present for this player?
+	int place = DataSlot(msg);
 	
 	if (place == -1)
-    {
-        Log(s:"[ERROR] GetPlayerLevelDatabase: Data entry for player ", d:player, s:" : ", n:player+1, s:" does not exist!");
-        level = -1;
-    }
-    else
-        level = Data[(DATASIZE*(place+1))-LEVELDATA];
+	{
+		Log(s:"[ERROR] GetPlayerLevelDatabase: Data entry for player ", d:player, s:" : ", n:player+1, s:" does not exist!");
+		level = -1;
+	}
+	else
+		level = Data[(DATASIZE*(place+1))-LEVELDATA];
 
-    return level;
+	return level;
 }
 
 // Set player level.
 function void SetPlayerLevelDatabase(int player, int level)
 {
-    str msg = StrParam(n:player+1);
-    int length = StrLen(msg);
-	
-    // Is there an account present for this player?
-    int place = DataSlot(msg);
-	
+	str msg = StrParam(n:player+1);
+	int length = StrLen(msg);
+
+	// Is there an account present for this player?
+	int place = DataSlot(msg);
+
 	if (place == -1)
-    {
-        Log(s:"[ERROR] SetPlayerLevelDatabase: Data entry for player ", d:player, s:" : ", n:player+1, s:" does not exist!");
-    }
-    else
-    {
-        Data[(DATASIZE*(place+1))-LEVELDATA] = level;
-    }
+	{
+		Log(s:"[ERROR] SetPlayerLevelDatabase: Data entry for player ", d:player, s:" : ", n:player+1, s:" does not exist!");
+	}
+	else
+	{
+		Data[(DATASIZE*(place+1))-LEVELDATA] = level;
+	}
 }
 
 ////////////////////////////////////////
 /*
-    === DATABASE RELATED SCRIPTS ===
+	=== DATABASE RELATED SCRIPTS ===
 */
 ////////////////////////////////////////
 
 script ACS_DBASE_ENTER (void)
 {
-    int player = PlayerNumber();
-    str msg = StrParam(n:PlayerNumber()+1);
-    int length = StrLen(msg);
+	int player = PlayerNumber();
+	str msg = StrParam(n:PlayerNumber()+1);
+	int length = StrLen(msg);
 	
-    // Is there an account present for this player?
-    int place = DataSlot(msg);
+	// Is there an account present for this player?
+	int place = DataSlot(msg);
 	
 	if (place == -1)
 	{
@@ -94,61 +94,64 @@ script ACS_DBASE_ENTER (void)
 		// Write the name to the database.
 		for (int i = 0; i < length; i++)
 			DataNames[i + (DATASIZE*DataIndex)] = GetChar(msg, i);
-            
+			
 		Log(s:"DataIndex created: ",d:DataIndex,s:" - ",n:DataNames[DATASIZE*DataIndex]);
 		DataIndex++;
 	}
-    else
-    {
-        //Log(s:"DataIndex for ",n:DataNames[DATASIZE*place], s:" already exists!");
-        ACS_ExecuteAlways(ACS_DBASE_DISTRDATA, 0);
-    }
-    // Run the script that logs the data on succesful map endings.
-    ACS_ExecuteAlways(ACS_DBASE_LOGDATA, 0);
+	else
+	{
+		//Log(s:"DataIndex for ",n:DataNames[DATASIZE*place], s:" already exists!");
+		ACS_ExecuteAlways(ACS_DBASE_DISTRDATA, 0);
+	}
+	// Run the script that logs the data on succesful map endings.
+	ACS_ExecuteAlways(ACS_DBASE_LOGDATA, 0);
 }
 
 // Script to log the data, triggered upon succesful map exit.
 
 script ACS_DBASE_LOGDATA (void)
 {
-    int player = playernumber();
-    int tmp_money;
-    str msg = StrParam(n:PlayerNumber()+1);
+	int player = playernumber();
+	int tmp_money;
+	str msg = StrParam(n:PlayerNumber()+1);
 
-    int place = DataSlot(msg);
+	int place = DataSlot(msg);
 
-    while(!gSavedata)
-        delay(1);
+	while(!gSavedata)
+		delay(1);
+
+	// check player place
+	if (place != -1 && PlayerAlive(player))
+	{
+		// Save the player's current money.  
+		tmp_money = GetMoney(player);
   
-    // check player place
-    if (place != -1 && PlayerAlive(player))
-    {
-        // Save the player's current money.  
-        tmp_money = GetMoney(player);
-  
-        int tmp_place = place+1;
+		int tmp_place = place+1;
 
-        // Time to update the database.
-        Data[(DATASIZE*(place+1))-MONEYDATA] = tmp_money;
-        Data[(DATASIZE*(place+1))-LEVELDATA] = m_tmplevelplayer[player];
-    }
+		// Time to update the database.
+		Data[(DATASIZE*(place+1))-MONEYDATA] = tmp_money;
+		Data[(DATASIZE*(place+1))-LEVELDATA] = m_tmplevelplayer[player];
+	}
 }
 
 // Script to distribute saved data to the player.
 
 script ACS_DBASE_DISTRDATA (void)
 {
-    int player = playernumber();
-    int tmp_money;
-    str msg = StrParam(n:PlayerNumber()+1);
+	int player = playernumber();
+	int tmp_money;
+	str msg = StrParam(n:PlayerNumber()+1);
 
-    // check player place
-    int place = DataSlot(msg);
+	// check player place
+	int place = DataSlot(msg);
   
-    if (place == -1)
-        terminate;
+	if (place == -1)
+		terminate;
 
-    GiveMoney(player, Data[(DATASIZE*(place+1))-MONEYDATA]);
-    m_tmplevelplayer[player] = Data[(DATASIZE*(place+1))-LEVELDATA];
+	// In case we end up playing with multiple lives..
+	if (GetPlayerInfo(player, PLAYERINFO_DEATHS) <= 0) 
+		GiveMoney(player, Data[(DATASIZE*(place+1))-MONEYDATA]);
+		
+	m_tmplevelplayer[player] = Data[(DATASIZE*(place+1))-LEVELDATA];
 }
 
