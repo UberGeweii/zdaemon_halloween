@@ -1,26 +1,26 @@
 
 Script 900 (int player, int amount)
 {
-    GiveMoney(player, amount);
+	GiveMoney(player, amount);
 }
 
 script 901 (int player, int pet)
 {
-    // Loading data
-    str msg = StrParam(n:player+1);
-    int slot = DataSlot(msg);
+	// Loading data
+	str msg = StrParam(n:player+1);
+	int slot = DataSlot(msg);
 
-  // check player slot within the database.
-    if (slot != -1)
-    {
-        Data[(DATASIZE*(slot+1))-PETDATA] = pet;
-    }
+	// check player slot within the database.
+	if (slot != -1)
+	{
+		Data[(DATASIZE*(slot+1))-PETDATA] = pet;
+	}
 }
 
 script 902 (int player, int discount)
 {
-    Log(s:"Discount of ", d:discount, s:"% set for ", n:player+1);
-    SetDiscount(player, discount);
+	Log(s:"Discount of ", d:discount, s:"% set for ", n:player+1);
+	SetDiscount(player, discount);
 }
 
 #define MAXSOUNDS 5
@@ -32,85 +32,85 @@ str funsound[MAXSOUNDS] = {
 
 
 script 903 (int snd)
-{ 
-    AmbientSound(funsound[snd], 127);
+{
+	AmbientSound(funsound[snd], 127);
 }
 
 script ACS_ADMIN_PLAYERPET (int player, int targetPlayer)
 {
-    int oldX, oldY, oldZ;
-    int dist, vang;
+	int oldX, oldY, oldZ;
+	int dist, vang;
 
-    int followspd;
+	int followspd;
 
-    oldX = GetActorX(PlayerTag(player));
-    oldY = GetActorY(PlayerTag(player));
-    oldZ = GetActorZ(PlayerTag(player)); 
-    
-    Log(n:targetPlayer+1, s:" is now following: ", n:player+1);   
-       
-        While(PlayerInGame(targetPlayer) && PlayerInGame(player) && GetCvar("sv_allowplayerpet"))
-        {
-            dist = GetDistance(GetActorX(PlayerTag(player)), GetActorY(PlayerTag(player)), oldX, oldY);
-            followspd = ((GetVelocity(PlayerTag(player)) >> 16) * 8 / 10) << 16;
-            if(followspd < 7.0) followspd = 7.0;
-            
+	oldX = GetActorX(PlayerTag(player));
+	oldY = GetActorY(PlayerTag(player));
+	oldZ = GetActorZ(PlayerTag(player)); 
+	
+	Log(n:targetPlayer+1, s:" is now following: ", n:player+1);   
+	   
+		While(PlayerInGame(targetPlayer) && PlayerInGame(player) && GetCvar("sv_allowplayerpet"))
+		{
+			dist = GetDistance(GetActorX(PlayerTag(player)), GetActorY(PlayerTag(player)), oldX, oldY);
+			followspd = ((GetVelocity(PlayerTag(player)) >> 16) * 8 / 10) << 16;
+			if(followspd < 7.0) followspd = 7.0;
+			
 
-            if (dist > 500)
-            {
-                oldX = GetActorX(PlayerTag(player));
-                oldY = GetActorY(PlayerTag(player));
-                oldZ = GetActorZ(PlayerTag(player));
-            }
-                
-            
-            // The player moved, update pet position.
-            if (dist > 60 && ThingCount(0, PlayerTag(targetPlayer)))
-            {  
-                // Update the position.                   
-                SetActorPosition(PlayerTag(targetPlayer), oldX, oldY, oldZ, 0);
-    
-                // Update actor angle.
-                vang = VectorAngle (GetActorX (PlayerTag(targetPlayer)) - GetActorX (PlayerTag(player)), GetActorY (PlayerTag(targetPlayer)) - GetActorY (PlayerTag(player)));
-                SetActorAngle (PlayerTag(targetPlayer), vang -0.50);
+			if (dist > 500)
+			{
+				oldX = GetActorX(PlayerTag(player));
+				oldY = GetActorY(PlayerTag(player));
+				oldZ = GetActorZ(PlayerTag(player));
+			}
+				
+			
+			// The player moved, update pet position.
+			if (dist > 60 && ThingCount(0, PlayerTag(targetPlayer)))
+			{  
+				// Update the position.                   
+				SetActorPosition(PlayerTag(targetPlayer), oldX, oldY, oldZ, 0);
+	
+				// Update actor angle.
+				vang = VectorAngle (GetActorX (PlayerTag(targetPlayer)) - GetActorX (PlayerTag(player)), GetActorY (PlayerTag(targetPlayer)) - GetActorY (PlayerTag(player)));
+				SetActorAngle (PlayerTag(targetPlayer), vang -0.50);
 
-        
-                if (GetActorX(PlayerTag(player)) > oldX) oldX += followspd;
-                if (GetActorX(PlayerTag(player)) < oldX) oldX -= followspd;
-        
-                if (GetActorY(PlayerTag(player)) > oldY) oldY += followspd;
-                if (GetActorY(PlayerTag(player)) < oldY) oldY -= followspd;
-            }
-            
-            // Update height outside of the distance check.
-            if (GetActorZ(PlayerTag(player)) > oldZ) oldZ = GetActorZ(PlayerTag(player));
-            if (GetActorZ(PlayerTag(player)) < oldZ) oldZ -= followspd;       
-                
-            Delay(1);
-        }
+
+				if (GetActorX(PlayerTag(player)) > oldX) oldX += followspd;
+				if (GetActorX(PlayerTag(player)) < oldX) oldX -= followspd;
+		
+				if (GetActorY(PlayerTag(player)) > oldY) oldY += followspd;
+				if (GetActorY(PlayerTag(player)) < oldY) oldY -= followspd;
+			}
+
+			// Update height outside of the distance check.
+			if (GetActorZ(PlayerTag(player)) > oldZ) oldZ = GetActorZ(PlayerTag(player));
+			if (GetActorZ(PlayerTag(player)) < oldZ) oldZ -= followspd;       
+				
+			Delay(1);
+		}
 }
 
 // Give Admin status
 
 script 905 (int player, int val)
 {
-    str msg = StrParam(n:player+1);
+	str msg = StrParam(n:player+1);
 
-    int slot = DataSlot(msg);
-  
-  // check player slot
-    if (slot != -1)
-    {
-        Data[(DATASIZE*(slot+1))-ADMINDATA] = val;
-        //Thing_Damage (PlayerTag(player), 999, MOD_LAVA);
-            if(val > 0)
-                Log(s:"\cj", n:player+1, s:"\cd is now on admin duty!");
-    }
+	int slot = DataSlot(msg);
+
+	// check player slot
+	if (slot != -1)
+	{
+		Data[(DATASIZE*(slot+1))-ADMINDATA] = val;
+		//Thing_Damage (PlayerTag(player), 999, MOD_LAVA);
+			if(val > 0)
+				Log(s:"\cj", n:player+1, s:"\cd is now on admin duty!");
+	}
 }
 
 script 906 (int player, int item, int amount)
 {
-    GiveActorInventory(PlayerTag(player), inv_item_names[item], amount);
+	GiveActorInventory(PlayerTag(player), inv_item_names[item], amount);
 }
 
 script 907 (int type)
@@ -130,7 +130,7 @@ script 907 (int type)
 	for(int k = 0; k < DataIndex ; k++)
 	{ 
 		msg = "";
-    
+	
 		for (int j = 0; j < DATASIZE ; j++)
 			msg = StrParam(s:msg, c:DataNames[j + (k*DATASIZE)]);
 	
@@ -141,26 +141,26 @@ script 907 (int type)
 
 script 908 (int arg1)
 {
-    Print(c:DataNames[arg1*DATASIZE]);
+	Print(c:DataNames[arg1*DATASIZE]);
 }
 
 script 909 (int player, int i)
 {
-    int match;
+	int match;
 	str msg = StrParam(n:player+1);
 	int length = StrLen(msg);
 	bool isIn = false;
-  
-  			str compname = "";
-			for (int j = 0; j < length; j++)
-      {
-				compname = StrParam(s:compname, c:DataNames[j + (i*DATASIZE)]);
-        print(c:DataNames[j + (i*DATASIZE)]);
-      }
-      
-      print(s:compname);
-      
-      isIn = strcomp(msg, compname);
+
+	str compname = "";
+	for (int j = 0; j < length; j++)
+	{
+		compname = StrParam(s:compname, c:DataNames[j + (i*DATASIZE)]);
+		print(c:DataNames[j + (i*DATASIZE)]);
+	}
+
+	print(s:compname);
+		
+	isIn = strcomp(msg, compname);
 }
 
 // Move floor to help players.
@@ -169,10 +169,10 @@ script 909 (int player, int i)
 // Syntax: pukename FloorLower <tag> <value>
 script "MoveFloor" (int tag, int value)
 {
-if (value < 0)
-	Floor_LowerByValue(tag, 8, value * -1);
+	if (value < 0)
+		Floor_LowerByValue(tag, 8, value * -1);
 	else
-	Floor_RaiseByValue(tag, 8, value);
+		Floor_RaiseByValue(tag, 8, value);
 }
 
 
@@ -182,13 +182,13 @@ if (value < 0)
 // Syntax: pukename MoveCeiling <tag> <value>
 script "MoveCeiling" (int tag, int value)
 {
-if (value < 0)
-	Ceiling_LowerByValue(tag, 8, value * -1);
+	if (value < 0)
+		Ceiling_LowerByValue(tag, 8, value * -1);
 	else
-	Ceiling_RaiseByValue(tag, 8, value);
+		Ceiling_RaiseByValue(tag, 8, value);
 }
 
 script 910 (int thang, int tid, int newtid)
 {
-    SpawnSpot(THINGLST[thang], tid, newtid, 0);
+	SpawnSpot(THINGLST[thang], tid, newtid, 0);
 }

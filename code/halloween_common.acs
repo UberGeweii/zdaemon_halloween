@@ -543,6 +543,7 @@ script ACS_PLYR_STARTMUSIC (void)
 */
 ////////////////////////////////////////
 
+// Ectoplasm fountain
 script 207 enter
 {
 	int player = PlayerNumber();
@@ -556,7 +557,7 @@ script 207 enter
 				GiveMoney(player, 10);
 				Delay(2*SEC);
 			}
-			delay(1);
+			Delay(1);
 		}
 	}
 }
