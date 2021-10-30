@@ -63,7 +63,7 @@ function void GrantPlayerLevel(int player, int level)
 	if (level >= 4)
 	{
     
-        ProvideInventoryCustom(player, "Armor", 75);
+        ProvideInventoryCustom(player, "Armor", 50);
 		ProvideInventoryCustom(player, "Shotgun", 1);
 		ProvideInventoryCustom(player, "Shell", 20);
 		ProvideInventoryCustom(player, "Mace", 1);
