@@ -168,7 +168,7 @@ function void GrantPlayerLevel(int player, int level)
 		//ProvideInventoryCustom(player, "CWeapFlame", 1);
 		ProvideInventoryCustom(player, "Cell", 125);
 		ProvideInventoryCustom(player, "Crossbow", 1);
-		ProvideInventoryCustom(player, "CrossbowAmmo", 5);
+		ProvideInventoryCustom(player, "CrossbowAmmo", 12);
 	}          
 }
 
@@ -271,12 +271,12 @@ script ACS_WRLD_CREATELEVELS OPEN
 	CreateLevel(  4, 1000, "\cf100 health, \cf50 armor\n\cfMace, \cfShotgun,\n\cd20 shells,\n\cdThe Expeller of Ectoplasm."); //Expeller of ectoplasm
 	CreateLevel(  5, 1250, "\cf100 health, \cd75 armor\n\cfMace, \cfShotgun,\n\cd25 shells,\n\cfThe Expeller of Ectoplasm,\cd Chaingun, \cd25 Clips");
 	CreateLevel(  6, 1500, "\cf100 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd30 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd50 Clips");
-	CreateLevel(  7, 2000, "\cd120 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd35 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cf50 Clips\n\cdPulse Rifle \cd25 Cells");
-	CreateLevel(  8, 2250, "\cd125 health, \cd100 armor\n\cfMace, \cfShotgun,\n\cd40 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd75 Clips\n\cfPulse Rifle\cd50 Cells");
-	CreateLevel(  9, 2500, "\cf125 health, \cf100 armor\n\cfMace, \cfShotgun,\n\cd50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd100 Clips\n\cfPulse Rifle\cd75 Cells");
-	CreateLevel( 10, 3000, "\cf125 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd100 Clips\n\cfPulse Rifle\cf75 Cells\n\cdVaporizer \cd25 Gas Canisters");
-	CreateLevel( 11, 3250, "\cd150 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd125 Clips\n\cfPulse Rifle\cf100 Cells\n\cfVaporizer \cd50 Gas Canisters");
-	CreateLevel( 12, 3500, "\cf150 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cf125 Clips\n\cfPulse Rifle\cd125 Cells\n\cfVaporizer \cf50 Gas Canisters \cdCrossbow \cd5 Arrows");
+	CreateLevel(  7, 2000, "\cd120 health, \cf75 armor\n\cfMace, \cfShotgun,\n\cd35 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cf50 Clips,\n\cd Pulse Rifle, \cd 25 Cells,");
+	CreateLevel(  8, 2250, "\cd125 health, \cd100 armor\n\cfMace, \cfShotgun,\n\cd40 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd75 Clips,\n\cf Pulse Rifle,\cd 50 Cells,");
+	CreateLevel(  9, 2500, "\cf125 health, \cf100 armor\n\cfMace, \cfShotgun,\n\cd50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd100 Clips,\n\cf Pulse Rifle,\cd 75 Cells,");
+	CreateLevel( 10, 3000, "\cf125 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd100 Clips,\n\cf Pulse Rifle,\cf 75 Cells,\n\cd Vaporizer \cd 25 Gas Canisters");
+	CreateLevel( 11, 3250, "\cd150 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cd125 Clips,\n\cf Pulse Rifle,\cf 100 Cells,\n\cf Vaporizer \cd 50 Gas Canisters");
+	CreateLevel( 12, 3500, "\cf150 health, \cf125 armor\n\cfMace, \cfShotgun,\n\cf50 shells,\n\cfThe Expeller of Ectoplasm,\cf Chaingun, \cf125 Clips,\n\cf Pulse Rifle,\cd 125 Cells,\n\cf Vaporizer \cf 50 Gas Canisters \cd Crossbow \cd 5 Arrows");
 	CreateLevel( 13,   -1, "\cfa lot of stuff!1one!1eleven!1");
 	CreateLevel( 14,   -1, "\cfa lot of stuff!!11eleven!1one!one");
 	CreateLevel( 15,   -1, "\cfa lot of stuff!1onehundredeleven!1!1!");

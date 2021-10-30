@@ -116,7 +116,7 @@ global int 3:Data[];
 global int 4:InvData[];
 
 int player_exit[MAXPLAYERS];
-bool hadFirstSpawn[MAXPLAYERS];
+//bool hadFirstSpawn[MAXPLAYERS];
 int total_player_exit = 0;
 int percentage = 70;
 
