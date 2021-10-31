@@ -1,0 +1,3 @@
+- Make sure there are no race conditions when it comes to fetching/retrieving the player inventory, data, etc.
+- Make sure the battery HUD message doesn't conflict with the pet system HUD messages.
+- Proper formatting for the ACS files.

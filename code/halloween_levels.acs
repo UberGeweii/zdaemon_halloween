@@ -16,21 +16,21 @@ function void CreateLevel(int level, int cost, str desc)
 // Returns player level.
 function int GetPlayerLevel(int player)
 {
-    return m_tmplevelplayer[player];
+	return m_tmplevelplayer[player];
 	//return GetData(GetDBID(player), DB_LEVEL);
 }
 
 // Sets player level and updates the HUD.
 function void SetPlayerLevel(int player, int level)
 {
-    m_tmplevelplayer[player] = level;
-    
+	m_tmplevelplayer[player] = level;
+	
 	if (PlayerInGame(player))
 	{
 		SetActivator(PlayerTag(player));
-        SetFont("GARGWING");
-        HudMessage (s:"\cdLevel: \cd", d:GetPlayerLevel(player);
-                    HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);
+		SetFont("GARGWING");
+		HudMessage (s:"\cdLevel: \cd", d:GetPlayerLevel(player);
+					HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);
 	}
 }
 
@@ -51,121 +51,81 @@ function void GrantPlayerLevel(int player, int level)
 	}
 	if (level >= 2)
 	{
-        ProvideInventoryCustom(player, "Armor", 25);
-        ProvideInventoryCustom(player, "CWeapMace", 50);
+		ProvideInventoryCustom(player, "Armor", 25);
+		ProvideInventoryCustom(player, "CWeapMace", 50);
 	}
 	if (level >= 3)
 	{
-        ProvideInventoryCustom(player, "Armor", 50);
+		ProvideInventoryCustom(player, "Armor", 50);
 		ProvideInventoryCustom(player, "Shotgun", 1);
 		ProvideInventoryCustom(player, "Shell", 15);
 	}
 	if (level >= 4)
 	{
-    
-        ProvideInventoryCustom(player, "Armor", 50);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
+	
+		ProvideInventoryCustom(player, "Armor", 50);
 		ProvideInventoryCustom(player, "Shell", 20);
 		ProvideInventoryCustom(player, "Mace", 1);
 	}
 	if (level >= 5)
 	{
-        //ProvideInventoryCustom(player, "Health", 100);
-        ProvideInventoryCustom(player, "Armor", 75);
+		ProvideInventoryCustom(player, "Armor", 75);
 		ProvideInventoryCustom(player, "Chaingun", 1);
 		ProvideInventoryCustom(player, "Shell", 25);
 		ProvideInventoryCustom(player, "Clip", 25);
-		//ProvideInventoryCustom(player, "PhoenixRodAmmo", 5);
 		ProvideInventoryCustom(player, "CWeapStaff", 1);
 	}
 	if (level >= 6)
 	{
-        //ProvideInventoryCustom(player, "Health", 100);
-        ProvideInventoryCustom(player, "Armor", 75);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Armor", 75);
 		ProvideInventoryCustom(player, "Shell", 30);
 		ProvideInventoryCustom(player, "Clip", 50);
-		//ProvideInventoryCustom(player, "Mace", 1);
-		//ProvideInventoryCustom(player, "PhoenixRodAmmo", 10);
-		//ProvideInventoryCustom(player, "CWeapStaff", 1);
-        ProvideInventoryCustom(player, "Chaingun", 1);
-		//ProvideInventoryCustom(player, "CWeapFlame", 1);
+		ProvideInventoryCustom(player, "Chaingun", 1);
 	}
 	if (level >= 7)
 	{
-        ProvideInventoryCustom(player, "Health", 125);
-        ProvideInventoryCustom(player, "Armor", 75);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Health", 125);
+		ProvideInventoryCustom(player, "Armor", 75);
 		ProvideInventoryCustom(player, "Shell", 35);
-		//ProvideInventoryCustom(player, "Mace", 1);
-		//ProvideInventoryCustom(player, "Clip", 50);
-		//ProvideInventoryCustom(player, "PhoenixRodAmmo", 10);
-		//ProvideInventoryCustom(player, "CWeapStaff", 1);
 		ProvideInventoryCustom(player, "CWeapStaff", 1);
 		ProvideInventoryCustom(player, "Cell", 25);
 	}
 	if (level >= 8)
 	{
-        ProvideInventoryCustom(player, "Health", 125);
-        ProvideInventoryCustom(player, "Armor", 100);
-        ProvideInventoryCustom(player, "Clip", 75);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Health", 125);
+		ProvideInventoryCustom(player, "Armor", 100);
+		ProvideInventoryCustom(player, "Clip", 75);
 		ProvideInventoryCustom(player, "Shell", 40);
-		//ProvideInventoryCustom(player, "Mace", 1);
 		ProvideInventoryCustom(player, "PhoenixRodAmmo", 15);
-		//ProvideInventoryCustom(player, "CWeapStaff", 1);
-		//ProvideInventoryCustom(player, "CWeapFlame", 1);
-    		ProvideInventoryCustom(player, "Cell", 50);
+		ProvideInventoryCustom(player, "Cell", 50);
 	}
 	if (level >= 9)
 	{
-        //ProvideInventoryCustom(player, "Health", 125);
-        ProvideInventoryCustom(player, "Armor", 100);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
+		ProvideInventoryCustom(player, "Armor", 100);
 		ProvideInventoryCustom(player, "Shell", 50);
-        ProvideInventoryCustom(player, "Clip", 100);
-		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "Clip", 100);
 		ProvideInventoryCustom(player, "PhoenixRodAmmo", 20);
-		//ProvideInventoryCustom(player, "CWeapStaff", 1);
-		//ProvideInventoryCustom(player, "CWeapFlame", 1);
 		ProvideInventoryCustom(player, "Cell", 75);
 	}
 	if (level >= 10)
 	{
-        ProvideInventoryCustom(player, "Health", 125);
-        ProvideInventoryCustom(player, "Armor", 125);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
-		//ProvideInventoryCustom(player, "Shell", 50);
-        //ProvideInventoryCustom(player, "Clip", 100);
-		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "Health", 125);
+		ProvideInventoryCustom(player, "Armor", 125);
 		ProvideInventoryCustom(player, "PhoenixRodAmmo", 25);
-		//ProvideInventoryCustom(player, "CWeapStaff", 1);
 		ProvideInventoryCustom(player, "CWeapFlame", 1);
-		//ProvideInventoryCustom(player, "Cell", 75);
 	}
 	if (level >= 11)
 	{
-        ProvideInventoryCustom(player, "Health", 150);
-        ProvideInventoryCustom(player, "Armor", 125);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
-		//ProvideInventoryCustom(player, "Shell", 50);
-        ProvideInventoryCustom(player, "Clip", 125);
-		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "Health", 150);
+		ProvideInventoryCustom(player, "Armor", 125);
+		ProvideInventoryCustom(player, "Clip", 125);
 		ProvideInventoryCustom(player, "PhoenixRodAmmo", 50);
-		//ProvideInventoryCustom(player, "CWeapStaff", 1);
-		//ProvideInventoryCustom(player, "CWeapFlame", 1);
 		ProvideInventoryCustom(player, "Cell", 100);
 	}
 	if (level >= 12)
 	{
-        //ProvideInventoryCustom(player, "Health", 150);
-        ProvideInventoryCustom(player, "Armor", 125);
-		//ProvideInventoryCustom(player, "Shotgun", 1);
-		//ProvideInventoryCustom(player, "Shell", 50);
-		//ProvideInventoryCustom(player, "Mace", 1);
+		ProvideInventoryCustom(player, "Armor", 125);
 		ProvideInventoryCustom(player, "PhoenixRodAmmo", 50);
-		//ProvideInventoryCustom(player, "CWeapStaff", 1);
-		//ProvideInventoryCustom(player, "CWeapFlame", 1);
 		ProvideInventoryCustom(player, "Cell", 125);
 		ProvideInventoryCustom(player, "Crossbow", 1);
 		ProvideInventoryCustom(player, "CrossbowAmmo", 12);
@@ -175,7 +135,7 @@ function void GrantPlayerLevel(int player, int level)
 // This script is invoked when a player attemps to buy a level.
 script 177 (int level)
 {
-    int player = PlayerNumber();
+	int player = PlayerNumber();
 	int cost = m_levelcost[level];
 	
 	if (level>=13) terminate;
@@ -189,14 +149,14 @@ script 177 (int level)
 			GrantPlayerLevel(player, level); // immediately provide everything too!
 			ThingSound(PlayerTag(player), "misc/levelup", 127);
 			LocalAmbientSound("misc/levelup", 80);
-            SetFont("GARGWING");
+			SetFont("GARGWING");
 			HudMessage(s:"\cdYou are now level ",d:level,s:"!" ;
 					   HUDMSG_FADEINOUT, CHNL_INTERACT3, NONE, 0.5+1.0, 0.65, 4.0, 0.2, 0.2);
 			Log(s:"\cf",n:0,s:"\cc is now level \cf",d:level,s:"!");
 		}
 		else
 		{
-            SetFont("GARGWING");
+			SetFont("GARGWING");
 			HudMessage(s:"\caNot enough money!";
 					   HUDMSG_FADEINOUT, CHNL_INTERACT3, NONE, 0.5+1.0, 0.65, 2.0, 0.2, 0.2);
 		}
@@ -218,10 +178,10 @@ script 177 (int level)
 // This script shows the description and the cost of a level.
 script 178 (int level, int spot, int maxradius)
 {
-    spot += 35000;
-    int player = PlayerNumber();
-    
-    SetFont("GARGWING");
+	spot += 35000;
+	int player = PlayerNumber();
+	
+	SetFont("GARGWING");
 	if (level >= 13)
 	{
 		HudMessage(s:"\cfLevel ",d:level,s:"\n\n\caNot available in this version.\n" ;
@@ -250,12 +210,12 @@ script 178 (int level, int spot, int maxradius)
 					HUDMSG_PLAIN, CHNL_INTERACT2, NONE, 0.5+1.0, 0.55, 0);
 	}
 	
-    while (true)
+	while (true)
 	{
 		if (!PlayerInGame(player)) terminate;
 		if (!IsClose(SELF, spot, maxradius) || !PlayerAlive(player)) break;
 		Delay(1);
-    }
+	}
 	
 	HudMessage(s:""; HUDMSG_PLAIN, CHNL_INTERACT1, NONE, 0.5+1.0, 0.55, 0);
 	HudMessage(s:""; HUDMSG_PLAIN, CHNL_INTERACT2, NONE, 0.5+1.0, 0.55, 0);
@@ -286,16 +246,16 @@ script ACS_PLYR_LEVELLOOP (void)
 {
 int player = PlayerNumber();
 
-    SetFont("GARGWING");
+	SetFont("GARGWING");
 
-    while(PlayerAlive(player) && !customGamemode)
-    {
-        HudMessage (s:"\cdLevel: \cd", d:GetPlayerLevel(player);
-                    HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);    
-        delay(1);
-    }
-    HudMessage (s:"";
-        HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);  
+	while(PlayerAlive(player) && !customGamemode)
+	{
+		HudMessage (s:"\cdLevel: \cd", d:GetPlayerLevel(player);
+					HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);    
+		delay(1);
+	}
+	HudMessage (s:"";
+		HUDMSG_PLAIN, CHNL_INVLEVEL, NONE, 0.95, 0.40, 0);  
 }                         
 
 

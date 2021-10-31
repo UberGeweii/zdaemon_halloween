@@ -1,14 +1,14 @@
-                                                                                                                                     /*
+																																	 /*
 /*
   _______ _             _____ _                             ____             
  |__   __| |           / ____| |                           / __ \            
-    | |  | |__   ___  | |    | |__   ___  ___  ___ _ __   | |  | |_ __   ___ 
-    | |  | '_ \ / _ \ | |    | '_ \ / _ \/ __|/ _ \ '_ \  | |  | | '_ \ / _ \
-    | |  | | | |  __/ | |____| | | | (_) \__ \  __/ | | | | |__| | | | |  __/
-    |_|  |_| |_|\___|  \_____|_| |_|\___/|___/\___|_| |_|  \____/|_| |_|\___|  
-                                                                  Version b3
-                                                                             
-                                                                             
+	| |  | |__   ___  | |    | |__   ___  ___  ___ _ __   | |  | |_ __   ___ 
+	| |  | '_ \ / _ \ | |    | '_ \ / _ \/ __|/ _ \ '_ \  | |  | | '_ \ / _ \
+	| |  | | | |  __/ | |____| | | | (_) \__ \  __/ | | | | |__| | | | |  __/
+	|_|  |_| |_|\___|  \_____|_| |_|\___/|___/\___|_| |_|  \____/|_| |_|\___|  
+																  Version b3
+																			 
+																			 
 Now possible because of the recent additions done to the ZDaemon engine.
 Started out as a joke for Halloween ZDS :p
 
@@ -159,173 +159,173 @@ str ThingSpawns[BATTERY_MAXTHINGS] = {"SkullRod","SkullRodAmmo","","","SkullRodA
 
 str StepSound[MaxStepSounds][2] = {
 	// Water
-    { "FWATER1", "player/waterstep" },
-    { "FWATER2", "player/waterstep" },
-    { "FWATER3", "player/waterstep" },
-    { "FWATER4", "player/waterstep" },
-    // Ground
-    { "FLOOR0_1", "player/footstep" },
-    { "FLOOR0_3", "player/footstep" },
-    { "FLOOR1_7", "player/footstep" },
-    { "FLOOR4_1", "player/footstep" },
-    { "FLOOR4_5", "player/footstep" },
-    { "FLOOR4_6", "player/footstep" },
-    { "TLITE6_1", "player/footstep" },
-    { "TLITE6_5", "player/footstep" },
-    { "CEIL3_1", "player/footstep" },
-    { "CEIL3_2", "player/footstep" },
-    { "CEIL4_2", "player/footstep" },
-    { "CEIL4_3", "player/footstep" },
-    { "CEIL5_1", "player/footstep" },
-    { "FLAT2", "player/footstep" },
-    { "FLAT5", "player/footstep" },
-    { "FLAT18", "player/footstep" },
-    { "FLOOR0_2", "player/footstep" },
-    { "FLOOR0_5", "player/footstep" },
-    { "FLOOR0_7", "player/footstep" },
-    { "FLAT5_3", "player/footstep" },
-    { "CRATOP1", "player/footstep" },
-    { "CRATOP2", "player/footstep" },
-    { "FLAT9", "player/footstep" },
-    { "FLAT17", "player/footstep" },
-    { "FLAT19", "player/footstep" },
-    { "COMP01", "player/footstep" },
-    { "GRNLITE1", "player/footstep" },
-    { "FLAT3", "player/footstep" },
-    // Carpet
-    { "FLOOR1_1", "player/carpetstep" },
-    { "FLAT14", "player/carpetstep" },
-    { "FLAT5_5", "player/carpetstep" },
-    { "FLOOR1_6", "player/carpetstep" },
-    { "CEIL4_1", "player/carpetstep" },
-    { "TAPIJT2", "player/carpetstep" },
-    { "TAPIJT1", "player/carpetstep" },
-    // Dirt
-    { "RROCK16", "player/dirtstep" },
-    { "RROCK19", "player/dirtstep" },
-    // Gravel
-    { "FLOOR6_1", "player/gravelstep" },
-    { "FLOOR6_2", "player/gravelstep" },
-    { "FLAT10", "player/gravelstep" },
-    { "MFLR8_3", "player/gravelstep" },
-    { "MFLR8_4", "player/gravelstep" },
-    { "RROCK17", "player/gravelstep" },
-    { "RROCK18", "player/gravelstep" },
-    {"GRASS1", "player/gravelstep" },
-    { "GRASS2", "player/gravelstep" },
-    // Hard
-    { "FLOOR0_6", "player/hardstep" },
-    { "FLOOR5_1", "player/hardstep" },
-    { "FLOOR5_2", "player/hardstep" },
-    { "FLOOR5_3", "player/hardstep" },
-    { "FLOOR5_4", "player/hardstep" },
-    { "TLITE6_4", "player/hardstep" },
-    { "TLITE6_6", "player/hardstep" },
-    { "FLOOR7_1", "player/hardstep" },
-    { "MFLR8_1", "player/hardstep" },
-    { "CEIL3_5", "player/hardstep" },
-    { "CEIL5_2", "player/hardstep" },
-    { "CEIL3_6", "player/hardstep" },
-    { "FLAT8", "player/hardstep" },
-    { "SLIME13", "player/hardstep" },
-    // Metal A
-    { "STEP1", "player/metalastep" },
-    { "STEP2", "player/metalastep" },
-    { "GATE1", "player/metalastep" },
-    { "GATE2", "player/metalastep" },
-    { "GATE3", "player/metalastep" },
-    { "CEIL1_2", "player/metalastep" },
-    { "CEIL1_3", "player/metalastep" },
-    { "SLIME14", "player/metalastep" },
-    { "SLIME15", "player/metalastep" },
-    { "SLIME16", "player/metalastep" },
-    // Metal B
-    { "FLAT22", "player/metalbstep" },
-    { "FLAT23", "player/metalbstep" },
-    { "CONS1_1", "player/metalbstep" },
-    { "CONS1_5", "player/metalbstep" },
-    { "CONS1_7", "player/metalbstep" },
-    { "GATE4", "player/metalbstep" },
-    { "FLAT4", "player/metalbstep" },
-    { "VENTFLR", "player/metalbstep" },
-    // Rock
-    { "FLAT1",   "player/rockstep" },
-    { "FLAT5_4", "player/rockstep" },
-    { "MFLR8_2", "player/rockstep" },
-    { "FLAT1_1", "player/rockstep" },
-    { "FLAT1_2", "player/rockstep" },
-    { "FLAT1_3", "player/rockstep" },
-    { "FLAT5_7", "player/rockstep" },
-    { "FLAT5_8", "player/rockstep" },
-    { "GRNROCK", "player/rockstep" },
-    { "RROCK01", "player/rockstep" },
-    { "RROCK02", "player/rockstep" },
-    { "RROCK03", "player/rockstep" },
-    { "RROCK04", "player/rockstep" },
-    { "RROCK05", "player/rockstep" },
-    { "RROCK06", "player/rockstep" },
-    { "RROCK07", "player/rockstep" },
-    { "RROCK08", "player/rockstep" },
-    { "RROCK09", "player/rockstep" },
-    { "RROCK10", "player/rockstep" },
-    { "RROCK11", "player/rockstep" },
-    { "RROCK12", "player/rockstep" },
-    { "RROCK13", "player/rockstep" },
-    { "RROCK14", "player/rockstep" },
-    { "RROCK15", "player/rockstep" },
-    { "RROCK20", "player/rockstep" },
-    { "SLIME09", "player/rockstep" },
-    { "SLIME10", "player/rockstep" },
-    { "SLIME11", "player/rockstep" },
-    { "SLIME12", "player/rockstep" },
-    // Snow
-    { "FLAT5_6", "player/snowstep" },
-    // Tile A
-    { "FLOOR3_3", "player/tileastep" },
-    { "FLAT20", "player/tileastep" },
-    { "CEIL3_3", "player/tileastep" },
-    { "CEIL3_4", "player/tileastep" },
-    // Tile B
-    { "FLOOR7_2", "player/tilebstep" },
-    { "DEM1_1", "player/tilebstep" },
-    { "DEM1_2", "player/tilebstep" },
-    { "DEM1_3", "player/tilebstep" },
-    { "DEM1_4", "player/tilebstep" },
-    { "DEM1_5", "player/tilebstep" },
-    { "DEM1_6", "player/tilebstep" },
-    { "TILESBW", "player/tilebstep" },
-    { "FLOOR4_8", "player/tilebstep" },
-    // Wood
-    { "CEIL1_1", "player/woodstep" },
-    { "FLAT5_1", "player/woodstep" },
-    { "FLAT5_2", "player/woodstep" },
-    // Slime
-    { "NUKAGE1", "player/slimestep" },
-    { "NUKAGE2", "player/slimestep" },
-    { "NUKAGE3", "player/slimestep" },
-    { "BLOOD1", "player/slimestep" },
-    { "BLOOD2", "player/slimestep" },
-    { "BLOOD3", "player/slimestep" },
-    { "SLIME01", "player/slimestep" },
-    { "SLIME02", "player/slimestep" },
-    { "SLIME03", "player/slimestep" },
-    { "SLIME04", "player/slimestep" },
-    { "SLIME05", "player/slimestep" },
-    { "SLIME06", "player/slimestep" },
-    { "SLIME07", "player/slimestep" },
-    { "SLIME08", "player/slimestep" },
-    // Slimy
-    { "SFLR6_1", "player/slimystep" },
-    { "SFLR6_4", "player/slimystep" },
-    { "SFLR7_1", "player/slimystep" },
-    { "SFLR7_4", "player/slimystep" },
-    // Lava
-    { "LAVA1", "player/lavastep" },
-    { "LAVA2", "player/lavastep" },
-    { "LAVA3", "player/lavastep" },
-    { "LAVA4", "player/lavastep" },
-    // None
-    { "F_SKY1", "player/none" },
+	{ "FWATER1", "player/waterstep" },
+	{ "FWATER2", "player/waterstep" },
+	{ "FWATER3", "player/waterstep" },
+	{ "FWATER4", "player/waterstep" },
+	// Ground
+	{ "FLOOR0_1", "player/footstep" },
+	{ "FLOOR0_3", "player/footstep" },
+	{ "FLOOR1_7", "player/footstep" },
+	{ "FLOOR4_1", "player/footstep" },
+	{ "FLOOR4_5", "player/footstep" },
+	{ "FLOOR4_6", "player/footstep" },
+	{ "TLITE6_1", "player/footstep" },
+	{ "TLITE6_5", "player/footstep" },
+	{ "CEIL3_1", "player/footstep" },
+	{ "CEIL3_2", "player/footstep" },
+	{ "CEIL4_2", "player/footstep" },
+	{ "CEIL4_3", "player/footstep" },
+	{ "CEIL5_1", "player/footstep" },
+	{ "FLAT2", "player/footstep" },
+	{ "FLAT5", "player/footstep" },
+	{ "FLAT18", "player/footstep" },
+	{ "FLOOR0_2", "player/footstep" },
+	{ "FLOOR0_5", "player/footstep" },
+	{ "FLOOR0_7", "player/footstep" },
+	{ "FLAT5_3", "player/footstep" },
+	{ "CRATOP1", "player/footstep" },
+	{ "CRATOP2", "player/footstep" },
+	{ "FLAT9", "player/footstep" },
+	{ "FLAT17", "player/footstep" },
+	{ "FLAT19", "player/footstep" },
+	{ "COMP01", "player/footstep" },
+	{ "GRNLITE1", "player/footstep" },
+	{ "FLAT3", "player/footstep" },
+	// Carpet
+	{ "FLOOR1_1", "player/carpetstep" },
+	{ "FLAT14", "player/carpetstep" },
+	{ "FLAT5_5", "player/carpetstep" },
+	{ "FLOOR1_6", "player/carpetstep" },
+	{ "CEIL4_1", "player/carpetstep" },
+	{ "TAPIJT2", "player/carpetstep" },
+	{ "TAPIJT1", "player/carpetstep" },
+	// Dirt
+	{ "RROCK16", "player/dirtstep" },
+	{ "RROCK19", "player/dirtstep" },
+	// Gravel
+	{ "FLOOR6_1", "player/gravelstep" },
+	{ "FLOOR6_2", "player/gravelstep" },
+	{ "FLAT10", "player/gravelstep" },
+	{ "MFLR8_3", "player/gravelstep" },
+	{ "MFLR8_4", "player/gravelstep" },
+	{ "RROCK17", "player/gravelstep" },
+	{ "RROCK18", "player/gravelstep" },
+	{"GRASS1", "player/gravelstep" },
+	{ "GRASS2", "player/gravelstep" },
+	// Hard
+	{ "FLOOR0_6", "player/hardstep" },
+	{ "FLOOR5_1", "player/hardstep" },
+	{ "FLOOR5_2", "player/hardstep" },
+	{ "FLOOR5_3", "player/hardstep" },
+	{ "FLOOR5_4", "player/hardstep" },
+	{ "TLITE6_4", "player/hardstep" },
+	{ "TLITE6_6", "player/hardstep" },
+	{ "FLOOR7_1", "player/hardstep" },
+	{ "MFLR8_1", "player/hardstep" },
+	{ "CEIL3_5", "player/hardstep" },
+	{ "CEIL5_2", "player/hardstep" },
+	{ "CEIL3_6", "player/hardstep" },
+	{ "FLAT8", "player/hardstep" },
+	{ "SLIME13", "player/hardstep" },
+	// Metal A
+	{ "STEP1", "player/metalastep" },
+	{ "STEP2", "player/metalastep" },
+	{ "GATE1", "player/metalastep" },
+	{ "GATE2", "player/metalastep" },
+	{ "GATE3", "player/metalastep" },
+	{ "CEIL1_2", "player/metalastep" },
+	{ "CEIL1_3", "player/metalastep" },
+	{ "SLIME14", "player/metalastep" },
+	{ "SLIME15", "player/metalastep" },
+	{ "SLIME16", "player/metalastep" },
+	// Metal B
+	{ "FLAT22", "player/metalbstep" },
+	{ "FLAT23", "player/metalbstep" },
+	{ "CONS1_1", "player/metalbstep" },
+	{ "CONS1_5", "player/metalbstep" },
+	{ "CONS1_7", "player/metalbstep" },
+	{ "GATE4", "player/metalbstep" },
+	{ "FLAT4", "player/metalbstep" },
+	{ "VENTFLR", "player/metalbstep" },
+	// Rock
+	{ "FLAT1",   "player/rockstep" },
+	{ "FLAT5_4", "player/rockstep" },
+	{ "MFLR8_2", "player/rockstep" },
+	{ "FLAT1_1", "player/rockstep" },
+	{ "FLAT1_2", "player/rockstep" },
+	{ "FLAT1_3", "player/rockstep" },
+	{ "FLAT5_7", "player/rockstep" },
+	{ "FLAT5_8", "player/rockstep" },
+	{ "GRNROCK", "player/rockstep" },
+	{ "RROCK01", "player/rockstep" },
+	{ "RROCK02", "player/rockstep" },
+	{ "RROCK03", "player/rockstep" },
+	{ "RROCK04", "player/rockstep" },
+	{ "RROCK05", "player/rockstep" },
+	{ "RROCK06", "player/rockstep" },
+	{ "RROCK07", "player/rockstep" },
+	{ "RROCK08", "player/rockstep" },
+	{ "RROCK09", "player/rockstep" },
+	{ "RROCK10", "player/rockstep" },
+	{ "RROCK11", "player/rockstep" },
+	{ "RROCK12", "player/rockstep" },
+	{ "RROCK13", "player/rockstep" },
+	{ "RROCK14", "player/rockstep" },
+	{ "RROCK15", "player/rockstep" },
+	{ "RROCK20", "player/rockstep" },
+	{ "SLIME09", "player/rockstep" },
+	{ "SLIME10", "player/rockstep" },
+	{ "SLIME11", "player/rockstep" },
+	{ "SLIME12", "player/rockstep" },
+	// Snow
+	{ "FLAT5_6", "player/snowstep" },
+	// Tile A
+	{ "FLOOR3_3", "player/tileastep" },
+	{ "FLAT20", "player/tileastep" },
+	{ "CEIL3_3", "player/tileastep" },
+	{ "CEIL3_4", "player/tileastep" },
+	// Tile B
+	{ "FLOOR7_2", "player/tilebstep" },
+	{ "DEM1_1", "player/tilebstep" },
+	{ "DEM1_2", "player/tilebstep" },
+	{ "DEM1_3", "player/tilebstep" },
+	{ "DEM1_4", "player/tilebstep" },
+	{ "DEM1_5", "player/tilebstep" },
+	{ "DEM1_6", "player/tilebstep" },
+	{ "TILESBW", "player/tilebstep" },
+	{ "FLOOR4_8", "player/tilebstep" },
+	// Wood
+	{ "CEIL1_1", "player/woodstep" },
+	{ "FLAT5_1", "player/woodstep" },
+	{ "FLAT5_2", "player/woodstep" },
+	// Slime
+	{ "NUKAGE1", "player/slimestep" },
+	{ "NUKAGE2", "player/slimestep" },
+	{ "NUKAGE3", "player/slimestep" },
+	{ "BLOOD1", "player/slimestep" },
+	{ "BLOOD2", "player/slimestep" },
+	{ "BLOOD3", "player/slimestep" },
+	{ "SLIME01", "player/slimestep" },
+	{ "SLIME02", "player/slimestep" },
+	{ "SLIME03", "player/slimestep" },
+	{ "SLIME04", "player/slimestep" },
+	{ "SLIME05", "player/slimestep" },
+	{ "SLIME06", "player/slimestep" },
+	{ "SLIME07", "player/slimestep" },
+	{ "SLIME08", "player/slimestep" },
+	// Slimy
+	{ "SFLR6_1", "player/slimystep" },
+	{ "SFLR6_4", "player/slimystep" },
+	{ "SFLR7_1", "player/slimystep" },
+	{ "SFLR7_4", "player/slimystep" },
+	// Lava
+	{ "LAVA1", "player/lavastep" },
+	{ "LAVA2", "player/lavastep" },
+	{ "LAVA3", "player/lavastep" },
+	{ "LAVA4", "player/lavastep" },
+	// None
+	{ "F_SKY1", "player/none" },
 };
 
 ///////////////////////////////////////////
@@ -345,14 +345,14 @@ function bool PlayerAlive(int player)
 
 function int abs(int x)
 {
-    if (x<0) return -x;
-    return x;
+	if (x<0) return -x;
+	return x;
 }
 
 function int Distance(int object1, int object2)
 {
 	return ((abs(GetActorX(object1)-GetActorX(object2))>>16) +
-	        (abs(GetActorY(object1)-GetActorY(object2))>>16));
+			(abs(GetActorY(object1)-GetActorY(object2))>>16));
 }
 
 function int GetVelocity (int id)
@@ -364,13 +364,13 @@ function int GetVelocity (int id)
 
 	int ang = vectorangle(x,y);
    
-    if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(y, sin(ang));
-    else len = fixeddiv(x, cos(ang));
+	if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(y, sin(ang));
+	else len = fixeddiv(x, cos(ang));
 
 	ang = vectorangle(len, z);
 
-    if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(z, sin(ang));
-    else len = fixeddiv(len, cos(ang));
+	if(((ang+0.125)%0.5) > 0.25) len = fixeddiv(z, sin(ang));
+	else len = fixeddiv(len, cos(ang));
 
 	return len;
 }
@@ -380,31 +380,31 @@ function bool LookingAt(int object1, int object2)
 	int angle = GetActorAngle(object1) - VectorAngle(GetActorX(object2)-GetActorX(object1), GetActorY(object2)-GetActorY(object1));
 	bool arg;
 
-    if      (angle < -0.5) angle += 1.0;
-    else if (angle >  0.5) angle -= 1.0;
-    
+	if      (angle < -0.5) angle += 1.0;
+	else if (angle >  0.5) angle -= 1.0;
+	
 	if (abs(angle) < 0.10) //0.5
 		arg = true;
-    else
+	else
 		arg = false;
-    
+	
 	return arg;
 }
 
 // So, let's turn this into a function then.
 // We might need it somewhere else.
-Function int GetFTVelocity(void) 
+function int GetFTVelocity(void) 
 {
 	int vel;
 	int x = GetActorVelX(0);
 	int y = GetActorVelY(0);
 	int angle = VectorAngle(x, y);
 	
-    if(((angle + 0.125) % 0.5) > 0.25) 
+	if(((angle + 0.125) % 0.5) > 0.25) 
 		vel = FixedDiv(y, Sin(angle));
-    else 
+	else 
 		vel = FixedDiv(x, Cos(angle));
-    
+	
 	return vel >> 16;
 }
 
@@ -412,11 +412,11 @@ function void SpawnChosenOne(void)
 {
 	int PickSpawn;
 
-    while(thingcount(0, CHOSEN_TID) <= 0)
-    {
+	while(thingcount(0, CHOSEN_TID) <= 0)
+	{
 		PickSpawn = zd_rand(0, CHOSEN_MAXSPAWNS);
 		SpawnSpot("StalagmiteSmall", CHOSEN_SPAWN_TID+PickSpawn, CHOSEN_TID, GetActorAngle(CHOSEN_SPAWN_TID+PickSpawn) >> 8);
-    }
+	}
 }
 
 // Everyone except the chosen one.
@@ -424,11 +424,11 @@ function int GetTotalPlayers(void)
 {
 	int TempPCount = 0;
 
-    for(int i = 0; i < PlayerTopIndex()+1; i++)
-    {
-        If(PlayerAlive(i) && i != chosen_one)
+	for(int i = 0; i < PlayerTopIndex()+1; i++)
+	{
+		If(PlayerAlive(i) && i != chosen_one)
 			TempPCount++;
-    }
+	}
 	return TempPCount;
 }
 
@@ -438,9 +438,9 @@ function void HudMessageOnActor(int own_tid, int tid, int msgID, int hudX, int h
 {		
 	int dist, angle, vang, pitch, x, y;
 	
-    if (holdTime == 0) { holdTime = 0.1; }	
-    if (hudX == 0) { hudX = 640; } // Default value.
-    if (hudY == 0) { hudY = 480; } // Default value.
+	if (holdTime == 0) { holdTime = 0.1; }	
+	if (hudX == 0) { hudX = 640; } // Default value.
+	if (hudY == 0) { hudY = 480; } // Default value.
 	
 	SetHudSize(hudX, hudY, 1);
 	x = GetActorX(tid) - GetActorX(own_tid);
@@ -449,30 +449,30 @@ function void HudMessageOnActor(int own_tid, int tid, int msgID, int hudX, int h
 	vang = VectorAngle(x,y);
 	angle = (vang - GetActorAngle(own_tid) + 1.0) % 1.0;
 	
-    if(((vang+0.125)%0.5) > 0.25) dist = FixedDiv(y, sin(vang));
-    else dist = FixedDiv(x, cos(vang));
+	if(((vang+0.125)%0.5) > 0.25) dist = FixedDiv(y, sin(vang));
+	else dist = FixedDiv(x, cos(vang));
 	
-    if ((angle < 0.23 || angle > 0.85) && (dist >> 16) < range)
-    {
+	if ((angle < 0.23 || angle > 0.85) && (dist >> 16) < range)
+	{
 		
-        if (GetActorPitch(own_tid) >= -0.5 && GetActorPitch(own_tid) <= 0.5)
-        {
-        pitch = VectorAngle(dist, GetActorZ(tid) - (GetActorZ(own_tid) + GetActorViewHeight(own_tid)));
-        pitch += FixedMul(GetActorPitch(own_tid), 1.2) % 1.0;
+		if (GetActorPitch(own_tid) >= -0.5 && GetActorPitch(own_tid) <= 0.5)
+		{
+		pitch = VectorAngle(dist, GetActorZ(tid) - (GetActorZ(own_tid) + GetActorViewHeight(own_tid)));
+		pitch += FixedMul(GetActorPitch(own_tid), 1.2) % 1.0;
  
-            if ((hudX/2) * sin(angle) != 0 && cos(angle) != 0 && (hudX/2) * sin(pitch) != 0 && cos(pitch) != 0)
-            {
+			if ((hudX/2) * sin(angle) != 0 && cos(angle) != 0 && (hudX/2) * sin(pitch) != 0 && cos(pitch) != 0)
+			{
 				
-            x = hudX/2 - ((hudX/2) * sin(angle) / cos(angle));
-            y = hudY/2 - ((HUDX/2) * sin(pitch) / cos(pitch));
+			x = hudX/2 - ((hudX/2) * sin(angle) / cos(angle));
+			y = hudY/2 - ((HUDX/2) * sin(pitch) / cos(pitch));
 				
-            x+=xOffset;
-            y+=yOffset;
-                    
-            HudMessage(n:(tid-PLAYERTIDBASE)+1, s:"\n\crPages: ",d:target_pages, s:"/ ",d:temp_totalpages; HUDMSG_PLAIN, msgID, colour, (x << 16), (y << 16), holdTime);
-            }   
-        }	
-    }
+			x+=xOffset;
+			y+=yOffset;
+					
+			HudMessage(n:(tid-PLAYERTIDBASE)+1, s:"\n\crPages: ",d:target_pages, s:"/ ",d:temp_totalpages; HUDMSG_PLAIN, msgID, colour, (x << 16), (y << 16), holdTime);
+			}   
+		}	
+	}
 }
 
 ////////////////////////////////////////////
@@ -481,76 +481,76 @@ function void HudMessageOnActor(int own_tid, int tid, int msgID, int hudX, int h
 
 script 700 RESPAWN
 {
-    // This script must only call the script above. Do NOT add anything here.
-    ACS_executealways(701, NONE);
+	// This script must only call the script above. Do NOT add anything here.
+	ACS_executealways(701, NONE);
 }
 
 script 701 ENTER
 {
 	// === EVERY [RE]SPAWN INIT HERE ===
-    // This script is executed EACH TIME the player [re]spawns.
-    // Do not do anything else here and never call this script yourself.
-    
-    int player = PlayerNumber();
-    Delay(5);
+	// This script is executed EACH TIME the player [re]spawns.
+	// Do not do anything else here and never call this script yourself.
+	
+	int player = PlayerNumber();
+	Delay(5);
 
-    //Thing_ChangeTID(SELF, PlayerTag(player)); // tag the player
-        
-    // Kill the player if he joins too late.
-    if(gamestarted == true && !GetCvar("sv_chosenmultiplelives"))
-    {
-        Thing_damage(PlayerTag(player), 666, MOD_UNKNOWN);
-        //Thing_ChangeTID(PlayerTag(player), NONE); // untag the corpse. 
-        terminate;
-    }
+	//Thing_ChangeTID(SELF, PlayerTag(player)); // tag the player
+		
+	// Kill the player if he joins too late.
+	if(gamestarted == true && !GetCvar("sv_chosenmultiplelives"))
+	{
+		Thing_damage(PlayerTag(player), 666, MOD_UNKNOWN);
+		//Thing_ChangeTID(PlayerTag(player), NONE); // untag the corpse. 
+		terminate;
+	}
 
-    Delay(1); // please keep it here
-    Acs_ExecuteAlways(802, NONE);
-    Acs_ExecuteAlways(805, NONE);
-    Acs_ExecuteAlways(806, NONE);
-    Acs_ExecuteAlways(816, NONE);
-    Acs_ExecuteAlways(819, NONE);
+	Delay(1); // please keep it here
+	Acs_ExecuteAlways(802, NONE);
+	Acs_ExecuteAlways(805, NONE);
+	Acs_ExecuteAlways(806, NONE);
+	Acs_ExecuteAlways(816, NONE);
+	Acs_ExecuteAlways(819, NONE);
 }
 
 script 702 DEATH
 {
 	// === RESET ON DEATH HERE ===
-    // This script is supposed to be the central place where all player
-    // variables from other systems are reset when a player dies. 
+	// This script is supposed to be the central place where all player
+	// variables from other systems are reset when a player dies. 
 	int player = PlayerNumber();
 
 	SetFont("GARGWING");
 
-    if(player == chosen_one)
-    {
+	if(player == chosen_one)
+	{
 		HudMessageBold(s:"\crMORTALS HAVE WON!", s:" The Chosen One disappeared!";
 		HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_WHITE, 0.50, 0.25, 2.0, 1.0, 1.0); 
 		Delay(4*SEC);
 		gExit = true;
-    }    
+	}    
 }
 
 script 703 (int player) DISCONNECT
 {
 	//  === RESET ON DISCONNECT HERE ===
-    // This script is run on player disconnection.
-    
+	// This script is run on player disconnection.
+	
 	SetFont("GARGWING");
-    
-    if(player == chosen_one)
-    {
+	
+	if(player == chosen_one)
+	{
 		HudMessageBold(s:"\crMORTALS HAVE WON!", s:" The Chosen One disappeared!";
 		HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_WHITE, 0.50, 0.25, 2.0, 1.0, 1.0); 
 		Delay(4*SEC);
 		gExit = true;
-    }
+	}
 }
 /////////////////////////////////////////////
 //                 GAMEMODE               //
 ///////////////////////////////////////////
 
 /*
-Main gamemode script - lobby & map environment seup
+	Main gamemode script - lobby & map environment seup
 */
 
 Script 800 open
@@ -560,38 +560,38 @@ Script 800 open
 	
 	stopMusicbox = true;
 
-    // Wait for mortals to join..
-    While(PlayerCount() < MIN_PLAYERS)
-    {
+	// Wait for mortals to join..
+	While(PlayerCount() < MIN_PLAYERS)
+	{
 		HudMessageBold(s:"Waiting for players to join.."; HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_WHITE, 0.5, 0.5, 0.5);
 		delay(2*SEC);
-    }
-    
-    for (int i=10; i > 0; i--)
-    {
+	}
+	
+	for (int i=10; i > 0; i--)
+	{
 		HudMessageBold(s:"Game starts in ", d:i, s:".."; HUDMSG_PLAIN, CHNL_ANNOUNCE2, CR_WHITE, 0.5, 0.5, 1.0);
 		delay(1*SEC);
-    }
+	}
 
-    If(GetCvar("sv_forcedchosen") > 0)
-    {
+	If(GetCvar("sv_forcedchosen") > 0)
+	{
 		Log(s:"Forced chosen one: ", n:GetCvar("chosen")+1);
 		chosen_one = GetCvar("chosen");
-    }
-    else
-    {
+	}
+	else
+	{
 		Log(s:"Time to select the chosen one..");
 	
-        while(!chosenspawned)
-        {
+		while(!chosenspawned)
+		{
 			chosen_one = zd_rand(0, PlayerTopIndex());
-        
-            if(PlayerInGame(chosen_one))
+		
+			if(PlayerInGame(chosen_one))
 				chosenspawned = true;
 
-        delay(1);
-        }
-    }
+		delay(1);
+		}
+	}
 
 	Log(n:chosen_one+1,s:" is the chosen one..");
 
@@ -599,7 +599,7 @@ Script 800 open
 }
 
 /*
-Main gamemode script
+	Main gamemode script
 */
 
 Script 801 (void)
@@ -612,23 +612,23 @@ Script 801 (void)
 	int i;
 	int page;
 
-    // Spawn the pages.
-    if(GetCvar("sv_pagecount") == 0)    
-        PageCount = PlayerCount() * 2;
-    else
-        PageCount = GetCvar("sv_pagecount"); 
-    
-    If(PageCount > PAGES_MAXSPAWNS) { PageCount = PAGES_MAXSPAWNS; }
-    
-    While (TotalPages != PageCount)
-    {
-        Rand_Spot = ZD_Rand(0, PAGES_MAXSPAWNS);
-        
+	// Spawn the pages.
+	if(GetCvar("sv_pagecount") == 0)    
+		PageCount = PlayerCount() * 2;
+	else
+		PageCount = GetCvar("sv_pagecount"); 
+	
+	If(PageCount > PAGES_MAXSPAWNS) { PageCount = PAGES_MAXSPAWNS; }
+	
+	While (TotalPages != PageCount)
+	{
+		Rand_Spot = ZD_Rand(0, PAGES_MAXSPAWNS);
+		
 		if (ThingCount(0, PAGES_TID+Rand_Spot) == 0)
 		{
 			TotalPages++;
 			SpawnSpot("MaceAmmo", PAGES_SPAWN_TID+Rand_Spot, PAGES_TID+Rand_Spot, 0);
-                
+				
 			If (!ThingCount(0, PAGES_TID+Rand_Spot)) //Make sure the page has spawned.
 			{
 				Log(s:"\cr[ERROR] Cannot spawn page: ", d:Rand_Spot);
@@ -636,99 +636,99 @@ Script 801 (void)
 			}
 		}
 		delay(1);
-    }
-    
-    If (GetCvar("sv_debugmode") > 0)
-    {
+	}
+	
+	If (GetCvar("sv_debugmode") > 0)
+	{
 		delay(1);
 		Log(s:"[DEBUG] A total of ", d:ThingCountName("MaceAmmo", 0), s:" pages have spawned!"); 
 		Log(s:"[DEBUG] A total of ", d:TotalPages, s:" pages have been registered!"); 
-    }
-    
-    // [$] I have no idea what went wrong last time but looking at the code above
-    // I think I know what was going on.. But we're in a rush so this'll have to do for now.
-    If (ThingCountName("MaceAmmo", 0) != TotalPages)
-    {
-        Log(s:"[DEBUG] Thingcount: ", d:ThingCountName("MaceAmmo", 0), s:" does not match TotalPages:", d:TotalPages, s:", correcting..");
-        TotalPages = ThingCountName("MaceAmmo", 0); 
-    }
-    
-    PagesSpawned = true;
-    
-    // Spawn the Chosen one
-    SpawnChosenOne();
+	}
+	
+	// [$] I have no idea what went wrong last time but looking at the code above
+	// I think I know what was going on.. But we're in a rush so this'll have to do for now.
+	If (ThingCountName("MaceAmmo", 0) != TotalPages)
+	{
+		Log(s:"[DEBUG] Thingcount: ", d:ThingCountName("MaceAmmo", 0), s:" does not match TotalPages:", d:TotalPages, s:", correcting..");
+		TotalPages = ThingCountName("MaceAmmo", 0); 
+	}
+	
+	PagesSpawned = true;
+	
+	// Spawn the Chosen one
+	SpawnChosenOne();
 
-    // We teleport all the players and move the player that has been selected as chosen one somewhere else.
-    for(i = 0; i < MAXPLAYERS; i++)
-    {
-        if(i != chosen_one)
+	// We teleport all the players and move the player that has been selected as chosen one somewhere else.
+	for(i = 0; i < MAXPLAYERS; i++)
+	{
+		if(i != chosen_one)
 			Thing_Move(PlayerTag(i), PLAYER_SPAWN_TID, 0);
-        else
+		else
 			Thing_Move(PlayerTag(chosen_one), CHOSEN_SECTOR_TID, 0);
-    }
+	}
 
 	gamestarted = true;
 
 	SetFont("GARGWING");
-    
+	
 	// Save current playercount.
 	Old_TotalPlayers = GetTotalPlayers();
 
-    If (GetCvar("sv_debugmode") > 0) { Log(s:"[DEBUG] A total of ", d:Old_TotalPlayers, s:" runners participating!"); }
+	If (GetCvar("sv_debugmode") > 0) { Log(s:"[DEBUG] A total of ", d:Old_TotalPlayers, s:" runners participating!"); }
 
-    While (gamestarted == true)
-    {
+	While (gamestarted == true)
+	{
 		TotalPlayers = GetTotalPlayers();
-    
-        for (i = 0; i < PlayerTopIndex()+1; i++)
-        {
-            for (page = 0; page < PAGES_MAXSPAWNS+1; page++)
-            {
-                If (PagesCollected[i][page] > 0)
+	
+		for (i = 0; i < PlayerTopIndex()+1; i++)
+		{
+			for (page = 0; page < PAGES_MAXSPAWNS+1; page++)
+			{
+				If (PagesCollected[i][page] > 0)
 					TempCount++;
-            }
-            
-            TotalPagesCollected[i] = TempCount; 
-            If(GetCvar("sv_debugmodepages") > 0) { Log(s:"[DEBUG] ", n:i+1, s:" has a total of ", d:TotalPagesCollected[i]); }
-            
-            If(TempCount >= TotalPages
-                && !gExit)
-            {
+			}
+			
+			TotalPagesCollected[i] = TempCount; 
+			If(GetCvar("sv_debugmodepages") > 0) { Log(s:"[DEBUG] ", n:i+1, s:" has a total of ", d:TotalPagesCollected[i]); }
+			
+			If(TempCount >= TotalPages
+				&& !gExit)
+			{
 				HudMessageBold(s:"\crMORTALS HAVE WON! ", n:i+1, s:" found all pages!";
 				HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_WHITE, 0.50, 0.25, 2.0, 1.0, 1.0); 
 				Delay(4*SEC);
 				gExit = true;
-                
-            }
-            else
-            {
+				
+			}
+			else
+			{
 				TempCount = 0;
-            }
-            
-            If(TotalPlayers != Old_TotalPlayers)
+			}
+			
+			If(TotalPlayers != Old_TotalPlayers)
 				Old_TotalPlayers = TotalPlayers;
-            
-            if(TotalPlayers == 0)
-            {
+			
+			if(TotalPlayers == 0)
+			{
 				HudMessageBold(s:"\crMORTALS HAVE ALL DIED! ", n:chosen_one+1, s:" wins!";
 				HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_WHITE, 0.50, 0.25, 2.0, 1.0, 1.0); 
 				Delay(4*SEC);
 				gExit = true;
-            }
-        }
-        
-        If(GetCvar("sv_chosenspeed") > 0) { ChosenSpeed = GetCvar("sv_chosenspeed"); }
-        If(GetCvar("sv_chosendamage") > 0) { chosen_dmg_value = GetCvar("sv_chosendamage"); }
-        
-        If (gExit)
-            break;
+			}
+		}
+		
+		If(GetCvar("sv_chosenspeed") > 0) { ChosenSpeed = GetCvar("sv_chosenspeed"); }
+		If(GetCvar("sv_chosendamage") > 0) { chosen_dmg_value = GetCvar("sv_chosendamage"); }
+		
+		If (gExit)
+			break;
 
 		delay(1);
-    }
+	}
 }
 
 /* 
-The main player-specific controller code, based on GetPlayerInput.
+	The main player-specific controller code, based on GetPlayerInput.
 */
 
 script 802 (void)
@@ -760,89 +760,89 @@ script 802 (void)
 	delay(5); // keep it here we need seriously need this, because it takes atleast one tic to set the camera up.
 	ChangeCamera(CAMERA_TID, 0, 0);
 
-        while (PlayerAlive(player))
-        {
+		while (PlayerAlive(player))
+		{
 			// Convert point angle to byte angle.
 			byte_angle = GetActorAngle(CHOSEN_TID) >> 8;
 
-            // [Forwards]
-            if (GetPlayerInput(-1, INPUT_FORWARDMOVE) > 0 && chosen_invisible)
-            {
+			// [Forwards]
+			if (GetPlayerInput(-1, INPUT_FORWARDMOVE) > 0 && chosen_invisible)
+			{
 				ThrustThing(byte_angle, ChosenSpeed, 0, CHOSEN_TID);
-            }
-            
-            // [Backwards]
-            if (GetPlayerInput(-1, INPUT_FORWARDMOVE) < 0 && chosen_invisible)
-            {
+			}
+			
+			// [Backwards]
+			if (GetPlayerInput(-1, INPUT_FORWARDMOVE) < 0 && chosen_invisible)
+			{
 				ThrustThing(byte_angle, -ChosenSpeed, 0, CHOSEN_TID);
-            }
-            
-            // [Left]
-            if (GetPlayerInput(player, INPUT_SIDEMOVE) > 0 && chosen_invisible)
-            {
+			}
+			
+			// [Left]
+			if (GetPlayerInput(player, INPUT_SIDEMOVE) > 0 && chosen_invisible)
+			{
 				ThrustThing(byte_angle-64, ChosenSpeed, 0, CHOSEN_TID);
-            }
-            
-            // [Right]
-            if (GetPlayerInput(player, INPUT_SIDEMOVE) < 0 && chosen_invisible)
-            {
+			}
+			
+			// [Right]
+			if (GetPlayerInput(player, INPUT_SIDEMOVE) < 0 && chosen_invisible)
+			{
 				ThrustThing(byte_angle+64, ChosenSpeed, 0, CHOSEN_TID);
-            }
-            
-            // [Jumping]
-            if (GetPlayerInput(-1, INPUT_BUTTONS) & BT_JUMP)
-            {
-            // Do not replace with Execute_Always, we wait for the script to finish.
+			}
+			
+			// [Jumping]
+			if (GetPlayerInput(-1, INPUT_BUTTONS) & BT_JUMP)
+			{
+			// Do not replace with Execute_Always, we wait for the script to finish.
 				Acs_Execute(804, NONE);
-            }
-            // [Charging]
-            if (GetPlayerInput(-1, INPUT_BUTTONS) & BT_ATTACK)
-            {
-            }
-            
-            // [Turn Right]
-            if (GetPlayerInput(-1, INPUT_YAW) > 0 && chosen_invisible)
-            {
+			}
+			// [Charging]
+			if (GetPlayerInput(-1, INPUT_BUTTONS) & BT_ATTACK)
+			{
+			}
+			
+			// [Turn Right]
+			if (GetPlayerInput(-1, INPUT_YAW) > 0 && chosen_invisible)
+			{
 				SetActorAngle(CHOSEN_TID, GetActorAngle(CHOSEN_TID) + 0.015); //0.125
 				byte_angle = GetActorAngle(CHOSEN_TID) >> 8;
-            }
-                
-            // [Turn Left]
-            if (GetPlayerInput(-1, INPUT_YAW) < 0 && chosen_invisible)
-            {
+			}
+				
+			// [Turn Left]
+			if (GetPlayerInput(-1, INPUT_YAW) < 0 && chosen_invisible)
+			{
 				SetActorAngle(CHOSEN_TID, GetActorAngle(CHOSEN_TID) - 0.015);
 				byte_angle = GetActorAngle(CHOSEN_TID) >> 8;
-            }
-            
-            // [Update HUD]
-            if (chosen_invisible == true)
-            {
+			}
+			
+			// [Update HUD]
+			if (chosen_invisible == true)
+			{
 				HudMessage(s:"\ccYou are invisible,\n\nturn visible \cr[JUMP KEY] \cjto make a kill!";
 				HUDMSG_FADEOUT, CHOSEN_HUD_KILLINFO, CR_WHITE, 1.50, 0.50, 0.3, 0.2);
 				HudMessage(s:"\crX \cc- You are invisible";
 				HUDMSG_FADEOUT, CHOSEN_HUD_INVISIBLE, CR_WHITE, 0.05, 0.85, 0.3, 0.2);
-            }
-            else
-            {
+			}
+			else
+			{
 				HudMessage(s:"\cdX \cc- You are visible";
 				HUDMSG_FADEOUT, CHOSEN_HUD_INVISIBLE, CR_WHITE, 0.05, 0.85, 0.3, 0.2);
-            }
-            
-            // [Chosen One actor disappeared]
-            if(thingcount(0, CHOSEN_TID) == 0)
+			}
+			
+			// [Chosen One actor disappeared]
+			if(thingcount(0, CHOSEN_TID) == 0)
 				SpawnChosenOne(); // If the chosen one is gone somehow, spawn a new one.
-            
-            for (int i = 0; i < PlayerTopIndex()+1; i++)
-            {
+			
+			for (int i = 0; i < PlayerTopIndex()+1; i++)
+			{
 				if(PlayerAlive(i))
 					Client_ExecuteAlways(chosen_one, 821, 0, i, TotalPagesCollected[i], TotalPages);
-            } 
+			} 
 			Delay(1);
-        }
+		}
 }
 
 /* 
-Client-sided player camera script.
+	Client-sided player camera script.
 */
 
 script 803 (void)
@@ -850,87 +850,87 @@ script 803 (void)
 	int player = PlayerNumber();
 	int byte_angle;
 
-    // Attempt to spawn the camera.
-    While(!(ThingCount(0, CAMERA_TID)))
-    {
-        if(ThingCount(0, CHOSEN_TID) > 0)
-        {
+	// Attempt to spawn the camera.
+	While(!(ThingCount(0, CAMERA_TID)))
+	{
+		if(ThingCount(0, CHOSEN_TID) > 0)
+		{
 			Spawnspot("SecurityCamera", CHOSEN_TID, CAMERA_TID, 0);
 			break;
-        }
-    delay(1);
-    }
+		}
+	delay(1);
+	}
 
-    while(PlayerAlive(player))
-    { 
+	while(PlayerAlive(player))
+	{ 
 		SetActorPosition(CAMERA_TID,
 		GetActorX(CHOSEN_TID) + cos (GetActorAngle(CHOSEN_TID)) * -CAMERA_FOLLOW_DIST,
 		GetActorY(CHOSEN_TID) + sin (GetActorAngle(CHOSEN_TID)) * -CAMERA_FOLLOW_DIST,
 		GetActorZ(CHOSEN_TID) + CAMERA_HEIGHT, 0);
 		SetActorAngle(CAMERA_TID, GetActorAngle(CHOSEN_TID));
 		delay(1);
-    }
+	}
 }
 
 /* 
-Invisibility checker, always launched from the main player-specific controller code.
+	Invisibility checker, always launched from the main player-specific controller code.
 */
 
 Script 804 (void)
 {
-int player = PlayerNumber();
-int old_angle;
-bool Insight = false;
-SetFont("BIGFONT");
+	int player = PlayerNumber();
+	int old_angle;
+	bool Insight = false;
+	SetFont("BIGFONT");
 
-    for (int i = 0; i < PlayerTopIndex()+1; i++)
-    {
-        if(LookingAt(PlayerTag(i), CHOSEN_TID) == true && Distance(CHOSEN_TID, PlayerTag(i)) < ALLOWED_INVIS_DIST && battery_power[i] > 25)
+	for (int i = 0; i < PlayerTopIndex()+1; i++)
+	{
+		if(LookingAt(PlayerTag(i), CHOSEN_TID) == true && Distance(CHOSEN_TID, PlayerTag(i)) < ALLOWED_INVIS_DIST && battery_power[i] > 25)
 			Insight = true;
-    }
-    
-    if(insight == true)
-    {
-    HudMessage(s:"\crCan't do that! you're within sight of a player!";
-    HUDMSG_FADEINOUT, CHOSEN_MSG2, CR_WHITE, 0.50, 0.60, 1.0, 0.2, 0.2);
-    }
-    else
-    {
-        if(!chosen_invisible)
-        {
-            if(GetCvar("sv_chosennoclip") > 0)
-            {
+	}
+	
+	if(insight == true)
+	{
+	HudMessage(s:"\crCan't do that! you're within sight of a player!";
+	HUDMSG_FADEINOUT, CHOSEN_MSG2, CR_WHITE, 0.50, 0.60, 1.0, 0.2, 0.2);
+	}
+	else
+	{
+		if(!chosen_invisible)
+		{
+			if(GetCvar("sv_chosennoclip") > 0)
+			{
 				old_angle = GetActorAngle(CHOSEN_TID) >> 8;
 				Spawnspot("MapSpot", CHOSEN_TID, CHOSEN_TEMP_TID, old_angle);
 				Thing_remove(CHOSEN_TID);
 				Spawnspot("StalagmiteLarge", CHOSEN_TEMP_TID, CHOSEN_TID, old_angle);
 				Thing_remove(CHOSEN_TEMP_TID);
-            }
+			}
 			SetActorProperty(CHOSEN_TID, APROP_RenderStyle, 0);
 			chosen_invisible = true;
-        }
-        else
-        {
-            if(GetCvar("sv_chosennoclip") > 0)
-            {
+		}
+		else
+		{
+			if(GetCvar("sv_chosennoclip") > 0)
+			{
 				old_angle = GetActorAngle(CHOSEN_TID) >> 8;
 				Spawnspot("MapSpot", CHOSEN_TID, CHOSEN_TEMP_TID, old_angle);
 				Thing_remove(CHOSEN_TID);
 				Spawnspot("StalagmiteSmall", CHOSEN_TEMP_TID, CHOSEN_TID, old_angle);
 				Thing_remove(CHOSEN_TEMP_TID);
-            }
+			}
 			SetActorProperty(CHOSEN_TID, APROP_RenderStyle, 1);
 			chosen_invisible = false;
-        }
-    }
-    
+		}
+	}
+	
 delay(SEC/2);
 }
 
 /* 
-Checks if a player is in sight of the chosen one.
-Then checks if the player is close enough and performs 
-Thing_Damage on the player.
+	Checks if a player is in sight of the chosen one.
+	Then checks if the player is close enough and performs 
+	Thing_Damage on the player.
 */
 
 script 805 (void)
@@ -942,42 +942,42 @@ script 805 (void)
 
 	if(player == chosen_one) { terminate; }
 
-    while(PlayerAlive(player))
-    {                   
-        if(LookingAt(PlayerTag(player), CHOSEN_TID) == true && Distance(CHOSEN_TID, PlayerTag(player)) < DIST_TO_KILL && !chosen_invisible)
+	while(PlayerAlive(player))
+	{                   
+		if(LookingAt(PlayerTag(player), CHOSEN_TID) == true && Distance(CHOSEN_TID, PlayerTag(player)) < DIST_TO_KILL && !chosen_invisible)
 			Thing_damage(PlayerTag(player), chosen_dmg_value, 	MOD_SPLASH);
-        
-        if(LookingAt(PlayerTag(player), CHOSEN_TID) == true && Distance(CHOSEN_TID, PlayerTag(player)) < ALLOWED_INVIS_DIST && !chosen_invisible)
-        {
-            if(!SoundPlaying[player])
-            {
+		
+		if(LookingAt(PlayerTag(player), CHOSEN_TID) == true && Distance(CHOSEN_TID, PlayerTag(player)) < ALLOWED_INVIS_DIST && !chosen_invisible)
+		{
+			if(!SoundPlaying[player])
+			{
 				SoundPlaying[player] = true;
 				Acs_ExecuteAlways(813, 0);
-            }
-        }
-    
-        If(Distance(CHOSEN_TID, PlayerTag(player)) < ALLOWED_INVIS_DIST)
-        {
-            if(!HeartBeatPlaying[player])
-            {
+			}
+		}
+	
+		If(Distance(CHOSEN_TID, PlayerTag(player)) < ALLOWED_INVIS_DIST)
+		{
+			if(!HeartBeatPlaying[player])
+			{
 				HeartBeatPlaying[player] = true;
 				Acs_ExecuteAlways(815, 0);
-            }
-        }
-    delay(1);
-    }
+			}
+		}
+	delay(1);
+	}
 
-    If(Distance(CHOSEN_TID, PlayerTag(player)) < ALLOWED_INVIS_DIST)
-    {
+	If(Distance(CHOSEN_TID, PlayerTag(player)) < ALLOWED_INVIS_DIST)
+	{
 		Log(s:"\cr", n:player+1, s:" was slaughtered by the chosen one!");
 		LocalAmbientSound("Player/slenderkill", 127);
-    }
-    
+	}
+	
 	Thing_ChangeTID(PlayerTag(player), NONE);  //Untag Player
 }
 
 /*
-Inventory related stuff, executed for each player.
+	Inventory related stuff, executed for each player.
 */
 
 Script 806 (void)
@@ -995,31 +995,31 @@ Script 806 (void)
 		
 	delay(2);
 
-    // Take all inventory stuff.
-    for (int i = 0; i < MAX_INV_ITEM_NAMES; i++)
-    {
-        if (inv_item_names[i] != "Armor" 
-            || inv_item_names[i] != "Health")
-        {
-            TakeInventory(inv_item_names[i], 666);
-        }
-    }
-    
-    // Make sure we have a fair start for everyone during custom gamemodes.
-    if (GetActorProperty(PlayerTag(player), APROP_Health) != 100)
-    {
-        SetActorProperty(PlayerTag(player), APROP_Health, 100);
-    }
-    if (CheckActorInventory(PlayerTag(player), "ArmorBonus") > 0)
-    {
-        int armAmount = CheckActorInventory(PlayerTag(player), "ArmorBonus");
-        TakeActorInventory(PlayerTag(player), "ArmorBonus", armAmount);
-    }
-        
-    delay(1);
-        
-    if(!CheckInventory("Fist"))
-        GiveInventory("Fist", 1);
+	// Take all inventory stuff.
+	for (int i = 0; i < MAX_INV_ITEM_NAMES; i++)
+	{
+		if (inv_item_names[i] != "Armor" 
+			|| inv_item_names[i] != "Health")
+		{
+			TakeInventory(inv_item_names[i], 666);
+		}
+	}
+	
+	// Make sure we have a fair start for everyone during custom gamemodes.
+	if (GetActorProperty(PlayerTag(player), APROP_Health) != 100)
+	{
+		SetActorProperty(PlayerTag(player), APROP_Health, 100);
+	}
+	if (CheckActorInventory(PlayerTag(player), "ArmorBonus") > 0)
+	{
+		int armAmount = CheckActorInventory(PlayerTag(player), "ArmorBonus");
+		TakeActorInventory(PlayerTag(player), "ArmorBonus", armAmount);
+	}
+		
+	delay(1);
+		
+	if(!CheckInventory("Fist"))
+		GiveInventory("Fist", 1);
 	
 	GiveInventory("Staff", 1);
 	SetWeapon("Staff");
@@ -1037,7 +1037,7 @@ Script 806 (void)
 }
 
 /*
-Draw the battery on screen.
+	Draw the battery on screen.
 */
 
 script 807 (void)
@@ -1047,10 +1047,10 @@ script 807 (void)
 
 	SetHudSize(800, 600, 0);
 
-    while(PlayerAlive(player) && player != chosen_one)
-    {
-        if(CheckWeapon("Staff"))
-        {	
+	while(PlayerAlive(player) && player != chosen_one)
+	{
+		if(CheckWeapon("Staff"))
+		{	
 			/*
 			if(battery_power[player] > 25)
 			{
@@ -1059,51 +1059,51 @@ script 807 (void)
 			}
 			*/
 			
-            if(battery_power[player] >= 125)
-            { 
+			if(battery_power[player] >= 125)
+			{ 
 				SetFont("BATRY1");
-            }
-        
-            if(battery_power[player] >= 100 && battery_power[player] < 125)
-            { 
+			}
+		
+			if(battery_power[player] >= 100 && battery_power[player] < 125)
+			{ 
 				SetFont("BATRY2");
-            }
-        
-            if(battery_power[player] >= 75 && battery_power[player] < 100)
-            { 
+			}
+		
+			if(battery_power[player] >= 75 && battery_power[player] < 100)
+			{ 
 				SetFont("BATRY3");
-            }
-        
-            if(battery_power[player] >= 50 && battery_power[player] < 75)
-            { 
+			}
+		
+			if(battery_power[player] >= 50 && battery_power[player] < 75)
+			{ 
 				SetFont("BATRY4");
-            }
-        
-            if(battery_power[player] >= 25 && battery_power[player] < 50)
-            { 
+			}
+		
+			if(battery_power[player] >= 25 && battery_power[player] < 50)
+			{ 
 				SetFont("BATRY5");
-            }
-        
-            if(battery_power[player] >= 0 && battery_power[player] < 25)
-            { 
+			}
+		
+			if(battery_power[player] >= 0 && battery_power[player] < 25)
+			{ 
 				SetFont("BATRY6");     
 				SetWeapon("Fist");
-            }
+			}
 			HudMessage(s:"!";
 			HUDMSG_PLAIN, PLAYER_HUD_BATTERY, CR_WHITE, 100.0, 100.0, 0.2);
-        }
+		}
 		
 		//Battery low, hurt player.
 		if(!Bathurt_countdown[player] && battery_power[player] < 25)
 		{
 			Acs_ExecuteAlways(822, 0, player);
 		}
-    delay(1);
-    }
+	delay(1);
+	}
 }
 
 /*
-Deplete battery over time.
+	Deplete battery over time.
 */
 
 script 808 (void)
@@ -1114,15 +1114,15 @@ script 808 (void)
 
 	if(player == chosen_one) { terminate; }
 
-    while(PlayerAlive(player))
-    {
-        if(CheckWeapon("Staff") && battery_power[player] >= 25)
-        {
+	while(PlayerAlive(player))
+	{
+		if(CheckWeapon("Staff") && battery_power[player] >= 25)
+		{
 			delay(2*SEC);
 			battery_power[player] = battery_power[player]-1;
-        }
-    delay(1);
-    }
+		}
+	delay(1);
+	}
 }
 
 script 809 (void)
@@ -1131,15 +1131,15 @@ script 809 (void)
 	SetFont("REC1");
 	SetHudSize(800, 600, 0);
 
-    while(PlayerAlive(player) && player != chosen_one)
-    {
-        if(CheckWeapon("Staff"))
-        {
+	while(PlayerAlive(player) && player != chosen_one)
+	{
+		if(CheckWeapon("Staff"))
+		{
 			HudMessage(s:"!";
 			HUDMSG_FADEOUT, PLAYER_HUD_REC, CR_RED, 700.0, 100.0, 1.0, 0.3, 0.2);  
-        }
-    delay(2*SEC);
-    }
+		}
+	delay(2*SEC);
+	}
 }
 
 script 810 (void)
@@ -1147,37 +1147,37 @@ script 810 (void)
 	int player = PlayerNumber();
 	bool brightness_set = false;
 
-    while(PlayerAlive(player))
-    {
-        if(CheckWeapon("Staff") && !brightness_set)
-        {
-            for (int i=0; i<=65536; i++)
-            {
+	while(PlayerAlive(player))
+	{
+		if(CheckWeapon("Staff") && !brightness_set)
+		{
+			for (int i=0; i<=65536; i++)
+			{
 				if (Sector_SetColor(i, 30, 30, 30, 0));
 				if(i > 65535)
 				{
 					brightness_set = true;
 				}
-            }
-        }
+			}
+		}
 
-        if(CheckWeapon("Fist") && brightness_set)
-        {
-            for (i=0; i<=65536; i++)
-            {
+		if(CheckWeapon("Fist") && brightness_set)
+		{
+			for (i=0; i<=65536; i++)
+			{
 				if (Sector_SetColor(i, 10, 10, 10, 0));
 				if(i > 65535)
 				{
 					brightness_set = false;
 				}
-            }
-        }
-    delay(1);
-    }
+			}
+		}
+	delay(1);
+	}
 }
 
 /*
-Play footsteps sound according to movement (player only).
+	Play footsteps sound according to movement (player only).
 */
 
 Script 811 (void) 
@@ -1185,44 +1185,44 @@ Script 811 (void)
 	int DelayTime, StepVolume, i, SoundPlayed;
 	int player = PlayerNumber();
 
-    while(PlayerAlive(player))
-    {
+	while(PlayerAlive(player))
+	{
 		DelayTime = 18 - GetFTVelocity() / 2;
 		StepVolume = 28 * GetFTVelocity();
 		
-        if(GetActorZ(0) - GetActorFloorZ(0) == 0) 
-        {
-            for(i=0; i<MaxStepSounds; i++) 
-            {
-                if(CheckActorFloorTexture(0, StepSound[i][0])) 
-                {
+		if(GetActorZ(0) - GetActorFloorZ(0) == 0) 
+		{
+			for(i=0; i<MaxStepSounds; i++) 
+			{
+				if(CheckActorFloorTexture(0, StepSound[i][0])) 
+				{
 					ActivatorSound(StepSound[i][1], StepVolume);
 					SoundPlayed = 1;
-                }	    
-            }
-            if(SoundPlayed == 0) 
+				}	    
+			}
+			if(SoundPlayed == 0) 
 				ActivatorSound(DefStepSound, StepVolume);
-        }
+		}
 		SoundPlayed = 0;
 		Delay(DelayTime);
-    Delay(1);
-    }
+	Delay(1);
+	}
 }
 
 /*
-Set client-sided brightness for the Chosen one.
+	Set client-sided brightness for the Chosen one.
 */
 
 script 812 (void)
 {
-    for (int i=0; i<=65536; i++)
-    {
+	for (int i=0; i<=65536; i++)
+	{
 		if (Sector_SetColor(i, 65, 65, 65, 0));
-    }
+	}
 }
 
 /*
-Player sees Chosen one, shock sound effect.
+	Player sees Chosen one, shock sound effect.
 */
 
 script 813 (void)
@@ -1235,7 +1235,7 @@ script 813 (void)
 
 
 /*
-Chosen one marker, client-sided.
+	Chosen one marker, client-sided.
 */
 
 script 814 (void)
@@ -1245,18 +1245,18 @@ script 814 (void)
 
 	Spawnspot("StalactiteSmall", CHOSEN_TID, CHOSEN_MARK_TID, 0);
 
-    while(PlayerAlive(player))
-    {
+	while(PlayerAlive(player))
+	{
 		X = GetActorX(CHOSEN_TID);
 		Y = GetActorY(CHOSEN_TID);
 		Z = GetActorZ(CHOSEN_TID);
 		SetActorPosition(CHOSEN_MARK_TID, X, Y, Z, 0);
 		delay(1);
-    }
+	}
 }
 
 /*
-Chosen one is invisible but close to a player, play a heartbeat sound on the player's side.
+	Chosen one is invisible but close to a player, play a heartbeat sound on the player's side.
 */
 script 815 (void)
 {
@@ -1267,7 +1267,7 @@ script 815 (void)
 }
 
 /*
-Picking up pages.
+	Picking up pages.
 */
 
 script 816 (void)
@@ -1281,38 +1281,38 @@ script 816 (void)
 
 	While(!PagesSpawned) { delay(1); }
 
-    While(PlayerAlive(player) && player != chosen_one)
-    {
-        for(i = 0; i < PAGES_MAXSPAWNS+1; i++)
-        {
-            If(ThingCount(0, PAGES_TID+i) != 0)
-            {
-                If(Distance(PlayerTag(player), PAGES_TID+i) < 64 && PagesCollected[player][i] < 1)
-                {
+	While(PlayerAlive(player) && player != chosen_one)
+	{
+		for(i = 0; i < PAGES_MAXSPAWNS+1; i++)
+		{
+			If(ThingCount(0, PAGES_TID+i) != 0)
+			{
+				If(Distance(PlayerTag(player), PAGES_TID+i) < 64 && PagesCollected[player][i] < 1)
+				{
 					PagesCollected[player][i] = 1;
 					Client_ExecuteAlways(player, 817, 0, i);
 					HudMessage(s:"\cjFound a page!";
 					HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 400.0, 300.0, 1.0, 0.3, 0.2);
 					ThingSound(PlayerTag(player), "player/pickuppage", 127);
-                }
-            }
-        }
-    
-        for(i = 0; i < PAGES_MAXSPAWNS+1; i++)
-        {
-            if(PagesCollected[player][i] == 1)
+				}
+			}
+		}
+	
+		for(i = 0; i < PAGES_MAXSPAWNS+1; i++)
+		{
+			if(PagesCollected[player][i] == 1)
 				LocalPages++;
-        }
-    
+		}
+	
 		HudMessage(s:"\cjPages ", d:LocalPages, s:" / ", d:TotalPages;
 		HUDMSG_PLAIN, PLAYER_HUD_PAGES, CR_WHITE, 700.0, 500.0, 1.0);
 		delay(1);
 		LocalPages = 0;
-    }
+	}
 }
 
 /* 
-Fake as if a page has been picked up on a client (client-sided).
+	Fake as if a page has been picked up on a client (client-sided).
 */
 
 Script 817 (int page)
@@ -1321,7 +1321,7 @@ Script 817 (int page)
 }
 
 /* 
-Spawns batteries randomly & removes them over time.
+	Spawns batteries randomly & removes them over time.
 */
 
 Script 818 open
@@ -1330,19 +1330,19 @@ Script 818 open
 
 	Delay(3 * SEC);
 
-    for (i = SPAWNTIDSTART; i <= SPAWNTIDEND; i++)
+	for (i = SPAWNTIDSTART; i <= SPAWNTIDEND; i++)
 		SpawnSpot(ThingSpawns[Random(0, BATTERY_MAXTHINGS - 1)], i, i + SPAWNTIDOFFSET);
-    
+	
 	Delay(ZD_Rand(40, 120) * SEC);
 
-    for (i = SPAWNTIDSTART + SPAWNTIDOFFSET; i <= SPAWNTIDEND + SPAWNTIDOFFSET; i++)
+	for (i = SPAWNTIDSTART + SPAWNTIDOFFSET; i <= SPAWNTIDEND + SPAWNTIDOFFSET; i++)
 		Thing_Remove(i);
 
 	Restart;
 }
 
 /* 
-Add battery juice (client-sided).
+	Add battery juice (client-sided).
 */
 
 script 819 (void)
@@ -1357,32 +1357,32 @@ script 819 (void)
 
 	if(player == chosen_one) { terminate; }
 
-    while (PlayerAlive(player))
-    {
-        if (CheckInventory("SkullRodAmmo") > old_ammo) // take ammo
-        {
+	while (PlayerAlive(player))
+	{
+		if (CheckInventory("SkullRodAmmo") > old_ammo) // take ammo
+		{
 			TakeInventory("SkullRodAmmo", CheckInventory("SkullRodAmmo")); 
 			old_ammo = CheckInventory("SkullRodAmmo");
-            
-            if(battery_power[player] < 150)
-            {
+			
+			if(battery_power[player] < 150)
+			{
 				HudMessage(s:"\cjFound a battery!";
 				HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 400.0, 300.0, 1.0, 0.3, 0.2);
 				battery_power[player] = battery_power[player]+25;
-            }
-            else
-            {
+			}
+			else
+			{
 				Acs_ExecuteAlways(820, 0, player);
 				HudMessage(s:"\cjBattery full!";
 				HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 400.0, 300.0, 1.0, 0.3, 0.2);
-            }
-        }
+			}
+		}
 		Delay(1);
 	}
 }
 
 /* 
-Drop a battery when enough battery juice.
+	Drop a battery when enough battery juice.
 */
 
 script 820 (int player)
@@ -1399,7 +1399,7 @@ script 820 (int player)
 }
 
 /* 
-Draws the pages on each player for the Chosen one to see.
+	Draws the pages on each player for the Chosen one to see.
 */
 
 script 821 (int target, int target_pages, int temp_totalpages)
@@ -1410,7 +1410,7 @@ script 821 (int target, int target_pages, int temp_totalpages)
 }
 
 /* 
-Hurt the player if their battery is fully depleted, trigger the cooldown.
+	Hurt the player if their battery is fully depleted, trigger the cooldown.
 */
 
 script 822 (int player)
