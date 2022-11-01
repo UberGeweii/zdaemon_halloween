@@ -492,14 +492,14 @@ script 701 ENTER
 	// Do not do anything else here and never call this script yourself.
 	
 	int player = PlayerNumber();
-	Delay(5);
+	Delay(15);
 
 	//Thing_ChangeTID(SELF, PlayerTag(player)); // tag the player
 		
 	// Kill the player if he joins too late.
 	if(gamestarted == true && !GetCvar("sv_chosenmultiplelives"))
 	{
-		Thing_damage(PlayerTag(player), 666, MOD_UNKNOWN);
+		Thing_damage(10000+player, 666, MOD_UNKNOWN);
 		//Thing_ChangeTID(PlayerTag(player), NONE); // untag the corpse. 
 		terminate;
 	}

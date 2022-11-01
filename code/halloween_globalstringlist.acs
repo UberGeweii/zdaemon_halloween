@@ -3,7 +3,7 @@
     === GLOBAL STRING VARIABLES ===
 */
 ////////////////////////////////////////
-#define MAX_INV_ITEM_NAMES 49
+#define MAX_INV_ITEM_NAMES 52
 
 str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "Clip",
@@ -24,10 +24,12 @@ str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "CWeapMace",
 "CWeapFlame",
 "Mace",
+"Crossbow", 
 "CWeapWraithverge",
 "MWeapWand",
 "FWeapQuietus",
 "MWeapBloodscourge",
+"FWeapHammer",
 "FWeaponPiece1",
 "FWeaponPiece2",
 "FWeaponPiece3",
@@ -37,6 +39,7 @@ str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "MWeaponPiece1",
 "MWeaponPiece2",
 "MWeaponPiece3",
+"Crossbow",
 "ArtiHealth",
 "ArtiSuperHealth", 
 "ArtiTorch",

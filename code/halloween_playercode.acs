@@ -109,6 +109,8 @@ script ACS_PLYR_INVSPECIALS (void)
 {
     int player = PlayerNumber();
     Setfont("GARGWING");
+	
+	TakeInventory("Gauntlets", 1);
     
     while(PlayerAlive(player))
     {        
@@ -138,12 +140,21 @@ script ACS_PLYR_INVSPECIALS (void)
     }
 }
 
+// So if, by accident multiple lives are allowed on slenderman don't return items.
+int dontReturnYet[MAXPLAYERS];
+
 script ACS_PLYR_RETURNOLDINVENTORY (void)
 {
     int player = PlayerNumber();
     Setfont("GARGWING");
+	
+	Delay(35);
+	
+    if(customGamemode)
+		terminate;
     
-    if(inventorySaved[player]) 
+    if(inventorySaved[player]
+		&& !dontReturnYet[player]) 
     {   
         RetrievePlayerFullInventory(player);
         
@@ -163,7 +174,8 @@ script ACS_PLYR_SAVEINVENTORY (void)
             
     if(GetCvar("sv_debugmode") > 0)          
         Log(s:"[DEBUG] Attempting to save inventory for player: ", n:player+1);
-            
+ 
+	dontReturnYet[player] = true;
     SavePlayerFullInventory(player);
     inventorySaved[player] = true;
 }

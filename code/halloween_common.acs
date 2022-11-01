@@ -136,6 +136,8 @@ global bool 16:inventorySaved[];
 // Music override?
 global bool 17:stopMusicbox;
 
+global bool 20:gbossFightUnlocked;
+
 ////////////////////////////////////////
 /*
 	=== GLOBAL STRING VARIABLES ===
@@ -366,7 +368,8 @@ script ACS_INTR_SHOPEXITTRIG (void)
 {
 	int player = PlayerNumber();
 
-	if(player_exit[player] != 1)
+	if(player_exit[player] != 1
+		&& !gbossFightUnlocked)
 	{
 		Log(n:0, s:" wants to exit the map.");
 		player_exit[player] = 1;
@@ -424,13 +427,18 @@ Script ACS_WRLD_SHOPEXITTIME open
 		{
 			if(gExit)
 				break;
+			
+			if(gbossFightUnlocked)
+				break;
 
 			HudMessageBold(s:"\cdTime left: \cj", d:i/60, s:" : ", d:(i%60)/10, d:i%10, s:" ..";
 			0, CHNL_ANNOUNCE1, CR_GOLD, 0.50, 0.15, 2.0); 
 			delay(1*SEC);
 		}
 		delay(1);
-		gExit = true;
+		
+		if(!gbossFightUnlocked)
+			gExit = true;
 		
 	}
 }
@@ -444,7 +452,9 @@ script ACS_WRLD_SHOPEXITVOTE open
 	{
 		for (int i=SHOP_EXITVOTE_CNTDWN; i > 0; i--)
 		{
-
+			if (gbossFightUnlocked)
+				break;
+			
 			if(i == 30)
 				DisplayShopTimeLeft(i);
 
@@ -468,7 +478,7 @@ script ACS_WRLD_SHOPEXITVOTE open
 		delay(SEC);
 		}
 
-		while (!gExit)
+		while (!gExit && !gbossFightUnlocked)
 		{
 			if(PlayerCount() != 0)
 			{
@@ -489,6 +499,18 @@ script ACS_WRLD_SHOPEXITVOTE open
 				}
 			}
 			Delay(1);
+		}
+		
+		if (gbossFightUnlocked)
+		{
+			SetLineBlocking(EXIT_LINE_ID, OFF);
+			//SetLineSpecial (EXIT_LINE_ID, ACS_Execute, ACS_INTR_SHOPEXITTRIG);
+			SetLineTexture(101, SIDE_FRONT, TEXTURE_MIDDLE, "EXTAL1");
+			SetLineTexture(101, SIDE_BACK, TEXTURE_MIDDLE, "EXTAL1"); 
+			//HudMessageBold(s:"\cdExit is open, you may now vote!"; 
+			//HUDMSG_FADEINOUT, CHNL_ANNOUNCE2, CR_RED, 0.5, 0.25, 3.0, 0.2, 0.2);
+			//log(s:"\cdExit is open, you may now vote!");
+			//AmbientSound("misc/exitopen", 127);
 		}
 	}
 }
@@ -511,6 +533,11 @@ script ACS_WRLD_CVARCHECKER open
 		delay(10);
 	}
 } 
+
+script "ResetGlobals" open
+{
+	customGamemode = false;
+}
    
 ////////////////////////////////////////
 /*
@@ -519,12 +546,13 @@ script ACS_WRLD_CVARCHECKER open
 ////////////////////////////////////////
 
 
-#define MAXTRACKS 15+1	// 1 more than MUSXX
+#define MAXTRACKS 16+1	// 1 more than MUSXX
 
 str all_music[MAXTRACKS] = {"MUS00", 
  "MUS01", "MUS02", "MUS03", "MUS04", "MUS05", 
  "MUS06", "MUS07", "MUS08", "MUS09", "MUS10", 
- "MUS11", "MUS12", "MUS13", "MUS14", "MUS15"};
+ "MUS11", "MUS12", "MUS13", "MUS14", "MUS15",
+ "MUS16"};
 
 int randmus;
 

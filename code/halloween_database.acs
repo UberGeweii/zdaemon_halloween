@@ -150,12 +150,14 @@ script ACS_DBASE_DISTRDATA (void)
 
 	// In case we end up playing with multiple lives..
 	if (GetPlayerInfo(player, PLAYERINFO_DEATHS) <= 0) 
+	{
 		GiveMoney(player, Data[(DATASIZE*(place+1))-MONEYDATA]);
 		
-	m_tmplevelplayer[player] = Data[(DATASIZE*(place+1))-LEVELDATA];
+		m_tmplevelplayer[player] = Data[(DATASIZE*(place+1))-LEVELDATA];
     
-    Delay(1);
+		Delay(1);
     
-    GrantPlayerLevel(player, GetPlayerLevel(player));
+		GrantPlayerLevel(player, GetPlayerLevel(player));
+	}
 }
 

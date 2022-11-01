@@ -1,0 +1,7 @@
+- Make sure there are no race conditions when it comes to fetching/retrieving the player inventory, data, etc.
+	^ This needs extra checking next year.
+
+- Make sure the battery HUD message doesn't conflict with the pet system HUD messages.
+- Proper formatting for the ACS files.
+- Crossbow not removed during the Chosen One.
+- Something awfully wrong with acs_always_preserve_globals.
