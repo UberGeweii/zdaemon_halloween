@@ -43,6 +43,7 @@
 #define PET_PUMPKINCACODEMON      35
 #define PET_GHOSTPET              36
 #define ITEM_CROSSBOW             37
+#define UPGRADE_MARINEWEAPON      38
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
@@ -88,6 +89,9 @@ script ACS_WRLD_CREATESHOPITMS OPEN
     CreateItem(PET_PUMPKINCACODEMON , "CacodemonPumpkin Pet"                ,   3500 );
     CreateItem(PET_GHOSTPET         , "Ghost Pet"                           ,   4000 );
     CreateItem(ITEM_CROSSBOW        , "Crossbow"                            ,   125 );
+    //CreateItem(ITEM_CROSSBOW        , "Crossbow"                            ,   125 );
+	
+	//UPGRADE_MARINEWEAPON
 
 }
 

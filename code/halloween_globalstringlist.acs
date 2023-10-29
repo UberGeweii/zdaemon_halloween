@@ -3,8 +3,24 @@
     === GLOBAL STRING VARIABLES ===
 */
 ////////////////////////////////////////
-#define MAX_INV_ITEM_NAMES 52
 
+#define MAXMARINEWEAPONS 12
+Str MarineWeapons[MAXMARINEWEAPONS] = {
+	"WEAPON_Dummy",
+	"WEAPON_Fist",
+	"WEAPON_BerserkFist",
+	"WEAPON_Chainsaw",
+	"WEAPON_Pistol",
+	"WEAPON_Shotgun",
+	"WEAPON_SuperShotgun",
+	"WEAPON_Chaingun",
+	"WEAPON_RocketLauncher",
+	"WEAPON_PlasmaRifle",
+	"WEAPON_Railgun",
+	"WEAPON_BFG"
+};
+
+#define MAX_INV_ITEM_NAMES 53
 str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "Clip",
 "RocketAmmo",
@@ -57,7 +73,8 @@ str inv_item_names[MAX_INV_ITEM_NAMES] = {
 "PuzzSkull",
 "GoldWand",
 "Health",
-"Armor"
+"Armor",
+"Gauntlets"
 };
 
 #define THING 888

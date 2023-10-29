@@ -78,6 +78,10 @@
 
 #define SEC                     35
 
+
+// [#] Need to check TID bases all around the lib for next year.
+#define PLAYERMARINETIDBASE		15000
+
 #define JUSTLEFT_MONEYSYSTEM    0
 
 // -- Shop defines --
@@ -112,6 +116,12 @@ global int 3:Data[];
 #define PETDATA             14
 #define LEVELDATA           13
 #define ADMINDATA           12
+#define MARINEHEALTHDATA	11
+#define MARINESPEEDDATA		10
+#define MARINEWEAPONDATA	9
+#define MARINESKINDATA		8
+#define MARINEDAMAGEDATA	7
+#define MARINECOLORDATA		6
 
 global int 4:InvData[];
 
@@ -163,6 +173,7 @@ global bool 20:gbossFightUnlocked;
 
 #include "halloween_shops.acs"
 #include "halloween_pets.acs"
+#include "halloween_scriptedmarines.acs"
 #include "halloween_admin.acs" 
 #include "halloween_dehackedcoupler.acs"
 
@@ -298,7 +309,7 @@ function void SavePlayerFullInventory(int player)
 		 
 		if(PlayerAlive(player) || PlayerInGame(player))
 		{
-			for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
+			for(int i = 0; i <  MAX_INV_ITEM_NAMES+1; i++) 
 			{
 				if(CheckInventoryCustom(player, inv_item_names[i]))
 					InvData[(INVENTORYDATASIZE*(slot+1))-i] = CheckInventoryCustom(player, inv_item_names[i]);       
@@ -319,7 +330,7 @@ function void RetrievePlayerFullInventory(int player)
 		
 		if(PlayerAlive(player) || PlayerInGame(player))
 		{
-			for(int i = 0; i <  MAX_INV_ITEM_NAMES; i++) 
+			for(int i = 0; i <  MAX_INV_ITEM_NAMES+1; i++) 
 			{
 				if(InvData[(INVENTORYDATASIZE*(slot+1))-i] != 0)
 					ProvideInventoryCustom(PlayerTag(player), inv_item_names[i], InvData[(INVENTORYDATASIZE*(slot+1))-i]);       
@@ -892,6 +903,57 @@ int countdown = time*60;
 	} 
 	Thing_move(PlayerTag(player), 16, 1);
 }
+
+int curScriptedMarineSkin[MAXPLAYERS];
+int curScriptedMarineWeapon[MAXPLAYERS];
+
+// Map based example of to-purchase marine.
+script 221 (int args1)
+{
+	int player = PlayerNumber();
+	SetFont("GARGWING");
+	
+	if (args1 == 0)
+	{
+		if (curScriptedMarineSkin[player] >= ZD_GetSkinTopIndex())
+			curScriptedMarineSkin[player] = 0;
+		else
+			curScriptedMarineSkin[player]++;
+		
+		Print(s:"\cdMarine skin changed to: \cj ", d:curScriptedMarineSkin[player], s:" - ", s:ZD_GetSkinName(curScriptedMarineSkin[player]));
+	}
+	
+	if (args1 == 1)
+	{
+		if (curScriptedMarineSkin[player] <= 0)
+			curScriptedMarineSkin[player] = ZD_GetSkinTopIndex();
+		else
+			curScriptedMarineSkin[player]--;
+		
+		Print(s:"\cdMarine skin changed to: \cj ", d:curScriptedMarineSkin[player], s:" - ", s:ZD_GetSkinName(curScriptedMarineSkin[player]));
+	}
+	
+	if (args1 == 2)
+	{
+		if (curScriptedMarineWeapon[player] >= MAXMARINEWEAPONS)
+			curScriptedMarineWeapon[player] = 0;
+		else
+			curScriptedMarineWeapon[player]++;
+		
+		Print(s:"\cdMarine weapon changed to: \cj ", d:curScriptedMarineWeapon[player], s:MarineWeapons[curScriptedMarineWeapon[player]]);;
+	}
+		
+	// Client sidedly update marine with correct skin.
+	Client_Execute(0, 222, 0); 
+	
+}
+
+// Client-sided script, do not call.
+script 222 (void)
+{
+	int player = PlayerNumber();
+	ZD_SetMarineSkin(22, ZD_GetSkinName(curScriptedMarineSkin[player]));
+}  
   
 ////////////////////////////////////////
 /*

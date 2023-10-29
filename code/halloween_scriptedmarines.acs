@@ -1,0 +1,254 @@
+
+
+/*
+#define MARINEHEALTHDATA	11
+#define MARINESPEEDDATA		10
+#define MARINEWEAPONDATA	9
+#define MARINESKINDATA		8
+#define MARINEDAMAGEDATA	7
+#define MARINECOLORDATA		6
+*/
+
+#define MARINEUPGRADE1_HEALTH 				0
+#define MARINEUPGRADE2_SPEED 				1
+#define MARINEUPGRADE3_DAMAGEMULTIPLIER 	2
+#define MARINEUPGRADE4_WEAPON				3
+#define MARINEUPGRADE5_COLOR				4
+
+Int MarineWeaponPrices[MAXMARINEWEAPONS] = {
+	100,
+	1000,
+	1200,
+	1500,
+	2000,
+	4000,
+	3000,
+	10000,
+	15000,
+	20000,
+	80000
+};
+
+// https://zdoom.org/wiki/Hudmessageonactor, thanks Isle. This saved me so much time (:
+
+
+/*
+
+		Log(s:"=== Printing marine data for: ", d:player, s:" - ", n:player+1, s:" ===");
+		Log(s:"Health: ", d:Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA]);
+		Log(s:"Speed: ", d:Data[(DATASIZE*(slot+1))-MARINESPEEDDATA]);
+		Log(s:"Weapon: ", s:MarineWeapons[Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]]);
+		Log(s:"Skin: ", s:ZD_GetSkinName(Data[(DATASIZE*(slot+1))-MARINESKINDATA]));
+		Log(s:"Damage Multiplier: ", d:Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA]);
+		Log(s:"Translation: ", d:Data[(DATASIZE*(slot+1))-MARINECOLORDATA]);
+*/
+
+function void DisplayScriptedMarineInfo(int marine, int msgID, int hudX, int hudY, int xOffset, int yOffset, int range, int holdTime, str colour)
+{		
+	int dist, angle, vang, pitch, x, y;
+	int player = PlayerNumber();
+	
+	// Loading data
+	str msg = StrParam(n:marine+1);
+	int slot = DataSlot(msg);
+
+	// check player slot within the database.
+	if (slot != -1)
+	{	
+		if (holdTime == 0) { holdTime = 0.1; }	
+		if (hudX == 0) { hudX = 640; } // Default value.
+		if (hudY == 0) { hudY = 480; } // Default value.
+		
+		SetHudSize(hudX, hudY, 1);
+		x = GetActorX(PlayerTag(player)) - GetActorX(PlayerTag(player));
+		y = GetActorY(PLAYERMARINETIDBASE+marine) - GetActorY(PlayerTag(player));
+		
+		vang = VectorAngle(x,y);
+		angle = (vang - GetActorAngle(PlayerTag(player)) + 1.0) % 1.0;
+		
+		if(((vang+0.125)%0.5) > 0.25) dist = FixedDiv(y, sin(vang));
+		else dist = FixedDiv(x, cos(vang));
+		
+		if ((angle < 0.23 || angle > 0.85) && (dist >> 16) < range)
+		{
+			
+			if (GetActorPitch(PlayerTag(player)) >= -0.5 && GetActorPitch(PlayerTag(player)) <= 0.5)
+			{
+			pitch = VectorAngle(dist, GetActorZ(PLAYERMARINETIDBASE) - (GetActorZ(PlayerTag(player)) + GetActorViewHeight(PlayerTag(player))));
+			pitch += FixedMul(GetActorPitch(PlayerTag(player)), 1.2) % 1.0;
+		
+				if ((hudX/2) * sin(angle) != 0 && cos(angle) != 0 && (hudX/2) * sin(pitch) != 0 && cos(pitch) != 0)
+				{
+					
+				x = hudX/2 - ((hudX/2) * sin(angle) / cos(angle));
+				y = hudY/2 - ((HUDX/2) * sin(pitch) / cos(pitch));
+					
+				x+=xOffset;
+				y+=yOffset;
+						
+				HudMessage(n:player+1, s:"'s Marine\n\crHealth: ",d:GetActorProperty(PLAYERMARINETIDBASE+marine, APROP_Health), 
+				s:" / ",d:Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA], s:"\n\crWeapon: ", s:MarineWeapons[Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]]; HUDMSG_PLAIN, msgID, colour, (x << 16), (y << 16), holdTime);
+				}   
+			}	
+		}
+	}
+}
+
+script "MarineInfoLoop" enter
+{
+	int player = PlayerNumber();
+	
+	while (PlayerAlive(player))
+	{
+		for (int i = 0; i <= PlayerTopIndex(); i++)
+		{
+			if(PlayerAlive(i) && ThingCount(0, PLAYERMARINETIDBASE+i) > 0)
+				Client_NamedExecuteAlways(player, "DisplayMarineInfo", 0, i);
+		}
+		
+		Delay(1);
+	}
+}
+
+script "DisplayMarineInfo" (int marine)
+{
+	DisplayScriptedMarineInfo(marine, 505+marine, 800, 600, 0, 0, 1024, 0, CR_WHITE);
+}
+
+script "PrintMarineData" (int player)
+{
+	// Loading data
+	str msg = StrParam(n:PlayerNumber()+1);
+	int slot = DataSlot(msg);
+
+	// check player slot within the database.
+	if (slot != -1)
+	{
+		Log(s:"=== Printing marine data for: ", d:player, s:" - ", n:player+1, s:" ===");
+		Log(s:"Health: ", d:Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA]);
+		Log(s:"Speed: ", d:Data[(DATASIZE*(slot+1))-MARINESPEEDDATA]);
+		Log(s:"Weapon: ", s:MarineWeapons[Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]]);
+		Log(s:"Skin: ", s:ZD_GetSkinName(Data[(DATASIZE*(slot+1))-MARINESKINDATA]));
+		Log(s:"Damage Multiplier: ", d:Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA]);
+		Log(s:"Translation: ", d:Data[(DATASIZE*(slot+1))-MARINECOLORDATA]);
+		Log(s:"==============================================");
+	}
+	else
+	{
+		Log(s:"PrintMarineData: Player does not exist in database!");
+	}
+}
+
+script "SetMarineData" (int player, int dataType, int value)
+{
+	// Loading data
+	str msg = StrParam(n:PlayerNumber()+1);
+	int slot = DataSlot(msg);
+
+	// check player slot within the database.
+	if (slot != -1)
+	{
+		// Health.
+		if (dataType == 0)
+		{
+			Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA] = value;
+		}
+		else if (dataType == 1)
+		{
+			Data[(DATASIZE*(slot+1))-MARINESPEEDDATA] = value * 65536;	
+		}
+		else if (dataType == 2)
+		{
+			Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA] = value;
+		}
+		else if (dataType == 3)
+		{
+			Data[(DATASIZE*(slot+1))-MARINESKINDATA] = value;
+		}
+		else if (dataType == 4)
+		{
+			Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA] = value * 65536;
+		}
+		else if (dataType == 5)
+		{
+			Data[(DATASIZE*(slot+1))-MARINECOLORDATA] = value;
+		}
+		else
+		{
+			Log(s:"SetMarineData: Invalid dataType provided!");
+		}
+	}
+	else
+	{
+		Log(s:"SetMarineData: Player does not exist in database!");
+	}
+}
+
+// Reroutes ArtiDarkServant functionality.
+script "ArtifactRerouting" open
+{
+	Arti_Execute("ArtiDarkServant", 223);
+}
+
+
+// Spawns a scripted marine.
+script 223 (void)
+{
+	int player = PlayerNumber();
+	
+	// Loading data
+	str msg = StrParam(n:PlayerNumber()+1);
+	int slot = DataSlot(msg);
+
+	// check player slot within the database.
+	if (slot != -1)
+	{
+		if (!ThingCount(0, PLAYERMARINETIDBASE+player))
+		{
+			Print(s:"\cdSpawned your friendly marine.");
+			
+			Spawn("ScriptedMarine",
+			GetActorX(PlayerTag(player)) + cos (GetActorAngle(PlayerTag(player))) * 96,
+			GetActorY(PlayerTag(player)) + sin (GetActorAngle(PlayerTag(player))) * 96,
+			GetActorFloorZ(PlayerTag(player)), PLAYERMARINETIDBASE+player, false);
+			SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Friendly, true);
+			
+			// Apply options bought by player.
+				
+			// Health.
+			if (Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA] <= 0)
+				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Health, 100);
+			else
+				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Health, Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA]);				
+			
+			// Speed.
+			if (Data[(DATASIZE*(slot+1))-MARINESPEEDDATA] <= 0)
+				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Speed, 2.0);
+			else
+				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Speed, Data[(DATASIZE*(slot+1))-MARINESPEEDDATA]);
+			
+			// Weapon.
+			SetMarineWeapon(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]);
+			
+			// Skin.
+			ZD_SetMarineSkin(PLAYERMARINETIDBASE+player, ZD_GetSkinName(Data[(DATASIZE*(slot+1))-MARINESKINDATA]));
+			
+			// Damage multiplier.
+			if (Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA] < 1.0)
+				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_DamageMultiplier, 1.0);	
+			else
+				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_DamageMultiplier, Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA]);
+
+			// Thing translation.
+			Thing_SetTranslation(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINECOLORDATA]);		
+
+		}
+		else
+		{
+			Print(s:"\caYour friendly marine is still alive!");
+			GiveInventory("ArtiDarkServant", 1);
+		}
+	}
+	
+	SetFont("GARGWING");
+}
