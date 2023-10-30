@@ -43,7 +43,25 @@
 #define PET_PUMPKINCACODEMON      35
 #define PET_GHOSTPET              36
 #define ITEM_CROSSBOW             37
-#define UPGRADE_MARINEWEAPON      38
+#define UPGRADE_MARINEWEPPISTOL   38
+#define UPGRADE_MARINEWEPCHAINSAW 39
+#define UPGRADE_MARINEWEPSHOTGUN  40
+#define UPGRADE_MARINEWEPCHAINGUN 41
+#define UPGRADE_MARINESSG		  42
+#define UPGRADE_MARINEROCKET	  43
+#define UPGRADE_MARINEPLASMA	  44
+#define UPGRADE_HEALTH125		  45
+#define UPGRADE_HEALTH150		  46
+#define UPGRADE_HEALTH175		  47
+#define UPGRADE_HEALTH200		  48
+#define UPGRADE_SPEED10			  49
+#define UPGRADE_SPEED20			  50
+#define UPGRADE_SPEED30			  51
+#define UPGRADE_SKIN			  52
+#define UPGRADE_COLOR			  53
+#define UPGRADE_DAMAGE1			  54
+#define UPGRADE_DAMAGE2			  55
+#define UPGRADE_DAMAGE3			  56
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
@@ -89,9 +107,30 @@ script ACS_WRLD_CREATESHOPITMS OPEN
     CreateItem(PET_PUMPKINCACODEMON , "CacodemonPumpkin Pet"                ,   3500 );
     CreateItem(PET_GHOSTPET         , "Ghost Pet"                           ,   4000 );
     CreateItem(ITEM_CROSSBOW        , "Crossbow"                            ,   125 );
-    //CreateItem(ITEM_CROSSBOW        , "Crossbow"                            ,   125 );
 	
-	//UPGRADE_MARINEWEAPON
+	CreateItem(UPGRADE_MARINEWEPPISTOL		, "Marine Pistol Upgrade"			, 5000 );
+	CreateItem(UPGRADE_MARINEWEPCHAINSAW	, "Marine Chainsaw Upgrade"			, 3000 );
+	CreateItem(UPGRADE_MARINEWEPSHOTGUN		, "Marine Shotgun Upgrade"			, 10000 );
+	CreateItem(UPGRADE_MARINEWEPCHAINGUN	, "Marine Chaingun Upgrade"			, 40000 );
+	CreateItem(UPGRADE_MARINESSG			, "Marine SSG Upgrade"				, 120000 );
+	CreateItem(UPGRADE_MARINEROCKET			, "Marine Rocket Upgrade"			, 200000 );
+	CreateItem(UPGRADE_MARINEPLASMA			, "Marine Plasma Upgrade"			, 500000 );
+	
+	CreateItem(UPGRADE_HEALTH125			, "Marine 125 HP Upgrade"			, 2000	 );
+	CreateItem(UPGRADE_HEALTH150			, "Marine 150 HP Upgrade"			, 4000	 );
+	CreateItem(UPGRADE_HEALTH175			, "Marine 175 HP Upgrade"			, 8000	 );
+	CreateItem(UPGRADE_HEALTH200			, "Marine 200 HP Upgrade"			, 10000	 );
+	
+	CreateItem(UPGRADE_SPEED10			, "Marine Speed I Upgrade"				, 4000	 );
+	CreateItem(UPGRADE_SPEED20			, "Marine Speed II Upgrade"				, 8000	 );
+	CreateItem(UPGRADE_SPEED30			, "Marine Speed III Upgrade"			, 50000	 );
+	
+	CreateItem(UPGRADE_SKIN				, "Marine Skin Change"					, 500	 );
+	CreateItem(UPGRADE_COLOR			, "Marine Color Change"					, 500	 );
+	
+	CreateItem(UPGRADE_DAMAGE1			, "Marine Damage Multiply I Upgrade"				, 100000	 );
+	CreateItem(UPGRADE_DAMAGE2			, "Marine Damage Multiply II Upgrade"				, 300000	 );
+	CreateItem(UPGRADE_DAMAGE3			, "Marine Damage Multiply III Upgrade"				, 500000	 );
 
 }
 
@@ -107,6 +146,8 @@ script 175 (int item)
     {
         switch (item)
         {
+			// Pets
+			
             case PET_GRIMREAPER:
                 BuyPet(item, player, 1, cost);
                 break;
@@ -254,12 +295,86 @@ script 175 (int item)
                 
             case ITEM_JERRYCAN:
                 BuyLimit("PhoenixRodAmmo", 1, 20, player, item, cost);
+                break;
+
+			// Marine upgrades.
+
+            case UPGRADE_MARINEWEPPISTOL:
+                BuyMarineUpgrade(item, player, 2, 4, cost);
+                break;
+
+            case UPGRADE_MARINEWEPCHAINSAW:
+                BuyMarineUpgrade(item, player, 2, 3, cost);
                 break;   
-        }
-    }
-    else
-    {
-        HudMessage (s:"\cgNot enough ectoplasm!";
-                    HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
-    }
-}
+
+            case UPGRADE_MARINEWEPSHOTGUN:
+                BuyMarineUpgrade(item, player, 2, 5, cost);
+                break;   
+
+            case UPGRADE_MARINEWEPCHAINGUN:
+                BuyMarineUpgrade(item, player, 2, 7, cost);
+                break;   
+
+            case UPGRADE_MARINESSG:
+                BuyMarineUpgrade(item, player, 2, 6, cost);
+                break;   
+
+            case UPGRADE_MARINEROCKET:
+                BuyMarineUpgrade(item, player, 2, 8, cost);
+                break;  
+
+            case UPGRADE_MARINEPLASMA:
+                BuyMarineUpgrade(item, player, 2, 9, cost);
+                break;   
+
+            case UPGRADE_HEALTH125:
+                BuyMarineUpgrade(item, player, 0, 125, cost);
+                break;  		
+
+            case UPGRADE_HEALTH150:
+                BuyMarineUpgrade(item, player, 0, 150, cost);
+                break;  		
+
+            case UPGRADE_HEALTH175:
+                BuyMarineUpgrade(item, player, 0, 175, cost);
+                break;  		
+
+            case UPGRADE_HEALTH200:
+                BuyMarineUpgrade(item, player, 0, 200, cost);
+                break;  		
+
+            case UPGRADE_SPEED10:
+                BuyMarineUpgrade(item, player, 1, 10, cost);
+                break;				
+
+            case UPGRADE_SPEED20:
+                BuyMarineUpgrade(item, player, 1, 20, cost);
+                break;		
+				
+            case UPGRADE_SPEED30:
+                BuyMarineUpgrade(item, player, 1, 30, cost);
+                break;		
+				
+            case UPGRADE_SKIN:
+                BuyMarineUpgrade(item, player, 3, curScriptedMarineSkin[player], cost);
+                break;	
+				
+            case UPGRADE_COLOR:
+                BuyMarineUpgrade(item, player, 5, curScriptedMarineColor[player], cost);
+                break;	
+				
+            case UPGRADE_DAMAGE1:
+                BuyMarineUpgrade(item, player, 4, 2, cost);
+                break;	
+				
+            case UPGRADE_DAMAGE2:
+                BuyMarineUpgrade(item, player, 4, 3, cost);
+                break;	
+
+            case UPGRADE_DAMAGE3:
+                BuyMarineUpgrade(item, player, 5, 4, cost);
+                break;	
+
+		}
+	}
+}	

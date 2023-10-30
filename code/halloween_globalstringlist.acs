@@ -22,955 +22,955 @@ Str MarineWeapons[MAXMARINEWEAPONS] = {
 
 #define MAX_INV_ITEM_NAMES 53
 str inv_item_names[MAX_INV_ITEM_NAMES] = {
-"Clip",
-"RocketAmmo",
-"Cell",
-"Shell",
-"Backpack",
-"BFG9000",
-"Chaingun",
-"Chainsaw",
-"RocketLauncher",
-"PlasmaRifle",
-"Fist",
-"Pistol",
-"Shotgun",
-"SuperShotgun",
-"CWeapStaff",
-"CWeapMace",
-"CWeapFlame",
-"Mace",
-"Crossbow", 
-"CWeapWraithverge",
-"MWeapWand",
-"FWeapQuietus",
-"MWeapBloodscourge",
-"FWeapHammer",
-"FWeaponPiece1",
-"FWeaponPiece2",
-"FWeaponPiece3",
-"CWeaponPiece1",
-"CWeaponPiece2",
-"CWeaponPiece3",
-"MWeaponPiece1",
-"MWeaponPiece2",
-"MWeaponPiece3",
-"Crossbow",
-"ArtiHealth",
-"ArtiSuperHealth", 
-"ArtiTorch",
-"ArtiInvulnerability",
-"ArtiInvisibility",
-"ArtiTeleport",
-"ArtiTeleportOther",
-"PuzzGemBig",
-"PuzzBook1",
-"PuzzBook2",
-"PuzzGear1",
-"PuzzGear2",
-"PuzzGear3",
-"PuzzGear4",
-"PuzzSkull",
-"GoldWand",
-"Health",
-"Armor",
-"Gauntlets"
+	"Clip",
+	"RocketAmmo",
+	"Cell",
+	"Shell",
+	"Backpack",
+	"BFG9000",
+	"Chaingun",
+	"Chainsaw",
+	"RocketLauncher",
+	"PlasmaRifle",
+	"Fist",
+	"Pistol",
+	"Shotgun",
+	"SuperShotgun",
+	"CWeapStaff",
+	"CWeapMace",
+	"CWeapFlame",
+	"Mace",
+	"Crossbow", 
+	"CWeapWraithverge",
+	"MWeapWand",
+	"FWeapQuietus",
+	"MWeapBloodscourge",
+	"FWeapHammer",
+	"FWeaponPiece1",
+	"FWeaponPiece2",
+	"FWeaponPiece3",
+	"CWeaponPiece1",
+	"CWeaponPiece2",
+	"CWeaponPiece3",
+	"MWeaponPiece1",
+	"MWeaponPiece2",
+	"MWeaponPiece3",
+	"Crossbow",
+	"ArtiHealth",
+	"ArtiSuperHealth", 
+	"ArtiTorch",
+	"ArtiInvulnerability",
+	"ArtiInvisibility",
+	"ArtiTeleport",
+	"ArtiTeleportOther",
+	"PuzzGemBig",
+	"PuzzBook1",
+	"PuzzBook2",
+	"PuzzGear1",
+	"PuzzGear2",
+	"PuzzGear3",
+	"PuzzGear4",
+	"PuzzSkull",
+	"GoldWand",
+	"Health",
+	"Armor",
+	"Gauntlets"
 };
 
 #define THING 888
 
 str THINGLST[THING] = {
-"",	// 0
-// Doom
-"DoomPlayer", // 1
-"ZombieMan", // 2
-"ShotgunGuy", // 3
-"Archvile",	// 4
-"ArchvileFire", // 5
-"Revenant",	// 6
-"RevenantTracer", // 7
-"RevenantTracerSmoke", // 8
-"Fatso",	// 9
-"FatShot",	// 10
-"ChaingunGuy", // 11
-"DoomImp",	// 12
-"Demon",	// 13
-"Spectre",	// 14
-"Cacodemon", // 15
-"BaronOfHell", // 16
-"BaronBall", // 17
-"HellKnight", // 18
-"LostSoul",	// 19
-"SpiderMastermind", // 20
-"Arachnotron", // 21
-"Cyberdemon", // 22
-"PainElemental", // 23
-"WolfensteinSS", // 24
-"CommanderKeen", // 25
-"BossBrain", // 26
-"BossEye",	// 27
-"BossTarget", // 28
-"SpawnShot", // 29
-"SpawnFire", // 30
-"ExplosiveBarrel", // 31
-"DoomImpBall", // 32
-"CacodemonBall", // 33
-"Rocket",	// 34
-"PlasmaBall", // 35
-"BFGBall",	// 36
-"ArachnotronPlasma", // 37
-"BulletPuff", // 38
-"Blood",	// 39
-"TeleportFog", // 40
-"ItemFog",	// 41
-"TeleportDest", // 42
-"BFGExtra",	// 43
-"GreenArmor", // 44
-"BlueArmor", // 45
-"HealthBonus", // 46
-"ArmorBonus", // 47
-"BlueCard",	// 48
-"RedCard",	// 49
-"YellowCard", // 50
-"YellowSkull", // 51
-"RedSkull",	// 52
-"BlueSkull", // 53
-"Stimpack",	// 54
-"Medikit",	// 55
-"Soulsphere", // 56
-"InvulnerabilitySphere",	// 57
-"Berserk",	// 58
-"BlurSphere", // 59
-"RadSuit",	// 60
-"Allmap",	// 61
-"Infrared",	// 62
-"Megasphere", // 63
-"Clip",	// 64
-"ClipBox",	// 65
-"RocketAmmo", // 66
-"RocketBox", // 67
-"Cell",	// 68
-"CellPack",	// 69
-"Shell",	// 70
-"ShellBox",	// 71
-"Backpack",	// 72
-"BFG9000",	// 73
-"Chaingun",	// 74
-"Chainsaw",	// 75
-"RocketLauncher", // 76
-"PlasmaRifle", // 77
-"Shotgun",	// 78
-"SuperShotgun", // 79
-"TechLamp",	// 80
-"TechLamp2", // 81
-"Column",	// 82
-"TallGreenColumn", // 83
-"ShortGreenColumn", // 84
-"TallRedColumn", // 85
-"ShortRedColumn", // 86
-"SkullColumn", // 87
-"HeartColumn", // 88
-"EvilEye",	// 89
-"FloatingSkull", // 90
-"TorchTree", // 91
-"BlueTorch", // 92
-"GreenTorch", // 93
-"RedTorch",	// 94
-"ShortBlueTorch", // 95
-"ShortGreenTorch", // 96
-"ShortRedTorch", // 97
-"Stalagtite", // 98
-"TechPillar", // 99
-"Candlestick", // 100
-"Candelabra", // 101
-"BloodyTwitch", // 102
-"Meat2",	// 103
-"Meat3",	// 104
-"Meat4",	// 105
-"Meat5",	// 106
-"NonsolidMeat2", // 107
-"NonsolidMeat4", // 108
-"NonsolidMeat3", // 109
-"NonsolidMeat5", // 110
-"NonsolidTwitch", // 111
-"DeadCacodemon", // 112
-"DeadMarine", // 113
-"DeadZombieMan", // 114
-"DeadDemon", // 115
-"DeadLostSoul", // 116
-"DeadDoomImp", // 117
-"DeadShotgunGuy", // 118
-"GibbedMarine", // 119
-"GibbedMarineExtra", // 120
-"HeadsOnAStick", // 121
-"Gibs",	// 122
-"HeadOnAStick", // 123
-"HeadCandles", // 124
-"DeadStick", // 125
-"LiveStick", // 126
-"BigTree",	// 127
-"BurningBarrel", // 128
-"HangNoGuts", // 129
-"HangBNoBrain", // 130
-"HangTLookingDown", // 131
-"HangTSkull", // 132
-"HangTLookingUp", // 133
-"HangTNoBrain", // 134
-"ColonGibs", // 135
-"SmallBloodPool", // 136
-"BrainStem", // 137
-"DoomUnusedStates", // 138
-// Heretic
-"SilverShield", // 139	Gold Armor
-"EnchantedShield", // 140	Red Armor
-"BagOfHolding", // 141
-"SuperMap",	// 142
-"ArtiInvisibility", // 143	Portable Invisibility
-"ArtiTomeOfPower", // 144	None
-"ArtiEgg",	// 145	Morph Ovum
-"EggFX",	// 146	Morph Ovum Ball
-"ArtiTimeBomb", // 147	TimeBomb
-"ActivatedTimeBomb", // 148	TimeBomb Activated
-"Pod",	// 149
-"PodGoo",	// 150
-"PodGenerator", // 151
-"SkullHang70", // 152	Portable Medikit (dummy)
-"SkullHang60", // 153	Portable Big Medpack (dummy)
-"SkullHang45", // 154	Portable Invulnerability (dummy)
-"SkullHang35", // 155	TimbeBomb (dummy)
-"Chandelier", // 156	Portable Invisibility (dummy)
-"SerpentTorch", // 157	Grenade (dummy)
-"SmallPillar", // 158	Steroids (dummy)
-"StalagmiteSmall", // 159	Morph Ovum (dummy)
-"StalagmiteLarge", // 160	Arrow
-"StalactiteSmall", // 161	Special Spot (old random)
-"StalactiteLarge", // 162	Teleporter Smoke
-"FireBrazier", // 163	Dispenser (dummy)
-"Barrel",	// 164	Portable Light Visor (dummy)
-"BrownPillar", // 165	Jetpack (dummy)
-"Moss1",	// 166	MasterKey (dummy evidemment)
-"Moss2",	// 167	GreenArmor (dummy)
-"WallTorch", // 168	BlueArmor (dummy)
-"HangingCorpse", // 169
-"KeyGizmo",	// 170
-"KeyGizmoFloat", // 171
-"KeyGizmoBlue", // 172	Megasphere (dummy)
-"KeyGizmoGreen", // 173	Clip (dummy)
-"KeyGizmoYellow", // 174	ClipBox (dummy)
-"Volcano",	// 175	RocketAmmo (dummy)
-"VolcanoBlast", // 176	RocketBox (dummy)
-"VolcanoTBlast", // 177	Cell (dummy)
-"TeleGlitterGenerator1",	// 178
-"TeleGlitterGenerator2",	// 179
-"TeleGlitter1", // 180
-"TeleGlitter2", // 181
-"Staff",	// 182
-"StaffPuff", // 183
-"StaffPuff2", // 184
-"Beak",	// 185
-"BeakPuff",	// 186
-"Gauntlets", // 187
-"GauntletPuff1", // 188
-"GauntletPuff2", // 189
-"Blaster",	// 190	MiniGun
-"BlasterFX1", // 191	Magma Rifle Ball
-"BlasterSmoke", // 192	Magma Rifle Ball Trail
-"Ripper",	// 193
-"BlasterPuff1", // 194
-"BlasterPuff2", // 195
-"Mace",	// 196	Putain de Gros Flingue
-"MaceFX1",	// 197
-"MaceFX2",	// 198
-"MaceFX3",	// 199
-"MaceFX4",	// 200
-"SkullRod",	// 201	Triple Rocket Launcher
-"HornRodFX1", // 202	Triple Rocket Launcher MiniRocket
-"HornRodFX2", // 203
-"RainPillar", // 204
-"GoldWand",	// 205	Poison Pistol
-"GoldWandFX1", // 206
-"GoldWandFX2", // 207
-"GoldWandPuff1", // 208
-"GoldWandPuff2", // 209
-"PhoenixRod", // 210	Magma Rifle
-"PhoenixFX1", // 211
-"PhoenixPuff", // 212
-"PhoenixFX2", // 213	Bullet Dummy
-"Crossbow",	// 214	Lever Shotgun
-"CrossbowFX1", // 215
-"CrossbowFX2", // 216
-"CrossbowFX3", // 217
-"CrossbowFX4", // 218
-"HereticPlayer", // 219
-"BloodySkull", // 220
-"ChickenPlayer", // 221
-"Chicken",	// 222
-"Feather",	// 223
-"Mummy",	// 224	Berseker Demon
-"MummyGhost", // 225
-"MummyLeader", // 226	Abaddon
-"MummyLeaderGhost", // 227
-"MummySoul", // 228	Soul Imp Soul
-"MummyFX1",	// 229	Soul Imp Ball
-"Beast",	// 230	Dark Imp
-"BeastBall", // 231	Dark Imp Ball
-"Puffy",	// 232	Soul Imp Ball Trail
-"Snake",	// 233	Snake Imp
-"SnakeProjA", // 234	Abaddon Ball
-"SnakeProjB", // 235	Cacolantern Ball
-"Ironlich",	// 236
-"HeadFX1",	// 237	Elemental Vile Ice Ball
-"HeadFX2",	// 328	Elemental Vile Ice Ball 2
-"HeadFX3",	// 239	Elemental Vile Fire Ball
-"Whirlwind", // 240	Elemental Vile Tornado
-"Clink",	// 241	Blood Demon
-"Wizard",	// 242
-"WizardFX1", // 243
-"HereticImp", // 244	Hectebus
-"HereticImpLeader", // 245
-"HereticImpChunk1", // 246
-"HereticImpChunk2", // 247
-"HereticImpBall", // 248	Firebomb Grenade
-"Knight",	// 249	Belphegor
-"KnightGhost", // 250
-"KnightAxe", // 251	Snake Imp Ball
-"RedAxe",	// 252	Arachnotron v2 Ball
-"BossSpot",	// 253
-"Sorcerer1", // 254	Flying Cyber
-"SorcererFX1", // 255
-"Sorcerer2", // 256	Arachnophyte
-"Sorcerer2FX1", // 257	Hectebus Ball
-"Sorcerer2FXSpark", // 258
-"Sorcerer2FX2", // 259	Flying Cyber Rocket
-"Sorcerer2Telefade", // 260
-"ScriptedAmbientMaster",	// 261
-"ScriptedAmbient", // 262
-"ScriptedAmbient1", // 263
-"ScriptedAmbient2", // 264
-"ScriptedAmbient3", // 265
-"ScriptedAmbient4", // 266
-"ScriptedAmbient5", // 267
-"ScriptedAmbient6", // 268
-"ScriptedAmbient7", // 269
-"ScriptedAmbient8", // 270
-"ScriptedAmbient9", // 271
-"ScriptedAmbient10", // 272
-"KeyGreen",	// 273
-"KeyBlue",	// 274
-"KeyYellow", // 275
-"GoldWandAmmo", // 276	None
-"GoldWandHefty", // 277	None
-"MaceAmmo",	// 278	Money Gold
-"MaceHefty", // 279	None
-"CrossbowAmmo", // 280	None
-"CrossbowHefty", // 281	None
-"SkullRodAmmo", // 282	None
-"SkullRodHefty", // 283	None
-"PhoenixRodAmmo", // 284	None
-"PhoenixRodHefty", // 285	None
-"BlasterAmmo", // 286	Money Red
-"BlasterHefty", // 287	None
-"MaceSpawner", // 288
-// Hexen
-"FireBall",	// 289
-"Arrow",	// 290	Belphegor Ball
-"Dart",	// 291	Revenant++ Ball
-"PoisonDart", // 292
-"RipperBall", // 293
-"ProjectileBlade", // 294	Putain de Gros Flingue Ball
-"IceShard",	// 295
-"FlameSmallTemp", // 296
-"FlameLargeTemp", // 297
-"FlameSmall", // 298
-"FlameLarge", // 299
-"ArtiDarkServant", // 300
-"SummoningDoll", // 301
-"ArtiTeleportOther", // 302	Dispenser
-"TelOtherFX1", // 303
-"TelOtherFX2", // 304
-"TelOtherFX3", // 305
-"TelOtherFX4", // 306
-"TelOtherFX5", // 307
-"DirtClump", // 308
-"ThrustFloorDown", // 309
-"ThrustFloorUp", // 310
-"FogSpawner", // 311
-"FogPatchSmall", // 312
-"FogPatchMedium", // 313
-"FogPatchLarge", // 314
-"ArtiPork",	// 315
-"PorkFX",	// 316
-"ZWingedStatueNoSkull", // 317
-"ZGemPedestal", // 318
-"PuzzleItem", // 319
-"PuzzSkull", // 320
-"PuzzGemBig", // 321
-"PuzzGemRed", // 322
-"PuzzGemGreen1", // 323
-"PuzzGemGreen2", // 324
-"PuzzGemBlue1", // 325
-"PuzzGemBlue2", // 326
-"PuzzBook1", // 327
-"PuzzBook2", // 328
-"PuzzFlameMask", // 329
-"PuzzFWeapon", // 330
-"PuzzCWeapon", // 331
-"PuzzMWeapon", // 332
-"PuzzGear1", // 333
-"PuzzGear2", // 334
-"PuzzGear3", // 335
-"PuzzGear4", // 336
-"FireBomb",	// 337
-"ArtiPoisonBag", // 338	Grenade
-"PoisonBag", // 339
-"ArtiPoisonBag1", // 340	Grenade
-"ArtiPoisonBag2", // 341
-"ArtiPoisonBag3", // 342
-"PoisonCloud", // 343
-"ThrowingBomb", // 344	Throwing Grenade
-"ArtiSpeedBoots", // 345	Steroids
-"ArtiBoostMana", // 346
-"ArtiBoostArmor", // 347
-"ArtiBlastRadius", // 348
-"ArtiHealingRadius", // 349
-"ZWingedStatue", // 350	CellPack (dummy)
-"ZRock1",	// 351	Shell (dummy)
-"ZRock2",	// 352	ShellBox (dummy)
-"ZRock3",	// 353	Backpack (dummy)
-"ZRock4",	// 354	BFG9000 (dummy)
-"ZChandelier", // 355	Chainsaw (dummy)
-"ZChandelierUnlit", // 356	RocketLauncher (dummy)
-"ZTreeDead", // 357	PlasmaRifle (dummy)
-"ZTree",	// 358	SuperShotgun (dummy)
-"TreeDestructible", // 359	Guard
-"ZTreeSwamp150", // 360	Scientist 1
-"ZTreeSwamp120", // 361	Sitting Marine
-"ZStumpBurned", // 362	Glock (dummy)
-"ZStumpBare", // 363	Lever Shotgun (dummy)
-"ZStumpSwamp1", // 364	MiniGun (dummy)
-"ZStumpSwamp2", // 365	Revolver (dummy)
-"ZShroomLarge1", // 366	Magma Rifle (dummy)
-"ZShroomLarge2", // 367	Triple Rocket Launcher (dummy)
-"ZShroomLarge3", // 368	Super Chaingun (dummy)
-"ZShroomSmall1", // 369	bottle 1
-"ZShroomSmall2", // 370	Glass
-"ZShroomSmall3", // 371	bottle 2
-"ZShroomSmall4", // 372	Firebomb (dummy)
-"ZShroomSmall5", // 373	Standing Marine
-"ZStalagmitePillar", // 374	Railgun (dummy)
-"ZStalagmiteLarge", // 375	Health Regen Sphere
-"ZStalagmiteMedium", // 376	Standing Marine 2
-"ZStalagmiteSmall", // 377	Guard 2
-"ZStalactiteLarge", // 378	Poison Pistol (dummy)
-"ZStalactiteMedium", // 379	The Bane (dummy)
-"ZStalactiteSmall", // 380	Guard Sphere (dummy rofl)
-"ZMossCeiling1", // 381	Hell Shotgun (dummy)
-"ZMossCeiling2", // 382	Soulsphere (dummy)
-"ZSwampVine", // 383
-"ZCorpseKabob", // 384	Thunder Shotgun
-"ZCorpseSleeping", // 385	Chaingun Missile (dummy)
-"ZTombstoneRIP", // 386	Scientist 2
-"ZTombstoneShane", // 387	Scientist 3
-"ZTombstoneBigCross", // 388	Scientist 4
-"ZTombstoneBrianR", // 389	Putain de Gros Flingue (dummy)
-"ZTombstoneCrossCircle",	// 390
-"ZTombstoneSmallCross", // 391
-"ZTombstoneBrianP", // 392
-"ZCorpseHanging", // 393
-"ZStatueGargoyleGreenTall",	// 394
-"ZStatueGargoyleBlueTall",	// 395
-"ZStatueGargoyleGreenShort",	// 396
-"ZStatueGargoyleBlueShort",	// 397
-"ZStatueGargoyleStripeTall",	// 398
-"ZStatueGargoyleDarkRedTall",	// 399
-"ZStatueGargoyleRedTall",	// 400
-"ZStatueGargoyleTanTall",	// 401
-"ZStatueGargoyleRustTall",	// 402
-"ZStatueGargoyleDarkRedShort",	// 403
-"ZStatueGargoyleRedShort",	// 404
-"ZStatueGargoyleTanShort",	// 405
-"ZStatueGargoyleRustShort",	// 406
-"ZBannerTattered", // 407
-"ZTreeLarge1", // 408
-"ZTreeLarge2", // 409
-"ZTreeGnarled1", // 410
-"ZTreeGnarled2", // 411
-"ZLog",	// 412
-"ZStalactiteIceLarge", // 413
-"ZStalactiteIceMedium", // 414
-"ZStalactiteIceSmall", // 415
-"ZStalactiteIceTiny", // 416
-"ZStalagmiteIceLarge", // 417
-"ZStalagmiteIceMedium", // 418
-"ZStalagmiteIceSmall", // 419
-"ZStalagmiteIceTiny", // 420
-"ZRockBrown1", // 421
-"ZRockBrown2", // 422
-"ZRockBlack", // 423
-"ZRubble1",	// 424
-"ZRubble2",	// 425
-"ZRubble3",	// 426
-"ZVasePillar", // 427
-"Pottery1",	// 428
-"Pottery2",	// 429
-"Pottery3",	// 430
-"PotteryBit", // 431
-"ZCorpseLynched", // 432
-"ZCorpseLynchedNoHeart",	// 433
-"ZCorpseSitting", // 434
-"CorpseBit", // 435
-"CorpseBloodDrip", // 436
-"BloodPool", // 437
-"ZCandle",	// 438
-"LeafSpawner", // 439
-"Leaf1",	// 440
-"Leaf2",	// 441
-"ZTwinedTorch", // 442
-"ZTwinedTorchUnlit", // 443
-"ZWallTorch", // 444
-"ZWallTorchUnlit", // 445
-"ZBarrel",	// 446
-"ZShrub1",	// 447
-"ZShrub2",	// 448
-"ZBucket",	// 449
-"ZPoisonShroom", // 450
-"ZFireBull", // 451
-"ZFireBullUnlit", // 452
-"FireThing", // 453
-"BrassTorch", // 454
-"ZSuitOfArmor", // 455
-"ZArmorChunk", // 456
-"ZBell",	// 457
-"ZBlueCandle", // 458
-"ZIronMaiden", // 459
-"ZXmasTree", // 460
-"ZCauldron", // 461
-"ZCauldronUnlit", // 462
-"ZChainBit32", // 463
-"ZChainBit64", // 464
-"ZChainEndHeart", // 465
-"ZChainEndHook1", // 466
-"ZChainEndHook2", // 467
-"ZChainEndSpike", // 468
-"ZChainEndSkull", // 469
-"TableShit1", // 470
-"TableShit2", // 471
-"TableShit3", // 472
-"TableShit4", // 473
-"TableShit5", // 474
-"TableShit6", // 475
-"TableShit7", // 476
-"TableShit8", // 477
-"TableShit9", // 478
-"TableShit10", // 479
-"TeleSmoke", // 480
-"FWeapFist", // 481
-"PunchPuff", // 482
-"FWeapAxe",	// 483	Revolver
-"AxePuff",	// 484
-"AxePuffGlow", // 485
-"AxeBlood",	// 486
-"FWeapHammer", // 487	Firebomb
-"HammerMissile", // 488	Chaingun Missile Rocket
-"HammerPuff", // 489
-"FWeapQuietus", // 490	Super Chaingun
-"FSwordMissile", // 491
-"FSwordFlame", // 492
-"CWeapMace", // 493
-"CWeapStaff", // 494	Glock
-"CStaffMissile", // 495	Poison Pistol Ball
-"CStaffPuff", // 496
-"CWeapFlame", // 497	Hell Shotgun
-"CFlameFloor", // 498
-"FlamePuff", // 499
-"FlamePuff2", // 500
-"CircleFlame", // 501
-"CFlameMissile", // 502
-"CWeapWraithverge", // 503	The Bane
-"HolySpirit", // 504
-"HolyTail",	// 505
-"HolyTailTrail", // 506
-"HolyPuff",	// 507
-"HolyMissile", // 508
-"HolyMissilePuff", // 509
-"MWeapWand", // 510
-"MageWandMissile", // 511	Hell Shotgun Bullet
-"MageWandSmoke", // 512	Hell Shotgun Bullet Trail
-"MWeapLightning", // 513	Thunder Shotgun
-"LightningCeiling", // 514	Thunder Shotgun Lightning Ceiling
-"LightningFloor", // 515	Thunder Shotgun Lightning Floor
-"LightningZap", // 516	Thunder Shotgun Lightning Middle
-"MWeapBloodscourge", // 517	Chaingun Missile
-"MageStaffFX2", // 518
-"FWeaponPiece1", // 519
-"FWeaponPiece2", // 520
-"FWeaponPiece3", // 521
-"CWeaponPiece1", // 522
-"CWeaponPiece2", // 523
-"CWeaponPiece3", // 524
-"MWeaponPiece1", // 525
-"MWeaponPiece2", // 526
-"MWeaponPiece3", // 527
-"Snout",	// 528
-"SnoutPuff", // 529
-"MWeapFrost", // 530
-"FrostMissile", // 531
-"FighterPlayer", // 532
-"ClericPlayer", // 533
-"MagePlayer", // 534
-"PigPlayer", // 535
-"Pig",	// 536
-"Centaur",	// 537	SuicideBomber
-"CentaurLeader", // 538	Cacolantern
-"CentaurMash", // 539
-"CentaurFX", // 540
-"CentaurShield", // 541
-"CentaurSword", // 542
-"DemonChunk", // 543
-"Demon1",	// 544	Lost Head
-"Demon1Mash", // 545
-"Demon1Chunk1", // 546
-"Demon1Chunk2", // 547
-"Demon1Chunk3", // 548
-"Demon1Chunk4", // 549
-"Demon1Chunk5", // 550
-"Demon1FX1", // 551
-"Demon2",	// 552	Chomp
-"Demon2Mash", // 553
-"Demon2Chunk1", // 554
-"Demon2Chunk2", // 555
-"Demon2Chunk3", // 556
-"Demon2Chunk4", // 557
-"Demon2Chunk5", // 558
-"Demon2FX1", // 559
-"Wraith",	// 560
-"WraithBuried", // 561
-"WraithFX1", // 562
-"WraithFX2", // 563
-"WraithFX3", // 564
-"WraithFX4", // 565
-"WraithFX5", // 566
-"MinotaurSmoke", // 567
-"MinotaurSmokeExit", // 568
-"Serpent",	// 569
-"SerpentLeader", // 570
-"SerpentFX", // 571
-"SerpentHead", // 572
-"SerpentGib1", // 573
-"SerpentGib2", // 574
-"SerpentGib3", // 575
-"Bishop",	// 576
-"BishopPuff", // 577
-"BishopBlur", // 578
-"BishopPainBlur", // 579
-"BishopFX",	// 580	Bruiser Demon Fx
-"Dragon",	// 581
-"DragonFireball", // 582
-"DragonExplosion", // 583
-"MeshArmor", // 584
-"FalconShield", // 585
-"PlatinumHelm", // 586
-"AmuletOfWarding", // 587
-"Mana1",	// 588
-"Mana2",	// 589
-"Mana3",	// 590
-"KeySteel",	// 591
-"KeyCave",	// 592
-"KeyAxe",	// 593
-"KeyFire",	// 594
-"KeyEmerald", // 595
-"KeyDungeon", // 596
-"KeySilver", // 597
-"KeyRusted", // 598
-"KeyHorn",	// 599
-"KeySwamp",	// 600
-"KeyCastle", // 601
-"Ettin",	// 602	Pacman Ghost
-"EttinMash", // 603
-"EttinMace", // 604
-"FireDemon", // 605
-"FireDemonSplotch1", // 606
-"FireDemonSplotch2", // 607
-"FireDemonRock1", // 608
-"FireDemonRock2", // 609
-"FireDemonRock3", // 610
-"FireDemonRock4", // 611
-"FireDemonRock5", // 612
-"FireDemonMissile", // 613
-"IceGuy",	// 614
-"IceGuyFX",	// 615
-"IceFXPuff", // 616
-"IceGuyFX2", // 617
-"IceGuyBit", // 618
-"IceGuyWisp1", // 619
-"IceGuyWisp2", // 620
-"FighterBoss", // 621
-"ClericBoss", // 622
-"MageBoss",	// 623
-"Heresiarch", // 624
-"SorcBall",	// 625
-"SorcBall1", // 626
-"SorcBall2", // 627
-"SorcBall3", // 628
-"SorcFX1",	// 629
-"SorcFX2",	// 630
-"SorcFX2T1", // 631
-"SorcFX3",	// 632
-"SorcFX3Explosion", // 633
-"SorcFX4",	// 634
-"SorcSpark1", // 635
-"BlastEffect", // 636
-"HWaterDrip", // 637
-"Korax",	// 638
-"KoraxSpirit", // 639
-"KoraxBolt", // 640
-"BatSpawner", // 641
-"Bat",	// 642
-"WraithvergeDrop", // 643
-"QuietusDrop", // 644
-"BloodscourgeDrop", // 645
-"MinotaurFriend", // 646
-// Heretic & Hexen
-"CrystalVial", // 647
-"ArtiHealth", // 648	Portable Medikit
-"ArtiFly",	// 649	Jetpack
-"ArtiInvulnerability", // 650	Portable Invincibility
-"ArtiSuperHealth", // 651	Portable Big Medpack
-"ArtiTorch", // 652	Portable Light Visor
-"ArtiTeleport", // 653
-"Minotaur",	// 654
-"MinotaurFX1", // 655
-"MinotaurFX2", // 656	Firebomb Fire
-"MinotaurFX3", // 657	Firebomb Fire 2
-"SoundWaterfall", // 658
-"SoundWind", // 659
-// Zdaemon
-"WaterSplash", // 660
-"WaterSplashBase", // 661
-"LavaSplash", // 662
-"LavaSmoke", // 663
-"SludgeChunk", // 664
-"SludgeSplash", // 665
-"Rock1",	// 666
-"Rock2",	// 667
-"Rock3",	// 668
-"Dirt1",	// 669
-"Dirt2",	// 670
-"Dirt3",	// 671
-"Dirt4",	// 672
-"Dirt5",	// 673
-"Dirt6",	// 674
-"SGShard1",	// 675
-"SGShard2",	// 676
-"SGShard3",	// 677
-"SGShard4",	// 678
-"SGShard5",	// 679
-"SGShard6",	// 680
-"SGShard7",	// 681
-"SGShard8",	// 682
-"SGShard9",	// 683
-"SGShard0",	// 684
-"Bridge",	// 685
-"BridgeBall", // 686
-"IceChunk",	// 687
-"IceChunkHead", // 688
-"Flag",	// 689
-"RedFlag",	// 690
-"BlueFlag",	// 691
-"GreenFlag", // 692
-"WhiteFlag", // 693
-"GoldFlag",	// 694
-"Railgun",	// 695
-"DomPointA", // 696
-"DomPointB", // 697
-"DomPointC", // 698
-"Spark",	// 699
-"PointPusher", // 700
-"PointPuller", // 701
-"TeleportDest2", // 702
-"TeleportDest3", // 703
-"AmbientSound", // 704
-"InvisibleBridge", // 705
-"InvisibleBridge32", // 706
-"InvisibleBridge16", // 707
-"InvisibleBridge8", // 708
-"InterpolationSpecial", // 709
-"ActorMover", // 710
-"SecretTrigger", // 711
-"SkyPicker", // 712
-"SectorSilencer", // 713
-"WaterZone", // 714
-"BloodSplash", // 715
-"BloodSplashBase", // 716
-"SlimeChunk", // 717
-"SlimeSplash", // 718
-"SectorAction", // 719
-"SecActEnter", // 720
-"SecActExit", // 721
-"SecActHitFloor", // 722
-"SecActHitCeil", // 723
-"SecActUse", // 724
-"SecActUseWall", // 725
-"SecActEyesDive", // 726
-"SecActEyesSurface", // 727
-"SecActEyesBelowC", // 728
-"SecActEyesAboveC", // 729
-"ParticleFountain", // 730
-"RedParticleFountain", // 731
-"GreenParticleFountain",	// 732
-"BlueParticleFountain", // 733
-"YellowParticleFountain",	// 734
-"PurpleParticleFountain",	// 735
-"BlackParticleFountain",	// 736
-"WhiteParticleFountain",	// 737
-"SecurityCamera", // 738
-"Unknown",	// 739
-"PatrolPoint", // 740
-"MapSpot",	// 741
-"MapSpotGravity", // 742
-"Health",	// 743
-"Armor",	// 744
-"Ammo",	// 745
-"Inventory", // 746
-"Artifact",	// 747
-"Key",	// 748
-"HexenArmor", // 749
-"PlayerSpeedTrail", // 750
-"PowerInvulnerable", // 751
-"PowerStrength", // 752
-"PowerInvisibility", // 753
-"PowerGhost", // 754
-"PowerShadow", // 755
-"PowerIronFeet", // 756
-"PowerMask", // 757
-"PowerLightAmp", // 758
-"PowerTorch", // 759
-"PowerFlight", // 760
-"PowerSpeed", // 761
-"PowerMinotaur", // 762
-"PowerTargeter", // 763
-"PowerScanner", // 764
-"PowerupGiver", // 765
-"Decal",	// 766
-"ImpactDecal", // 767
-"StealthArachnotron", // 768	Arachnotron v2
-"StealthArchvile", // 769	Elemental Vile
-"StealthBaron", // 770	Super Shotgunner
-"StealthHellKnight", // 771	Revenant++
-"StealthCacodemon", // 772	Fire Soul
-"StealthDemon", // 773
-"StealthDoomImp", // 774	Soul Imp
-"StealthFatso", // 775	Bruiser Demon
-"StealthZombieMan", // 776	Rapid Fire Trooper
-"StealthShotgunGuy", // 777
-"StealthChaingunGuy", // 778
-"StealthRevenant", // 779	Melee Revenant
-"ScriptedMarine", // 780
-"MarineFist", // 781
-"MarineBerserk", // 782
-"MarineChainsaw", // 783
-"MarinePistol", // 784
-"MarineShotgun", // 785
-"MarineSSG", // 786
-"MarineChaingun", // 787
-"MarineRocket", // 788
-"MarinePlasma", // 789
-"MarineRailgun", // 790
-"MarineBFG", // 791
-"CajunMaster", // 792
-"CajunBodyNode", // 793
-"CajunTrace", // 794
-"StoredCommand", // 795
-"DomPoint",	// 796
-"DecalThinker", // 797
-"DecalFader", // 798
-"DecalStretcher", // 799
-"DecalSlider", // 800
-"DecalColorer", // 801
-"SectorEffect", // 802
-"Mover",	// 803
-"MovingFloor", // 804
-"MovingCeiling", // 805
-"Thinker",	// 806
-"Autosaver", // 807
-"Args",	// 808
-"PlaneWatcher", // 809
-"ACSThinker", // 810
-"LevelScript", // 811
-"Ceiling",	// 812
-"Door",	// 813
-"Floor",	// 814
-"Elevator",	// 815
-"WaggleBase", // 816
-"FloorWaggle", // 817
-"CeilingWaggle", // 818
-"Lighting",	// 819
-"FireFlicker", // 820
-"Flicker",	// 821
-"LightFlash", // 822
-"Strobe",	// 823
-"Glow",	// 824
-"Glow2",	// 825
-"Phased",	// 826
-"Actor",	// 827
-"BloodSplatter", // 828
-"Pillar",	// 829
-"Plat",	// 830
-"Scroller",	// 831
-"Pusher",	// 832
-"LightTransfer", // 833
-"ActiveButton", // 834
-"PlayerPawn", // 835
-"PlayerChunk", // 836
-"PolyAction", // 837
-"RotatePoly", // 838
-"MovePoly",	// 839
-"PolyDoor",	// 840
-"MusicChanger", // 841
-"SeqNode",	// 842
-"SeqActorNode", // 843
-"SeqPolyNode", // 844
-"SeqSectorNode", // 845
-"anvas",	// 846
-"rameBuffer", // 847
-"impleCanvas", // 848
-"CorpseQueue", // 849
-"Powerup",	// 850
-"PowerWeaponLevel2", // 851
-"AimingCamera", // 852
-"GlassShard", // 853
-"FlashFader", // 854
-"LightningThinker", // 855
-"InterpolationPoint", // 856
-"PathFollower", // 857
-"MovingCamera", // 858
-"Earthquake", // 859
-"RealGibs",	// 860
-"SkyViewpoint", // 861
-"StackPoint", // 862
-"UpperStackLookOnly", // 863
-"LowerStackLookOnly", // 864
-"Weapon",	// 865
-"HUDMessage", // 866
-"HUDMessageFadeOut", // 867
-"HUDMessageFadeInOut", // 868
-"HUDMessageTypeOnFadeOut",	// 869
-"BrainState", // 870
-"Fist",	// 871
-"Pistol",	// 872
-"HereticWeapon", // 873
-"DarkServant", // 874
-"ClericWeaponPiece", // 875
-"ClericWeapon", // 876
-"FighterWeapon", // 877
-"FighterWeaponPiece", // 878
-"SwitchableDecoration", // 879
-"SwitchingDecoration", // 880
-"Lightning", // 881
-"MageWeapon", // 882
-"MageWeaponPiece", // 883
-"ThrustFloor", // 884
-"FourthWeaponPiece", // 885
-"MBFHelperDog", //886
-"BetaSkull" //887
+	"",	// 0
+	// Doom
+	"DoomPlayer", // 1
+	"ZombieMan", // 2
+	"ShotgunGuy", // 3
+	"Archvile",	// 4
+	"ArchvileFire", // 5
+	"Revenant",	// 6
+	"RevenantTracer", // 7
+	"RevenantTracerSmoke", // 8
+	"Fatso",	// 9
+	"FatShot",	// 10
+	"ChaingunGuy", // 11
+	"DoomImp",	// 12
+	"Demon",	// 13
+	"Spectre",	// 14
+	"Cacodemon", // 15
+	"BaronOfHell", // 16
+	"BaronBall", // 17
+	"HellKnight", // 18
+	"LostSoul",	// 19
+	"SpiderMastermind", // 20
+	"Arachnotron", // 21
+	"Cyberdemon", // 22
+	"PainElemental", // 23
+	"WolfensteinSS", // 24
+	"CommanderKeen", // 25
+	"BossBrain", // 26
+	"BossEye",	// 27
+	"BossTarget", // 28
+	"SpawnShot", // 29
+	"SpawnFire", // 30
+	"ExplosiveBarrel", // 31
+	"DoomImpBall", // 32
+	"CacodemonBall", // 33
+	"Rocket",	// 34
+	"PlasmaBall", // 35
+	"BFGBall",	// 36
+	"ArachnotronPlasma", // 37
+	"BulletPuff", // 38
+	"Blood",	// 39
+	"TeleportFog", // 40
+	"ItemFog",	// 41
+	"TeleportDest", // 42
+	"BFGExtra",	// 43
+	"GreenArmor", // 44
+	"BlueArmor", // 45
+	"HealthBonus", // 46
+	"ArmorBonus", // 47
+	"BlueCard",	// 48
+	"RedCard",	// 49
+	"YellowCard", // 50
+	"YellowSkull", // 51
+	"RedSkull",	// 52
+	"BlueSkull", // 53
+	"Stimpack",	// 54
+	"Medikit",	// 55
+	"Soulsphere", // 56
+	"InvulnerabilitySphere",	// 57
+	"Berserk",	// 58
+	"BlurSphere", // 59
+	"RadSuit",	// 60
+	"Allmap",	// 61
+	"Infrared",	// 62
+	"Megasphere", // 63
+	"Clip",	// 64
+	"ClipBox",	// 65
+	"RocketAmmo", // 66
+	"RocketBox", // 67
+	"Cell",	// 68
+	"CellPack",	// 69
+	"Shell",	// 70
+	"ShellBox",	// 71
+	"Backpack",	// 72
+	"BFG9000",	// 73
+	"Chaingun",	// 74
+	"Chainsaw",	// 75
+	"RocketLauncher", // 76
+	"PlasmaRifle", // 77
+	"Shotgun",	// 78
+	"SuperShotgun", // 79
+	"TechLamp",	// 80
+	"TechLamp2", // 81
+	"Column",	// 82
+	"TallGreenColumn", // 83
+	"ShortGreenColumn", // 84
+	"TallRedColumn", // 85
+	"ShortRedColumn", // 86
+	"SkullColumn", // 87
+	"HeartColumn", // 88
+	"EvilEye",	// 89
+	"FloatingSkull", // 90
+	"TorchTree", // 91
+	"BlueTorch", // 92
+	"GreenTorch", // 93
+	"RedTorch",	// 94
+	"ShortBlueTorch", // 95
+	"ShortGreenTorch", // 96
+	"ShortRedTorch", // 97
+	"Stalagtite", // 98
+	"TechPillar", // 99
+	"Candlestick", // 100
+	"Candelabra", // 101
+	"BloodyTwitch", // 102
+	"Meat2",	// 103
+	"Meat3",	// 104
+	"Meat4",	// 105
+	"Meat5",	// 106
+	"NonsolidMeat2", // 107
+	"NonsolidMeat4", // 108
+	"NonsolidMeat3", // 109
+	"NonsolidMeat5", // 110
+	"NonsolidTwitch", // 111
+	"DeadCacodemon", // 112
+	"DeadMarine", // 113
+	"DeadZombieMan", // 114
+	"DeadDemon", // 115
+	"DeadLostSoul", // 116
+	"DeadDoomImp", // 117
+	"DeadShotgunGuy", // 118
+	"GibbedMarine", // 119
+	"GibbedMarineExtra", // 120
+	"HeadsOnAStick", // 121
+	"Gibs",	// 122
+	"HeadOnAStick", // 123
+	"HeadCandles", // 124
+	"DeadStick", // 125
+	"LiveStick", // 126
+	"BigTree",	// 127
+	"BurningBarrel", // 128
+	"HangNoGuts", // 129
+	"HangBNoBrain", // 130
+	"HangTLookingDown", // 131
+	"HangTSkull", // 132
+	"HangTLookingUp", // 133
+	"HangTNoBrain", // 134
+	"ColonGibs", // 135
+	"SmallBloodPool", // 136
+	"BrainStem", // 137
+	"DoomUnusedStates", // 138
+	// Heretic
+	"SilverShield", // 139	Gold Armor
+	"EnchantedShield", // 140	Red Armor
+	"BagOfHolding", // 141
+	"SuperMap",	// 142
+	"ArtiInvisibility", // 143	Portable Invisibility
+	"ArtiTomeOfPower", // 144	None
+	"ArtiEgg",	// 145	Morph Ovum
+	"EggFX",	// 146	Morph Ovum Ball
+	"ArtiTimeBomb", // 147	TimeBomb
+	"ActivatedTimeBomb", // 148	TimeBomb Activated
+	"Pod",	// 149
+	"PodGoo",	// 150
+	"PodGenerator", // 151
+	"SkullHang70", // 152	Portable Medikit (dummy)
+	"SkullHang60", // 153	Portable Big Medpack (dummy)
+	"SkullHang45", // 154	Portable Invulnerability (dummy)
+	"SkullHang35", // 155	TimbeBomb (dummy)
+	"Chandelier", // 156	Portable Invisibility (dummy)
+	"SerpentTorch", // 157	Grenade (dummy)
+	"SmallPillar", // 158	Steroids (dummy)
+	"StalagmiteSmall", // 159	Morph Ovum (dummy)
+	"StalagmiteLarge", // 160	Arrow
+	"StalactiteSmall", // 161	Special Spot (old random)
+	"StalactiteLarge", // 162	Teleporter Smoke
+	"FireBrazier", // 163	Dispenser (dummy)
+	"Barrel",	// 164	Portable Light Visor (dummy)
+	"BrownPillar", // 165	Jetpack (dummy)
+	"Moss1",	// 166	MasterKey (dummy evidemment)
+	"Moss2",	// 167	GreenArmor (dummy)
+	"WallTorch", // 168	BlueArmor (dummy)
+	"HangingCorpse", // 169
+	"KeyGizmo",	// 170
+	"KeyGizmoFloat", // 171
+	"KeyGizmoBlue", // 172	Megasphere (dummy)
+	"KeyGizmoGreen", // 173	Clip (dummy)
+	"KeyGizmoYellow", // 174	ClipBox (dummy)
+	"Volcano",	// 175	RocketAmmo (dummy)
+	"VolcanoBlast", // 176	RocketBox (dummy)
+	"VolcanoTBlast", // 177	Cell (dummy)
+	"TeleGlitterGenerator1",	// 178
+	"TeleGlitterGenerator2",	// 179
+	"TeleGlitter1", // 180
+	"TeleGlitter2", // 181
+	"Staff",	// 182
+	"StaffPuff", // 183
+	"StaffPuff2", // 184
+	"Beak",	// 185
+	"BeakPuff",	// 186
+	"Gauntlets", // 187
+	"GauntletPuff1", // 188
+	"GauntletPuff2", // 189
+	"Blaster",	// 190	MiniGun
+	"BlasterFX1", // 191	Magma Rifle Ball
+	"BlasterSmoke", // 192	Magma Rifle Ball Trail
+	"Ripper",	// 193
+	"BlasterPuff1", // 194
+	"BlasterPuff2", // 195
+	"Mace",	// 196	Putain de Gros Flingue
+	"MaceFX1",	// 197
+	"MaceFX2",	// 198
+	"MaceFX3",	// 199
+	"MaceFX4",	// 200
+	"SkullRod",	// 201	Triple Rocket Launcher
+	"HornRodFX1", // 202	Triple Rocket Launcher MiniRocket
+	"HornRodFX2", // 203
+	"RainPillar", // 204
+	"GoldWand",	// 205	Poison Pistol
+	"GoldWandFX1", // 206
+	"GoldWandFX2", // 207
+	"GoldWandPuff1", // 208
+	"GoldWandPuff2", // 209
+	"PhoenixRod", // 210	Magma Rifle
+	"PhoenixFX1", // 211
+	"PhoenixPuff", // 212
+	"PhoenixFX2", // 213	Bullet Dummy
+	"Crossbow",	// 214	Lever Shotgun
+	"CrossbowFX1", // 215
+	"CrossbowFX2", // 216
+	"CrossbowFX3", // 217
+	"CrossbowFX4", // 218
+	"HereticPlayer", // 219
+	"BloodySkull", // 220
+	"ChickenPlayer", // 221
+	"Chicken",	// 222
+	"Feather",	// 223
+	"Mummy",	// 224	Berseker Demon
+	"MummyGhost", // 225
+	"MummyLeader", // 226	Abaddon
+	"MummyLeaderGhost", // 227
+	"MummySoul", // 228	Soul Imp Soul
+	"MummyFX1",	// 229	Soul Imp Ball
+	"Beast",	// 230	Dark Imp
+	"BeastBall", // 231	Dark Imp Ball
+	"Puffy",	// 232	Soul Imp Ball Trail
+	"Snake",	// 233	Snake Imp
+	"SnakeProjA", // 234	Abaddon Ball
+	"SnakeProjB", // 235	Cacolantern Ball
+	"Ironlich",	// 236
+	"HeadFX1",	// 237	Elemental Vile Ice Ball
+	"HeadFX2",	// 328	Elemental Vile Ice Ball 2
+	"HeadFX3",	// 239	Elemental Vile Fire Ball
+	"Whirlwind", // 240	Elemental Vile Tornado
+	"Clink",	// 241	Blood Demon
+	"Wizard",	// 242
+	"WizardFX1", // 243
+	"HereticImp", // 244	Hectebus
+	"HereticImpLeader", // 245
+	"HereticImpChunk1", // 246
+	"HereticImpChunk2", // 247
+	"HereticImpBall", // 248	Firebomb Grenade
+	"Knight",	// 249	Belphegor
+	"KnightGhost", // 250
+	"KnightAxe", // 251	Snake Imp Ball
+	"RedAxe",	// 252	Arachnotron v2 Ball
+	"BossSpot",	// 253
+	"Sorcerer1", // 254	Flying Cyber
+	"SorcererFX1", // 255
+	"Sorcerer2", // 256	Arachnophyte
+	"Sorcerer2FX1", // 257	Hectebus Ball
+	"Sorcerer2FXSpark", // 258
+	"Sorcerer2FX2", // 259	Flying Cyber Rocket
+	"Sorcerer2Telefade", // 260
+	"ScriptedAmbientMaster",	// 261
+	"ScriptedAmbient", // 262
+	"ScriptedAmbient1", // 263
+	"ScriptedAmbient2", // 264
+	"ScriptedAmbient3", // 265
+	"ScriptedAmbient4", // 266
+	"ScriptedAmbient5", // 267
+	"ScriptedAmbient6", // 268
+	"ScriptedAmbient7", // 269
+	"ScriptedAmbient8", // 270
+	"ScriptedAmbient9", // 271
+	"ScriptedAmbient10", // 272
+	"KeyGreen",	// 273
+	"KeyBlue",	// 274
+	"KeyYellow", // 275
+	"GoldWandAmmo", // 276	None
+	"GoldWandHefty", // 277	None
+	"MaceAmmo",	// 278	Money Gold
+	"MaceHefty", // 279	None
+	"CrossbowAmmo", // 280	None
+	"CrossbowHefty", // 281	None
+	"SkullRodAmmo", // 282	None
+	"SkullRodHefty", // 283	None
+	"PhoenixRodAmmo", // 284	None
+	"PhoenixRodHefty", // 285	None
+	"BlasterAmmo", // 286	Money Red
+	"BlasterHefty", // 287	None
+	"MaceSpawner", // 288
+	// Hexen
+	"FireBall",	// 289
+	"Arrow",	// 290	Belphegor Ball
+	"Dart",	// 291	Revenant++ Ball
+	"PoisonDart", // 292
+	"RipperBall", // 293
+	"ProjectileBlade", // 294	Putain de Gros Flingue Ball
+	"IceShard",	// 295
+	"FlameSmallTemp", // 296
+	"FlameLargeTemp", // 297
+	"FlameSmall", // 298
+	"FlameLarge", // 299
+	"ArtiDarkServant", // 300
+	"SummoningDoll", // 301
+	"ArtiTeleportOther", // 302	Dispenser
+	"TelOtherFX1", // 303
+	"TelOtherFX2", // 304
+	"TelOtherFX3", // 305
+	"TelOtherFX4", // 306
+	"TelOtherFX5", // 307
+	"DirtClump", // 308
+	"ThrustFloorDown", // 309
+	"ThrustFloorUp", // 310
+	"FogSpawner", // 311
+	"FogPatchSmall", // 312
+	"FogPatchMedium", // 313
+	"FogPatchLarge", // 314
+	"ArtiPork",	// 315
+	"PorkFX",	// 316
+	"ZWingedStatueNoSkull", // 317
+	"ZGemPedestal", // 318
+	"PuzzleItem", // 319
+	"PuzzSkull", // 320
+	"PuzzGemBig", // 321
+	"PuzzGemRed", // 322
+	"PuzzGemGreen1", // 323
+	"PuzzGemGreen2", // 324
+	"PuzzGemBlue1", // 325
+	"PuzzGemBlue2", // 326
+	"PuzzBook1", // 327
+	"PuzzBook2", // 328
+	"PuzzFlameMask", // 329
+	"PuzzFWeapon", // 330
+	"PuzzCWeapon", // 331
+	"PuzzMWeapon", // 332
+	"PuzzGear1", // 333
+	"PuzzGear2", // 334
+	"PuzzGear3", // 335
+	"PuzzGear4", // 336
+	"FireBomb",	// 337
+	"ArtiPoisonBag", // 338	Grenade
+	"PoisonBag", // 339
+	"ArtiPoisonBag1", // 340	Grenade
+	"ArtiPoisonBag2", // 341
+	"ArtiPoisonBag3", // 342
+	"PoisonCloud", // 343
+	"ThrowingBomb", // 344	Throwing Grenade
+	"ArtiSpeedBoots", // 345	Steroids
+	"ArtiBoostMana", // 346
+	"ArtiBoostArmor", // 347
+	"ArtiBlastRadius", // 348
+	"ArtiHealingRadius", // 349
+	"ZWingedStatue", // 350	CellPack (dummy)
+	"ZRock1",	// 351	Shell (dummy)
+	"ZRock2",	// 352	ShellBox (dummy)
+	"ZRock3",	// 353	Backpack (dummy)
+	"ZRock4",	// 354	BFG9000 (dummy)
+	"ZChandelier", // 355	Chainsaw (dummy)
+	"ZChandelierUnlit", // 356	RocketLauncher (dummy)
+	"ZTreeDead", // 357	PlasmaRifle (dummy)
+	"ZTree",	// 358	SuperShotgun (dummy)
+	"TreeDestructible", // 359	Guard
+	"ZTreeSwamp150", // 360	Scientist 1
+	"ZTreeSwamp120", // 361	Sitting Marine
+	"ZStumpBurned", // 362	Glock (dummy)
+	"ZStumpBare", // 363	Lever Shotgun (dummy)
+	"ZStumpSwamp1", // 364	MiniGun (dummy)
+	"ZStumpSwamp2", // 365	Revolver (dummy)
+	"ZShroomLarge1", // 366	Magma Rifle (dummy)
+	"ZShroomLarge2", // 367	Triple Rocket Launcher (dummy)
+	"ZShroomLarge3", // 368	Super Chaingun (dummy)
+	"ZShroomSmall1", // 369	bottle 1
+	"ZShroomSmall2", // 370	Glass
+	"ZShroomSmall3", // 371	bottle 2
+	"ZShroomSmall4", // 372	Firebomb (dummy)
+	"ZShroomSmall5", // 373	Standing Marine
+	"ZStalagmitePillar", // 374	Railgun (dummy)
+	"ZStalagmiteLarge", // 375	Health Regen Sphere
+	"ZStalagmiteMedium", // 376	Standing Marine 2
+	"ZStalagmiteSmall", // 377	Guard 2
+	"ZStalactiteLarge", // 378	Poison Pistol (dummy)
+	"ZStalactiteMedium", // 379	The Bane (dummy)
+	"ZStalactiteSmall", // 380	Guard Sphere (dummy rofl)
+	"ZMossCeiling1", // 381	Hell Shotgun (dummy)
+	"ZMossCeiling2", // 382	Soulsphere (dummy)
+	"ZSwampVine", // 383
+	"ZCorpseKabob", // 384	Thunder Shotgun
+	"ZCorpseSleeping", // 385	Chaingun Missile (dummy)
+	"ZTombstoneRIP", // 386	Scientist 2
+	"ZTombstoneShane", // 387	Scientist 3
+	"ZTombstoneBigCross", // 388	Scientist 4
+	"ZTombstoneBrianR", // 389	Putain de Gros Flingue (dummy)
+	"ZTombstoneCrossCircle",	// 390
+	"ZTombstoneSmallCross", // 391
+	"ZTombstoneBrianP", // 392
+	"ZCorpseHanging", // 393
+	"ZStatueGargoyleGreenTall",	// 394
+	"ZStatueGargoyleBlueTall",	// 395
+	"ZStatueGargoyleGreenShort",	// 396
+	"ZStatueGargoyleBlueShort",	// 397
+	"ZStatueGargoyleStripeTall",	// 398
+	"ZStatueGargoyleDarkRedTall",	// 399
+	"ZStatueGargoyleRedTall",	// 400
+	"ZStatueGargoyleTanTall",	// 401
+	"ZStatueGargoyleRustTall",	// 402
+	"ZStatueGargoyleDarkRedShort",	// 403
+	"ZStatueGargoyleRedShort",	// 404
+	"ZStatueGargoyleTanShort",	// 405
+	"ZStatueGargoyleRustShort",	// 406
+	"ZBannerTattered", // 407
+	"ZTreeLarge1", // 408
+	"ZTreeLarge2", // 409
+	"ZTreeGnarled1", // 410
+	"ZTreeGnarled2", // 411
+	"ZLog",	// 412
+	"ZStalactiteIceLarge", // 413
+	"ZStalactiteIceMedium", // 414
+	"ZStalactiteIceSmall", // 415
+	"ZStalactiteIceTiny", // 416
+	"ZStalagmiteIceLarge", // 417
+	"ZStalagmiteIceMedium", // 418
+	"ZStalagmiteIceSmall", // 419
+	"ZStalagmiteIceTiny", // 420
+	"ZRockBrown1", // 421
+	"ZRockBrown2", // 422
+	"ZRockBlack", // 423
+	"ZRubble1",	// 424
+	"ZRubble2",	// 425
+	"ZRubble3",	// 426
+	"ZVasePillar", // 427
+	"Pottery1",	// 428
+	"Pottery2",	// 429
+	"Pottery3",	// 430
+	"PotteryBit", // 431
+	"ZCorpseLynched", // 432
+	"ZCorpseLynchedNoHeart",	// 433
+	"ZCorpseSitting", // 434
+	"CorpseBit", // 435
+	"CorpseBloodDrip", // 436
+	"BloodPool", // 437
+	"ZCandle",	// 438
+	"LeafSpawner", // 439
+	"Leaf1",	// 440
+	"Leaf2",	// 441
+	"ZTwinedTorch", // 442
+	"ZTwinedTorchUnlit", // 443
+	"ZWallTorch", // 444
+	"ZWallTorchUnlit", // 445
+	"ZBarrel",	// 446
+	"ZShrub1",	// 447
+	"ZShrub2",	// 448
+	"ZBucket",	// 449
+	"ZPoisonShroom", // 450
+	"ZFireBull", // 451
+	"ZFireBullUnlit", // 452
+	"FireThing", // 453
+	"BrassTorch", // 454
+	"ZSuitOfArmor", // 455
+	"ZArmorChunk", // 456
+	"ZBell",	// 457
+	"ZBlueCandle", // 458
+	"ZIronMaiden", // 459
+	"ZXmasTree", // 460
+	"ZCauldron", // 461
+	"ZCauldronUnlit", // 462
+	"ZChainBit32", // 463
+	"ZChainBit64", // 464
+	"ZChainEndHeart", // 465
+	"ZChainEndHook1", // 466
+	"ZChainEndHook2", // 467
+	"ZChainEndSpike", // 468
+	"ZChainEndSkull", // 469
+	"TableShit1", // 470
+	"TableShit2", // 471
+	"TableShit3", // 472
+	"TableShit4", // 473
+	"TableShit5", // 474
+	"TableShit6", // 475
+	"TableShit7", // 476
+	"TableShit8", // 477
+	"TableShit9", // 478
+	"TableShit10", // 479
+	"TeleSmoke", // 480
+	"FWeapFist", // 481
+	"PunchPuff", // 482
+	"FWeapAxe",	// 483	Revolver
+	"AxePuff",	// 484
+	"AxePuffGlow", // 485
+	"AxeBlood",	// 486
+	"FWeapHammer", // 487	Firebomb
+	"HammerMissile", // 488	Chaingun Missile Rocket
+	"HammerPuff", // 489
+	"FWeapQuietus", // 490	Super Chaingun
+	"FSwordMissile", // 491
+	"FSwordFlame", // 492
+	"CWeapMace", // 493
+	"CWeapStaff", // 494	Glock
+	"CStaffMissile", // 495	Poison Pistol Ball
+	"CStaffPuff", // 496
+	"CWeapFlame", // 497	Hell Shotgun
+	"CFlameFloor", // 498
+	"FlamePuff", // 499
+	"FlamePuff2", // 500
+	"CircleFlame", // 501
+	"CFlameMissile", // 502
+	"CWeapWraithverge", // 503	The Bane
+	"HolySpirit", // 504
+	"HolyTail",	// 505
+	"HolyTailTrail", // 506
+	"HolyPuff",	// 507
+	"HolyMissile", // 508
+	"HolyMissilePuff", // 509
+	"MWeapWand", // 510
+	"MageWandMissile", // 511	Hell Shotgun Bullet
+	"MageWandSmoke", // 512	Hell Shotgun Bullet Trail
+	"MWeapLightning", // 513	Thunder Shotgun
+	"LightningCeiling", // 514	Thunder Shotgun Lightning Ceiling
+	"LightningFloor", // 515	Thunder Shotgun Lightning Floor
+	"LightningZap", // 516	Thunder Shotgun Lightning Middle
+	"MWeapBloodscourge", // 517	Chaingun Missile
+	"MageStaffFX2", // 518
+	"FWeaponPiece1", // 519
+	"FWeaponPiece2", // 520
+	"FWeaponPiece3", // 521
+	"CWeaponPiece1", // 522
+	"CWeaponPiece2", // 523
+	"CWeaponPiece3", // 524
+	"MWeaponPiece1", // 525
+	"MWeaponPiece2", // 526
+	"MWeaponPiece3", // 527
+	"Snout",	// 528
+	"SnoutPuff", // 529
+	"MWeapFrost", // 530
+	"FrostMissile", // 531
+	"FighterPlayer", // 532
+	"ClericPlayer", // 533
+	"MagePlayer", // 534
+	"PigPlayer", // 535
+	"Pig",	// 536
+	"Centaur",	// 537	SuicideBomber
+	"CentaurLeader", // 538	Cacolantern
+	"CentaurMash", // 539
+	"CentaurFX", // 540
+	"CentaurShield", // 541
+	"CentaurSword", // 542
+	"DemonChunk", // 543
+	"Demon1",	// 544	Lost Head
+	"Demon1Mash", // 545
+	"Demon1Chunk1", // 546
+	"Demon1Chunk2", // 547
+	"Demon1Chunk3", // 548
+	"Demon1Chunk4", // 549
+	"Demon1Chunk5", // 550
+	"Demon1FX1", // 551
+	"Demon2",	// 552	Chomp
+	"Demon2Mash", // 553
+	"Demon2Chunk1", // 554
+	"Demon2Chunk2", // 555
+	"Demon2Chunk3", // 556
+	"Demon2Chunk4", // 557
+	"Demon2Chunk5", // 558
+	"Demon2FX1", // 559
+	"Wraith",	// 560
+	"WraithBuried", // 561
+	"WraithFX1", // 562
+	"WraithFX2", // 563
+	"WraithFX3", // 564
+	"WraithFX4", // 565
+	"WraithFX5", // 566
+	"MinotaurSmoke", // 567
+	"MinotaurSmokeExit", // 568
+	"Serpent",	// 569
+	"SerpentLeader", // 570
+	"SerpentFX", // 571
+	"SerpentHead", // 572
+	"SerpentGib1", // 573
+	"SerpentGib2", // 574
+	"SerpentGib3", // 575
+	"Bishop",	// 576
+	"BishopPuff", // 577
+	"BishopBlur", // 578
+	"BishopPainBlur", // 579
+	"BishopFX",	// 580	Bruiser Demon Fx
+	"Dragon",	// 581
+	"DragonFireball", // 582
+	"DragonExplosion", // 583
+	"MeshArmor", // 584
+	"FalconShield", // 585
+	"PlatinumHelm", // 586
+	"AmuletOfWarding", // 587
+	"Mana1",	// 588
+	"Mana2",	// 589
+	"Mana3",	// 590
+	"KeySteel",	// 591
+	"KeyCave",	// 592
+	"KeyAxe",	// 593
+	"KeyFire",	// 594
+	"KeyEmerald", // 595
+	"KeyDungeon", // 596
+	"KeySilver", // 597
+	"KeyRusted", // 598
+	"KeyHorn",	// 599
+	"KeySwamp",	// 600
+	"KeyCastle", // 601
+	"Ettin",	// 602	Pacman Ghost
+	"EttinMash", // 603
+	"EttinMace", // 604
+	"FireDemon", // 605
+	"FireDemonSplotch1", // 606
+	"FireDemonSplotch2", // 607
+	"FireDemonRock1", // 608
+	"FireDemonRock2", // 609
+	"FireDemonRock3", // 610
+	"FireDemonRock4", // 611
+	"FireDemonRock5", // 612
+	"FireDemonMissile", // 613
+	"IceGuy",	// 614
+	"IceGuyFX",	// 615
+	"IceFXPuff", // 616
+	"IceGuyFX2", // 617
+	"IceGuyBit", // 618
+	"IceGuyWisp1", // 619
+	"IceGuyWisp2", // 620
+	"FighterBoss", // 621
+	"ClericBoss", // 622
+	"MageBoss",	// 623
+	"Heresiarch", // 624
+	"SorcBall",	// 625
+	"SorcBall1", // 626
+	"SorcBall2", // 627
+	"SorcBall3", // 628
+	"SorcFX1",	// 629
+	"SorcFX2",	// 630
+	"SorcFX2T1", // 631
+	"SorcFX3",	// 632
+	"SorcFX3Explosion", // 633
+	"SorcFX4",	// 634
+	"SorcSpark1", // 635
+	"BlastEffect", // 636
+	"HWaterDrip", // 637
+	"Korax",	// 638
+	"KoraxSpirit", // 639
+	"KoraxBolt", // 640
+	"BatSpawner", // 641
+	"Bat",	// 642
+	"WraithvergeDrop", // 643
+	"QuietusDrop", // 644
+	"BloodscourgeDrop", // 645
+	"MinotaurFriend", // 646
+	// Heretic & Hexen
+	"CrystalVial", // 647
+	"ArtiHealth", // 648	Portable Medikit
+	"ArtiFly",	// 649	Jetpack
+	"ArtiInvulnerability", // 650	Portable Invincibility
+	"ArtiSuperHealth", // 651	Portable Big Medpack
+	"ArtiTorch", // 652	Portable Light Visor
+	"ArtiTeleport", // 653
+	"Minotaur",	// 654
+	"MinotaurFX1", // 655
+	"MinotaurFX2", // 656	Firebomb Fire
+	"MinotaurFX3", // 657	Firebomb Fire 2
+	"SoundWaterfall", // 658
+	"SoundWind", // 659
+	// Zdaemon
+	"WaterSplash", // 660
+	"WaterSplashBase", // 661
+	"LavaSplash", // 662
+	"LavaSmoke", // 663
+	"SludgeChunk", // 664
+	"SludgeSplash", // 665
+	"Rock1",	// 666
+	"Rock2",	// 667
+	"Rock3",	// 668
+	"Dirt1",	// 669
+	"Dirt2",	// 670
+	"Dirt3",	// 671
+	"Dirt4",	// 672
+	"Dirt5",	// 673
+	"Dirt6",	// 674
+	"SGShard1",	// 675
+	"SGShard2",	// 676
+	"SGShard3",	// 677
+	"SGShard4",	// 678
+	"SGShard5",	// 679
+	"SGShard6",	// 680
+	"SGShard7",	// 681
+	"SGShard8",	// 682
+	"SGShard9",	// 683
+	"SGShard0",	// 684
+	"Bridge",	// 685
+	"BridgeBall", // 686
+	"IceChunk",	// 687
+	"IceChunkHead", // 688
+	"Flag",	// 689
+	"RedFlag",	// 690
+	"BlueFlag",	// 691
+	"GreenFlag", // 692
+	"WhiteFlag", // 693
+	"GoldFlag",	// 694
+	"Railgun",	// 695
+	"DomPointA", // 696
+	"DomPointB", // 697
+	"DomPointC", // 698
+	"Spark",	// 699
+	"PointPusher", // 700
+	"PointPuller", // 701
+	"TeleportDest2", // 702
+	"TeleportDest3", // 703
+	"AmbientSound", // 704
+	"InvisibleBridge", // 705
+	"InvisibleBridge32", // 706
+	"InvisibleBridge16", // 707
+	"InvisibleBridge8", // 708
+	"InterpolationSpecial", // 709
+	"ActorMover", // 710
+	"SecretTrigger", // 711
+	"SkyPicker", // 712
+	"SectorSilencer", // 713
+	"WaterZone", // 714
+	"BloodSplash", // 715
+	"BloodSplashBase", // 716
+	"SlimeChunk", // 717
+	"SlimeSplash", // 718
+	"SectorAction", // 719
+	"SecActEnter", // 720
+	"SecActExit", // 721
+	"SecActHitFloor", // 722
+	"SecActHitCeil", // 723
+	"SecActUse", // 724
+	"SecActUseWall", // 725
+	"SecActEyesDive", // 726
+	"SecActEyesSurface", // 727
+	"SecActEyesBelowC", // 728
+	"SecActEyesAboveC", // 729
+	"ParticleFountain", // 730
+	"RedParticleFountain", // 731
+	"GreenParticleFountain",	// 732
+	"BlueParticleFountain", // 733
+	"YellowParticleFountain",	// 734
+	"PurpleParticleFountain",	// 735
+	"BlackParticleFountain",	// 736
+	"WhiteParticleFountain",	// 737
+	"SecurityCamera", // 738
+	"Unknown",	// 739
+	"PatrolPoint", // 740
+	"MapSpot",	// 741
+	"MapSpotGravity", // 742
+	"Health",	// 743
+	"Armor",	// 744
+	"Ammo",	// 745
+	"Inventory", // 746
+	"Artifact",	// 747
+	"Key",	// 748
+	"HexenArmor", // 749
+	"PlayerSpeedTrail", // 750
+	"PowerInvulnerable", // 751
+	"PowerStrength", // 752
+	"PowerInvisibility", // 753
+	"PowerGhost", // 754
+	"PowerShadow", // 755
+	"PowerIronFeet", // 756
+	"PowerMask", // 757
+	"PowerLightAmp", // 758
+	"PowerTorch", // 759
+	"PowerFlight", // 760
+	"PowerSpeed", // 761
+	"PowerMinotaur", // 762
+	"PowerTargeter", // 763
+	"PowerScanner", // 764
+	"PowerupGiver", // 765
+	"Decal",	// 766
+	"ImpactDecal", // 767
+	"StealthArachnotron", // 768	Arachnotron v2
+	"StealthArchvile", // 769	Elemental Vile
+	"StealthBaron", // 770	Super Shotgunner
+	"StealthHellKnight", // 771	Revenant++
+	"StealthCacodemon", // 772	Fire Soul
+	"StealthDemon", // 773
+	"StealthDoomImp", // 774	Soul Imp
+	"StealthFatso", // 775	Bruiser Demon
+	"StealthZombieMan", // 776	Rapid Fire Trooper
+	"StealthShotgunGuy", // 777
+	"StealthChaingunGuy", // 778
+	"StealthRevenant", // 779	Melee Revenant
+	"ScriptedMarine", // 780
+	"MarineFist", // 781
+	"MarineBerserk", // 782
+	"MarineChainsaw", // 783
+	"MarinePistol", // 784
+	"MarineShotgun", // 785
+	"MarineSSG", // 786
+	"MarineChaingun", // 787
+	"MarineRocket", // 788
+	"MarinePlasma", // 789
+	"MarineRailgun", // 790
+	"MarineBFG", // 791
+	"CajunMaster", // 792
+	"CajunBodyNode", // 793
+	"CajunTrace", // 794
+	"StoredCommand", // 795
+	"DomPoint",	// 796
+	"DecalThinker", // 797
+	"DecalFader", // 798
+	"DecalStretcher", // 799
+	"DecalSlider", // 800
+	"DecalColorer", // 801
+	"SectorEffect", // 802
+	"Mover",	// 803
+	"MovingFloor", // 804
+	"MovingCeiling", // 805
+	"Thinker",	// 806
+	"Autosaver", // 807
+	"Args",	// 808
+	"PlaneWatcher", // 809
+	"ACSThinker", // 810
+	"LevelScript", // 811
+	"Ceiling",	// 812
+	"Door",	// 813
+	"Floor",	// 814
+	"Elevator",	// 815
+	"WaggleBase", // 816
+	"FloorWaggle", // 817
+	"CeilingWaggle", // 818
+	"Lighting",	// 819
+	"FireFlicker", // 820
+	"Flicker",	// 821
+	"LightFlash", // 822
+	"Strobe",	// 823
+	"Glow",	// 824
+	"Glow2",	// 825
+	"Phased",	// 826
+	"Actor",	// 827
+	"BloodSplatter", // 828
+	"Pillar",	// 829
+	"Plat",	// 830
+	"Scroller",	// 831
+	"Pusher",	// 832
+	"LightTransfer", // 833
+	"ActiveButton", // 834
+	"PlayerPawn", // 835
+	"PlayerChunk", // 836
+	"PolyAction", // 837
+	"RotatePoly", // 838
+	"MovePoly",	// 839
+	"PolyDoor",	// 840
+	"MusicChanger", // 841
+	"SeqNode",	// 842
+	"SeqActorNode", // 843
+	"SeqPolyNode", // 844
+	"SeqSectorNode", // 845
+	"anvas",	// 846
+	"rameBuffer", // 847
+	"impleCanvas", // 848
+	"CorpseQueue", // 849
+	"Powerup",	// 850
+	"PowerWeaponLevel2", // 851
+	"AimingCamera", // 852
+	"GlassShard", // 853
+	"FlashFader", // 854
+	"LightningThinker", // 855
+	"InterpolationPoint", // 856
+	"PathFollower", // 857
+	"MovingCamera", // 858
+	"Earthquake", // 859
+	"RealGibs",	// 860
+	"SkyViewpoint", // 861
+	"StackPoint", // 862
+	"UpperStackLookOnly", // 863
+	"LowerStackLookOnly", // 864
+	"Weapon",	// 865
+	"HUDMessage", // 866
+	"HUDMessageFadeOut", // 867
+	"HUDMessageFadeInOut", // 868
+	"HUDMessageTypeOnFadeOut",	// 869
+	"BrainState", // 870
+	"Fist",	// 871
+	"Pistol",	// 872
+	"HereticWeapon", // 873
+	"DarkServant", // 874
+	"ClericWeaponPiece", // 875
+	"ClericWeapon", // 876
+	"FighterWeapon", // 877
+	"FighterWeaponPiece", // 878
+	"SwitchableDecoration", // 879
+	"SwitchingDecoration", // 880
+	"Lightning", // 881
+	"MageWeapon", // 882
+	"MageWeaponPiece", // 883
+	"ThrustFloor", // 884
+	"FourthWeaponPiece", // 885
+	"MBFHelperDog", //886
+	"BetaSkull" //887
 }; 

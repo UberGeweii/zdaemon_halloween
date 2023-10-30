@@ -148,6 +148,10 @@ global bool 17:stopMusicbox;
 
 global bool 20:gbossFightUnlocked;
 
+int curScriptedMarineSkin[MAXPLAYERS];
+int curScriptedMarineWeapon[MAXPLAYERS];
+int curScriptedMarineColor[MAXPLAYERS];
+
 ////////////////////////////////////////
 /*
 	=== GLOBAL STRING VARIABLES ===
@@ -309,7 +313,7 @@ function void SavePlayerFullInventory(int player)
 		 
 		if(PlayerAlive(player) || PlayerInGame(player))
 		{
-			for(int i = 0; i <  MAX_INV_ITEM_NAMES+1; i++) 
+			for(int i = 0; i <=  MAX_INV_ITEM_NAMES; i++) 
 			{
 				if(CheckInventoryCustom(player, inv_item_names[i]))
 					InvData[(INVENTORYDATASIZE*(slot+1))-i] = CheckInventoryCustom(player, inv_item_names[i]);       
@@ -330,7 +334,7 @@ function void RetrievePlayerFullInventory(int player)
 		
 		if(PlayerAlive(player) || PlayerInGame(player))
 		{
-			for(int i = 0; i <  MAX_INV_ITEM_NAMES+1; i++) 
+			for(int i = 0; i <=  MAX_INV_ITEM_NAMES; i++) 
 			{
 				if(InvData[(INVENTORYDATASIZE*(slot+1))-i] != 0)
 					ProvideInventoryCustom(PlayerTag(player), inv_item_names[i], InvData[(INVENTORYDATASIZE*(slot+1))-i]);       
@@ -903,9 +907,6 @@ int countdown = time*60;
 	} 
 	Thing_move(PlayerTag(player), 16, 1);
 }
-
-int curScriptedMarineSkin[MAXPLAYERS];
-int curScriptedMarineWeapon[MAXPLAYERS];
 
 // Map based example of to-purchase marine.
 script 221 (int args1)

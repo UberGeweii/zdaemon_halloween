@@ -124,14 +124,15 @@ script "PrintMarineData" (int player)
 	// check player slot within the database.
 	if (slot != -1)
 	{
-		Log(s:"=== Printing marine data for: ", d:player, s:" - ", n:player+1, s:" ===");
+		Log(s:"=== Printing marine data ===");
+		Log(s:"Player: ", d:player);
 		Log(s:"Health: ", d:Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA]);
 		Log(s:"Speed: ", d:Data[(DATASIZE*(slot+1))-MARINESPEEDDATA]);
 		Log(s:"Weapon: ", s:MarineWeapons[Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]]);
 		Log(s:"Skin: ", s:ZD_GetSkinName(Data[(DATASIZE*(slot+1))-MARINESKINDATA]));
 		Log(s:"Damage Multiplier: ", d:Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA]);
 		Log(s:"Translation: ", d:Data[(DATASIZE*(slot+1))-MARINECOLORDATA]);
-		Log(s:"==============================================");
+		Log(s:"============================");
 	}
 	else
 	{
@@ -199,10 +200,13 @@ script 223 (void)
 	// Loading data
 	str msg = StrParam(n:PlayerNumber()+1);
 	int slot = DataSlot(msg);
+	
+	SetFont("GARGWING");
 
 	// check player slot within the database.
 	if (slot != -1)
 	{
+			
 		if (!ThingCount(0, PLAYERMARINETIDBASE+player))
 		{
 			Print(s:"\cdSpawned your friendly marine.");
@@ -249,6 +253,118 @@ script 223 (void)
 			GiveInventory("ArtiDarkServant", 1);
 		}
 	}
+}
+
+// Upgrade buying function.
+function void BuyMarineUpgrade(int item, int player, int, dataType, int value, int cost)
+{
+	str msg = StrParam(n:player+1);    
+	int hasSlot = DataSlot(msg);
+
+	// Player present in database?
+	if (hasSlot == -1)
+	{
+		Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+		return;
+	}
+
+	// Now fetch the item name.
+	int itemName = GetItemDesc(item);
 	
+	// Health.
+	if (dataType == 0)
+	{
+		if (value != Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA])
+		{
+			Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA] = value;
+		}
+		else
+		{
+			HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+			return;	
+		}
+	}
+	// Speed.
+	else if (dataType == 1)
+	{
+		if ((value * 65536) != Data[(DATASIZE*(slot+1))-MARINESPEEDDATA])
+		{
+			Data[(DATASIZE*(slot+1))-MARINESPEEDDATA] = value * 65536;
+		}
+		else
+		{
+			HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+			return;	
+		}
+	}
+	// Weapon.
+	else if (dataType == 2)
+	{
+		if (value != Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA])
+		{
+			Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA] = value;
+		}
+		else
+		{
+			HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+			return;	
+		}
+	}
+	// Skin.
+	else if (dataType == 3)
+	{
+		if (value != Data[(DATASIZE*(slot+1))-MARINESKINDATA])
+		{
+			Data[(DATASIZE*(slot+1))-MARINESKINDATA] = value;
+		}
+		else
+		{
+			HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+			return;	
+		}
+	}
+	// Damage multiplier.
+	else if (dataType == 4)
+	{
+		if ((value * 65536) != Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA])
+		{
+			Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA] = value * 65536;
+		}
+		else
+		{
+			HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+			return;	
+		}
+	}
+	// Translation.
+	else if (dataType == 5)
+	{
+		if (value != Data[(DATASIZE*(slot+1))-MARINECOLORDATA])
+		{
+			Data[(DATASIZE*(slot+1))-MARINECOLORDATA] = value;
+		}
+		else
+		{
+			HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+			return;	
+		}
+	}
+	else
+	{
+		Log(s:"SetMarineData: Invalid dataType provided!");
+		return;
+	}
+	
+	TakeMoney(player, cost);
+
+	//print(s:"\cdYou bought ",s:GetItemDesc(item),s:".");
 	SetFont("GARGWING");
+	HudMessage (s:"\cdYou bought ",s:itemName,s:".";
+		HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
 }
