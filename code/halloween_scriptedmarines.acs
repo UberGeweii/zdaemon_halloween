@@ -9,26 +9,6 @@
 #define MARINECOLORDATA		6
 */
 
-#define MARINEUPGRADE1_HEALTH 				0
-#define MARINEUPGRADE2_SPEED 				1
-#define MARINEUPGRADE3_DAMAGEMULTIPLIER 	2
-#define MARINEUPGRADE4_WEAPON				3
-#define MARINEUPGRADE5_COLOR				4
-
-Int MarineWeaponPrices[MAXMARINEWEAPONS] = {
-	100,
-	1000,
-	1200,
-	1500,
-	2000,
-	4000,
-	3000,
-	10000,
-	15000,
-	20000,
-	80000
-};
-
 // https://zdoom.org/wiki/Hudmessageonactor, thanks Isle. This saved me so much time (:
 
 
@@ -232,7 +212,10 @@ script 223 (void)
 				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Speed, Data[(DATASIZE*(slot+1))-MARINESPEEDDATA]);
 			
 			// Weapon.
-			SetMarineWeapon(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]);
+			if (Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA] <= 1)	
+				SetMarineWeapon(PLAYERMARINETIDBASE+player, WEAPON_Fist);
+			else
+				SetMarineWeapon(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]);
 			
 			// Skin.
 			ZD_SetMarineSkin(PLAYERMARINETIDBASE+player, ZD_GetSkinName(Data[(DATASIZE*(slot+1))-MARINESKINDATA]));
@@ -256,13 +239,13 @@ script 223 (void)
 }
 
 // Upgrade buying function.
-function void BuyMarineUpgrade(int item, int player, int, dataType, int value, int cost)
+function void BuyMarineUpgrade(int item, int player, int dataType, int value, int cost)
 {
 	str msg = StrParam(n:player+1);    
-	int hasSlot = DataSlot(msg);
+	int slot = DataSlot(msg);
 
 	// Player present in database?
-	if (hasSlot == -1)
+	if (slot == -1)
 	{
 		Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
 		return;
@@ -276,7 +259,16 @@ function void BuyMarineUpgrade(int item, int player, int, dataType, int value, i
 	{
 		if (value != Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA])
 		{
-			Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA] = value;
+			if (value < Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA])
+			{
+				HudMessage (s:"\ceYou already have a higher tier upgrade!";
+				HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+				return;
+			}
+			else
+			{
+				Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA] = value;
+			}
 		}
 		else
 		{
@@ -290,8 +282,17 @@ function void BuyMarineUpgrade(int item, int player, int, dataType, int value, i
 	{
 		if ((value * 65536) != Data[(DATASIZE*(slot+1))-MARINESPEEDDATA])
 		{
-			Data[(DATASIZE*(slot+1))-MARINESPEEDDATA] = value * 65536;
-		}
+			if ((value * 65536) < Data[(DATASIZE*(slot+1))-MARINESPEEDDATA])
+			{
+				HudMessage (s:"\ceYou already have a higher tier upgrade!";
+				HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+				return;
+			}
+			else
+			{
+				Data[(DATASIZE*(slot+1))-MARINESPEEDDATA] = value * 65536;
+			}
+		}		
 		else
 		{
 			HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
@@ -332,7 +333,16 @@ function void BuyMarineUpgrade(int item, int player, int, dataType, int value, i
 	{
 		if ((value * 65536) != Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA])
 		{
-			Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA] = value * 65536;
+			if ((value * 65536) < Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA])
+			{
+				HudMessage (s:"\ceYou already have a higher tier upgrade!";
+				HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+				return;
+			}
+			else
+			{
+				Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA] = value * 65536;
+			}
 		}
 		else
 		{

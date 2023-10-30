@@ -936,12 +936,22 @@ script 221 (int args1)
 	
 	if (args1 == 2)
 	{
-		if (curScriptedMarineWeapon[player] >= MAXMARINEWEAPONS)
-			curScriptedMarineWeapon[player] = 0;
+		if (curScriptedMarineColor[player] >= 15)
+			curScriptedMarineColor[player] = 0;
 		else
-			curScriptedMarineWeapon[player]++;
+			curScriptedMarineColor[player]++;
 		
-		Print(s:"\cdMarine weapon changed to: \cj ", d:curScriptedMarineWeapon[player], s:MarineWeapons[curScriptedMarineWeapon[player]]);;
+		Print(s:"\cdMarine color changed to: \cj ", d:curScriptedMarineColor[player]);
+	}
+	
+	if (args1 == 3)
+	{
+		if (curScriptedMarineColor[player] <= 0)
+			curScriptedMarineColor[player] = 15;
+		else
+			curScriptedMarineColor[player]--;
+		
+		Print(s:"\cdMarine color changed to: \cj ", d:curScriptedMarineColor[player]);
 	}
 		
 	// Client sidedly update marine with correct skin.
@@ -954,6 +964,7 @@ script 222 (void)
 {
 	int player = PlayerNumber();
 	ZD_SetMarineSkin(22, ZD_GetSkinName(curScriptedMarineSkin[player]));
+	Thing_SetTranslation (22, curScriptedMarineColor[player]);
 }  
   
 ////////////////////////////////////////

@@ -62,6 +62,7 @@
 #define UPGRADE_DAMAGE1			  54
 #define UPGRADE_DAMAGE2			  55
 #define UPGRADE_DAMAGE3			  56
+#define UPGRADE_MARINEWEPBERSERK  57
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
@@ -109,6 +110,7 @@ script ACS_WRLD_CREATESHOPITMS OPEN
     CreateItem(ITEM_CROSSBOW        , "Crossbow"                            ,   125 );
 	
 	CreateItem(UPGRADE_MARINEWEPPISTOL		, "Marine Pistol Upgrade"			, 5000 );
+	CreateItem(UPGRADE_MARINEWEPBERSERK		, "Marine Berserk Upgrade"			, 2000 );
 	CreateItem(UPGRADE_MARINEWEPCHAINSAW	, "Marine Chainsaw Upgrade"			, 3000 );
 	CreateItem(UPGRADE_MARINEWEPSHOTGUN		, "Marine Shotgun Upgrade"			, 10000 );
 	CreateItem(UPGRADE_MARINEWEPCHAINGUN	, "Marine Chaingun Upgrade"			, 40000 );
@@ -374,6 +376,10 @@ script 175 (int item)
             case UPGRADE_DAMAGE3:
                 BuyMarineUpgrade(item, player, 5, 4, cost);
                 break;	
+				
+            case UPGRADE_MARINEWEPBERSERK:
+                BuyMarineUpgrade(item, player, 2, 2, cost);
+                break;
 
 		}
 	}
