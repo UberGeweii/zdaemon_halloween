@@ -9,72 +9,7 @@
 #define MARINECOLORDATA		6
 */
 
-// https://zdoom.org/wiki/Hudmessageonactor, thanks Isle. This saved me so much time (:
-
-
-/*
-
-		Log(s:"=== Printing marine data for: ", d:player, s:" - ", n:player+1, s:" ===");
-		Log(s:"Health: ", d:Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA]);
-		Log(s:"Speed: ", d:Data[(DATASIZE*(slot+1))-MARINESPEEDDATA]);
-		Log(s:"Weapon: ", s:MarineWeapons[Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]]);
-		Log(s:"Skin: ", s:ZD_GetSkinName(Data[(DATASIZE*(slot+1))-MARINESKINDATA]));
-		Log(s:"Damage Multiplier: ", d:Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA]);
-		Log(s:"Translation: ", d:Data[(DATASIZE*(slot+1))-MARINECOLORDATA]);
-*/
-
-function void DisplayScriptedMarineInfo(int marine, int msgID, int hudX, int hudY, int xOffset, int yOffset, int range, int holdTime, str colour)
-{		
-	int dist, angle, vang, pitch, x, y;
-	int player = PlayerNumber();
-	
-	// Loading data
-	str msg = StrParam(n:marine+1);
-	int slot = DataSlot(msg);
-
-	// check player slot within the database.
-	if (slot != -1)
-	{	
-		if (holdTime == 0) { holdTime = 0.1; }	
-		if (hudX == 0) { hudX = 640; } // Default value.
-		if (hudY == 0) { hudY = 480; } // Default value.
-		
-		SetHudSize(hudX, hudY, 1);
-		x = GetActorX(PlayerTag(player)) - GetActorX(PlayerTag(player));
-		y = GetActorY(PLAYERMARINETIDBASE+marine) - GetActorY(PlayerTag(player));
-		
-		vang = VectorAngle(x,y);
-		angle = (vang - GetActorAngle(PlayerTag(player)) + 1.0) % 1.0;
-		
-		if(((vang+0.125)%0.5) > 0.25) dist = FixedDiv(y, sin(vang));
-		else dist = FixedDiv(x, cos(vang));
-		
-		if ((angle < 0.23 || angle > 0.85) && (dist >> 16) < range)
-		{
-			
-			if (GetActorPitch(PlayerTag(player)) >= -0.5 && GetActorPitch(PlayerTag(player)) <= 0.5)
-			{
-			pitch = VectorAngle(dist, GetActorZ(PLAYERMARINETIDBASE) - (GetActorZ(PlayerTag(player)) + GetActorViewHeight(PlayerTag(player))));
-			pitch += FixedMul(GetActorPitch(PlayerTag(player)), 1.2) % 1.0;
-		
-				if ((hudX/2) * sin(angle) != 0 && cos(angle) != 0 && (hudX/2) * sin(pitch) != 0 && cos(pitch) != 0)
-				{
-					
-				x = hudX/2 - ((hudX/2) * sin(angle) / cos(angle));
-				y = hudY/2 - ((HUDX/2) * sin(pitch) / cos(pitch));
-					
-				x+=xOffset;
-				y+=yOffset;
-						
-				HudMessage(n:player+1, s:"'s Marine\n\crHealth: ",d:GetActorProperty(PLAYERMARINETIDBASE+marine, APROP_Health), 
-				s:" / ",d:Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA], s:"\n\crWeapon: ", s:MarineWeapons[Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]]; HUDMSG_PLAIN, msgID, colour, (x << 16), (y << 16), holdTime);
-				}   
-			}	
-		}
-	}
-}
-
-script "MarineInfoLoop" enter
+script "DisplayMarineStatsOnMarines" enter
 {
 	int player = PlayerNumber();
 	
@@ -83,16 +18,54 @@ script "MarineInfoLoop" enter
 		for (int i = 0; i <= PlayerTopIndex(); i++)
 		{
 			if(PlayerAlive(i) && ThingCount(0, PLAYERMARINETIDBASE+i) > 0)
-				Client_NamedExecuteAlways(player, "DisplayMarineInfo", 0, i);
+			{
+				// Loading data
+				str msg = StrParam(n:i+1);
+				int slot = DataSlot(msg);
+	
+				// check player slot within the database.
+				if (slot != -1)
+				{					
+					Client_NamedExecuteAlways(player, "DisplayMarineInfo", 0, i, Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA], Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]);
+				}
+			}
 		}
 		
 		Delay(1);
 	}
 }
 
-script "DisplayMarineInfo" (int marine)
+script "DisplayMarineInfo" (int marine, int hpInfo, int wepInfo)
 {
-	DisplayScriptedMarineInfo(marine, 505+marine, 800, 600, 0, 0, 1024, 0, CR_WHITE);
+	str marineInfo = strparam(s:"\cd", n:marine+1, s:"'s Marine\n\cdHealth: \cj",d:GetActorProperty(PLAYERMARINETIDBASE+marine, APROP_Health), 
+		s:" / ",d:hpInfo, s:"\n\cdWeapon: \cj", s:MarineWeapons[wepInfo]);
+	
+	HudMessageOnActor(PLAYERMARINETIDBASE+marine, 505+marine, 800, 600, 0, 0, 768, -1, "", 0, CR_WHITE, marineInfo);
+}
+
+script "LocalMarineCounter" (void)
+{
+	int player = PlayerNumber();
+	int mTimer = 60;
+	
+	SetFont("GARGWING");
+	
+	while (ThingCount(0, PLAYERMARINETIDBASE+player) > 0)
+	{
+        HudMessage (s:"\cdMarine timer:  \cd", d:mTimer;
+                    HUDMSG_PLAIN, CHNL_INVMTIMER, CR_BLACK, 0.95, 0.45, 1.0);
+		mTimer--;
+		Delay(1*35);
+		
+		if (mTimer <= 0)
+			break;
+		
+	}
+	HudMessage (s:"\crDespawning marine..";
+		HUDMSG_PLAIN, CHNL_INVMTIMER, CR_BLACK, 0.95, 0.45, 1.0);
+	Delay(1*35);
+	Thing_Remove(PLAYERMARINETIDBASE+player);
+	
 }
 
 script "PrintMarineData" (int player)
@@ -213,7 +186,7 @@ script 223 (void)
 			
 			// Weapon.
 			if (Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA] <= 1)	
-				SetMarineWeapon(PLAYERMARINETIDBASE+player, WEAPON_Fist);
+				SetMarineWeapon(PLAYERMARINETIDBASE+player, MARINEWEAPON_Fist);
 			else
 				SetMarineWeapon(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]);
 			
@@ -227,7 +200,10 @@ script 223 (void)
 				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_DamageMultiplier, Data[(DATASIZE*(slot+1))-MARINEDAMAGEDATA]);
 
 			// Thing translation.
-			Thing_SetTranslation(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINECOLORDATA]);		
+			Thing_SetTranslation(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINECOLORDATA]);
+			
+			// Activate the timer.
+			ACS_NamedExecuteAlways("LocalMarineCounter", 0);
 
 		}
 		else

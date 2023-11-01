@@ -73,6 +73,9 @@ script ACS_PLYR_REENTER ENTER
     ACS_ExecuteAlways(ACS_PLYR_SAVEINVENTORY, 0);       // Save inventory on custom gamemodes or w/e
     ACS_ExecuteAlways(ACS_PLYR_RETURNOLDINVENTORY, 0);  // Return old inventory
     ACS_ExecuteAlways(ACS_PLYR_CBOWAMMO, 0);            // Crossbow script
+	
+	// Ideally, all scripts are moved to named scripts.
+	ACS_NamedExecuteAlways("DisplayMarineStatsOnMarines", 0); // Displays stats on player-owned marines.
     
     //hadFirstSpawn[player] = true;
 }

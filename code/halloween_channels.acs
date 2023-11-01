@@ -85,6 +85,11 @@
 // y: 0.55
 #define CHNL_INVDISCOUNT 92
 
+// CHANNEL: SCRIPTED MARINE TIMER
+// x: 0.95
+// y: 0.45
+#define CHNL_INVMTIMER 93
+
 // CHANNEL SET: MONEY EFFECT
 // x: 0.95
 // y: 0.365 - 0.486
