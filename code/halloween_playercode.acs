@@ -60,7 +60,10 @@ script ACS_PLYR_REENTER ENTER
     
     //We remove all the ammo. After that we apply the player level.
     //GiveInventory(   "Backpack",  1 );
+	
+	// Take Slenderman mode Camera + Trick or Treat buckets.
     TakeInventory("Staff", 1);
+    TakeInventory("Gauntlets", 1);
     
     SetEntered(player, JUSTLEFT_MONEYSYSTEM);
     
@@ -222,5 +225,4 @@ script ACS_PLYR_CBOWAMMO (void)
 	   Delay(1);
 	}
 }
-
 

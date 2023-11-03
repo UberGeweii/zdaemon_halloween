@@ -40,13 +40,16 @@ script "DisplayMarineInfo" (int marine, int hpInfo, int wepInfo)
 	str marineInfo = strparam(s:"\cd", n:marine+1, s:"'s Marine\n\cdHealth: \cj",d:GetActorProperty(PLAYERMARINETIDBASE+marine, APROP_Health), 
 		s:" / ",d:hpInfo, s:"\n\cdWeapon: \cj", s:MarineWeapons[wepInfo]);
 	
-	HudMessageOnActor(PLAYERMARINETIDBASE+marine, 505+marine, 800, 600, 0, 0, 768, -1, "", 0, CR_WHITE, marineInfo);
+	HudMessageOnActor(PLAYERMARINETIDBASE+marine, 505+marine, 800, 600, 0, -64, 768, -1, "", 0, CR_WHITE, marineInfo);
 }
 
 script "LocalMarineCounter" (void)
 {
 	int player = PlayerNumber();
-	int mTimer = 60;
+	int mTimer = 30;
+	
+	if (GetCvar("sv_marinetime") != mTimer && GetCvar("sv_marinetime") > 0)
+		mTimer = GetCvar("sv_marinetime");
 	
 	SetFont("GARGWING");
 	
@@ -62,8 +65,9 @@ script "LocalMarineCounter" (void)
 		
 	}
 	HudMessage (s:"\crDespawning marine..";
-		HUDMSG_PLAIN, CHNL_INVMTIMER, CR_BLACK, 0.95, 0.45, 1.0);
+				HUDMSG_PLAIN, CHNL_INVMTIMER, CR_BLACK, 0.95, 0.45, 1.0);
 	Delay(1*35);
+	SpawnSpotForced ("TeleportFog", PLAYERMARINETIDBASE+player, 0, 0);
 	Thing_Remove(PLAYERMARINETIDBASE+player);
 	
 }
@@ -71,7 +75,7 @@ script "LocalMarineCounter" (void)
 script "PrintMarineData" (int player)
 {
 	// Loading data
-	str msg = StrParam(n:PlayerNumber()+1);
+	str msg = StrParam(n:player+1);
 	int slot = DataSlot(msg);
 
 	// check player slot within the database.
@@ -158,8 +162,7 @@ script 223 (void)
 
 	// check player slot within the database.
 	if (slot != -1)
-	{
-			
+	{		
 		if (!ThingCount(0, PLAYERMARINETIDBASE+player))
 		{
 			Print(s:"\cdSpawned your friendly marine.");
@@ -170,11 +173,16 @@ script 223 (void)
 			GetActorFloorZ(PlayerTag(player)), PLAYERMARINETIDBASE+player, false);
 			SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Friendly, true);
 			
+			SpawnSpotForced ("TeleportFog", PLAYERMARINETIDBASE+player, 0, 0);
+			
 			// Apply options bought by player.
 				
 			// Health.
 			if (Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA] <= 0)
-				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Health, 100);
+			{
+				Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA] = 100; // Also handle first time use of the marine without health upgrades..
+				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Health, Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA]);
+			}
 			else
 				SetActorProperty(PLAYERMARINETIDBASE+player, APROP_Health, Data[(DATASIZE*(slot+1))-MARINEHEALTHDATA]);				
 			
@@ -186,7 +194,10 @@ script 223 (void)
 			
 			// Weapon.
 			if (Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA] <= 1)	
-				SetMarineWeapon(PLAYERMARINETIDBASE+player, MARINEWEAPON_Fist);
+			{
+				Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA] = 1;	// Also handle first time use of the marine without weapon upgrades..
+				SetMarineWeapon(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]);
+			}
 			else
 				SetMarineWeapon(PLAYERMARINETIDBASE+player, Data[(DATASIZE*(slot+1))-MARINEWEAPONDATA]);
 			

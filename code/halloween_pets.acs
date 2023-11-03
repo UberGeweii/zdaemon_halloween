@@ -17,7 +17,7 @@ str AvailablePets[MAX_VARIETY_PETS] = {"",
 "",
 "ExplosiveBarrel",
 "ZChainBit64",
-"StalagmiteSmall", //slenderman
+"StalagmgiteSmall", //slenderman
 "GoldWandFX2",
 "ZChainBit32",
 "DeadCacodemon",

@@ -192,3 +192,9 @@ script 910 (int thang, int tid, int newtid)
 {
 	SpawnSpot(THINGLST[thang], tid, newtid, 0);
 }
+
+script 911 (int player, int item, int amount)
+{
+	GiveActorInventory(PlayerTag(player), THINGLST[item], amount);
+	
+}

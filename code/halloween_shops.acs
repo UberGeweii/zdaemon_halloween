@@ -63,6 +63,11 @@
 #define UPGRADE_DAMAGE2			  55
 #define UPGRADE_DAMAGE3			  56
 #define UPGRADE_MARINEWEPBERSERK  57
+#define PET_DEADMARINE			  58
+#define PET_TOMATOBOX			  59
+#define ITEM_ARTIDARKSERVANT	  60
+#define UPGRADE_HEALTH300		  61
+#define UPGRADE_HEALTH400		  62
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
@@ -133,6 +138,14 @@ script ACS_WRLD_CREATESHOPITMS OPEN
 	CreateItem(UPGRADE_DAMAGE1			, "Marine Damage Multiply I Upgrade"				, 100000	 );
 	CreateItem(UPGRADE_DAMAGE2			, "Marine Damage Multiply II Upgrade"				, 300000	 );
 	CreateItem(UPGRADE_DAMAGE3			, "Marine Damage Multiply III Upgrade"				, 500000	 );
+	
+    CreateItem(PET_DEADMARINE       , "Deadmarine Pet"							,   50000 	);
+    CreateItem(PET_TOMATOBOX     	, "TomatoBox Pet"							,   100000 	);
+	
+	CreateItem(ITEM_ARTIDARKSERVANT , "Friendly Scripted Marine Helper"			,	1500 	);	
+	
+	CreateItem(UPGRADE_HEALTH300			, "Marine 300 HP Upgrade"			, 20000	 );
+	CreateItem(UPGRADE_HEALTH400			, "Marine 400 HP Upgrade"			, 40000	 );
 
 }
 
@@ -371,16 +384,41 @@ script 175 (int item)
 				
             case UPGRADE_DAMAGE2:
                 BuyMarineUpgrade(item, player, 4, 3, cost);
-                break;	
+                break;
 
             case UPGRADE_DAMAGE3:
-                BuyMarineUpgrade(item, player, 5, 4, cost);
+                BuyMarineUpgrade(item, player, 4, 4, cost);
                 break;	
 				
             case UPGRADE_MARINEWEPBERSERK:
                 BuyMarineUpgrade(item, player, 2, 2, cost);
                 break;
+				
+            case PET_DEADMARINE:
+                BuyPet(item, player, 15, cost);
+                break;
+
+            case PET_TOMATOBOX:
+                BuyPet(item, player, 12, cost);
+                break;
+				
+           case ITEM_ARTIDARKSERVANT:
+                BuyLimit("ArtiDarkServant", 1, 25, player, item, cost);
+                break;
+				
+            case UPGRADE_HEALTH300:
+                BuyMarineUpgrade(item, player, 0, 300, cost);
+                break;  		
+
+            case UPGRADE_HEALTH400:
+                BuyMarineUpgrade(item, player, 0, 400, cost);
+                break;  
 
 		}
 	}
+    else
+    {
+        HudMessage (s:"\cgInsufficient funds!";
+                    HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+    }
 }	

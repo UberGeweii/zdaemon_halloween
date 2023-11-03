@@ -149,7 +149,6 @@ global bool 17:stopMusicbox;
 global bool 20:gbossFightUnlocked;
 
 int curScriptedMarineSkin[MAXPLAYERS];
-int curScriptedMarineWeapon[MAXPLAYERS];
 int curScriptedMarineColor[MAXPLAYERS];
 
 ////////////////////////////////////////
@@ -432,6 +431,66 @@ function void HudMessageOnActor(int tid, int msgID, int hudX, int hudY, int xOff
 	=== GLOBAL SCRIPTS ===
 */
 ////////////////////////////////////////
+
+// Create global thing translations.
+script "GlobalThingTranslations" open
+{
+
+    Delay(2);
+	
+	// This is the standard gray/indigo range
+	CreateTranslation (1, 112:127=96:111);
+
+	// This is a white range
+	CreateTranslation (2, 112:127=80:95);
+
+	// This is the standard brown range
+	CreateTranslation (3, 112:127=64:79);
+
+	// This is a peach range
+	CreateTranslation (4, 112:127=48:63);
+
+	// This is the standard red range
+	CreateTranslation (5, 112:127=32:47);
+
+	// This is a pink range
+	CreateTranslation (6, 112:127=16:31);
+
+	// This is a sort of ugly brown range
+	CreateTranslation (7, 112:127=128:151);
+
+	// This is a greenish range, but not the standard player green
+	CreateTranslation (8, 112:127=152:159);
+
+	// This is a golden yellow range
+	CreateTranslation (9, 112:127=160:167);
+
+	// This is a brighter red range than the standard one
+	CreateTranslation (10, 112:127=169:191);
+
+	// This is a blue range
+	CreateTranslation (11, 112:127=192:207);
+
+	// This is an orange range
+	CreateTranslation (12, 112:127=208:223);
+
+	// This is a very bright yellow range
+	CreateTranslation (13, 112:127=231:224);
+
+	// This is a range from yellow (255,255,0) to black (0,0,0)
+	CreateTranslation (14, 112:127=[255,255,0]:[0,0,0]);
+
+    CreateTranslation (15, 112:127=0:2);
+
+/*
+	while (true)
+	{
+		Thing_SetTranslation(1, random(1, 15));
+		Delay(1);
+	}
+*/
+}
+
 
 // Shop exit voting trigger
 
@@ -882,8 +941,6 @@ Script 216 (int angle)
 	str msg = StrParam(n:PlayerNumber()+1);
 	int slot = DataSlot(msg);
 
-	int place = DataSlot(msg);
-
 	// check player slot
 	if (slot != -1)
 	{
@@ -1010,12 +1067,12 @@ script 221 (int args1)
 		Print(s:"\cdMarine color changed to: \cj ", d:curScriptedMarineColor[player]);
 	}
 		
-	// Client sidedly update marine with correct skin.
-	Client_Execute(0, 222, 0); 
+	// Update marine with correct skin.
+	ACS_Execute(222, 0); 
 	
 }
 
-// Client-sided script, do not call.
+// Update example-marine.
 script 222 (void)
 {
 	int player = PlayerNumber();

@@ -6,18 +6,18 @@
 
 #define MAXMARINEWEAPONS 12
 Str MarineWeapons[MAXMARINEWEAPONS] = {
-	"WEAPON_Dummy",
-	"WEAPON_Fist",
-	"WEAPON_BerserkFist",
-	"WEAPON_Chainsaw",
-	"WEAPON_Pistol",
-	"WEAPON_Shotgun",
-	"WEAPON_SuperShotgun",
-	"WEAPON_Chaingun",
-	"WEAPON_RocketLauncher",
-	"WEAPON_PlasmaRifle",
-	"WEAPON_Railgun",
-	"WEAPON_BFG"
+	"Dummy",
+	"Fist",
+	"BerserkFist",
+	"Chainsaw",
+	"Pistol",
+	"Shotgun",
+	"SuperShotgun",
+	"Chaingun",
+	"RocketLauncher",
+	"PlasmaRifle",
+	"Railgun",
+	"BFG"
 };
 
 #define MAX_INV_ITEM_NAMES 53
