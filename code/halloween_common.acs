@@ -147,9 +147,12 @@ global bool 16:inventorySaved[];
 global bool 17:stopMusicbox;
 
 global bool 20:gbossFightUnlocked;
+global bool 21:preBossDoorUnlocked;
+global bool 22:preBossDoorOpened;
 
 int curScriptedMarineSkin[MAXPLAYERS];
 int curScriptedMarineColor[MAXPLAYERS];
+int playerInQuestMenu[MAXPLAYERS];
 
 ////////////////////////////////////////
 /*
@@ -667,6 +670,9 @@ script ACS_WRLD_CVARCHECKER open
 script "ResetGlobals" open
 {
 	customGamemode = false;
+	gbossFightUnlocked = false;
+	preBossDoorUnlocked = false;
+	preBossDoorOpened = false;
 }
    
 ////////////////////////////////////////
@@ -741,7 +747,7 @@ script 207 enter
 		{
 			if(Distance(PlayerTag(player), 77) < 500)
 			{
-				GiveMoney(player, 10);
+				GiveMoney(player, 5*moneyrate);
 				Delay(2*SEC);
 			}
 			Delay(1);
@@ -864,6 +870,8 @@ script 213 (int tid)
 336 <=> PuzzGear4
 
 */
+
+// playerInQuestMenu[MAXPLAYERS];
  
 script 214 (void)
 {
@@ -871,6 +879,12 @@ script 214 (void)
 	int rand_amount = zd_rand(5000, 10000);
 
 	SetFont("GARGWING");
+	
+	// Prevent somebody from trading in a lot of gears at once.
+	if(playerInQuestMenu[player])
+		terminate;
+	
+	playerInQuestMenu[player] = true;
 
 	If(!CheckInventory("PuzzGear1") &&  !CheckInventory("PuzzGear2") && !CheckInventory("PuzzGear3") && !CheckInventory("PuzzGear4"))  
 	{
@@ -920,6 +934,7 @@ script 214 (void)
 		}
 	}
 
+	playerInQuestMenu[player] = false;
 }
 
 
@@ -1034,6 +1049,16 @@ script 221 (int args1)
 		else
 			curScriptedMarineSkin[player]++;
 		
+		while (Strcomp(ZD_GetSkinName(curScriptedMarineSkin[player]),"MaulotaurHuge")
+				|| Strcomp(ZD_GetSkinName(curScriptedMarineSkin[player]),"MaulotaurHugeAttack"))
+		{
+			if (curScriptedMarineSkin[player] >= ZD_GetSkinTopIndex())
+				curScriptedMarineSkin[player] = 0;
+			else
+				curScriptedMarineSkin[player]++;
+			Delay(1);
+		}
+		
 		Print(s:"\cdMarine skin changed to: \cj ", d:curScriptedMarineSkin[player], s:" - ", s:ZD_GetSkinName(curScriptedMarineSkin[player]));
 	}
 	
@@ -1043,6 +1068,16 @@ script 221 (int args1)
 			curScriptedMarineSkin[player] = ZD_GetSkinTopIndex();
 		else
 			curScriptedMarineSkin[player]--;
+		
+		while (Strcomp(ZD_GetSkinName(curScriptedMarineSkin[player]),"MaulotaurHuge")
+				|| Strcomp(ZD_GetSkinName(curScriptedMarineSkin[player]),"MaulotaurHugeAttack"))
+		{
+			if (curScriptedMarineSkin[player] <= 0)
+				curScriptedMarineSkin[player] = ZD_GetSkinTopIndex();
+			else
+				curScriptedMarineSkin[player]--;
+			Delay(1);
+		}
 		
 		Print(s:"\cdMarine skin changed to: \cj ", d:curScriptedMarineSkin[player], s:" - ", s:ZD_GetSkinName(curScriptedMarineSkin[player]));
 	}

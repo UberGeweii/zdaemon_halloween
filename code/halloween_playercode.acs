@@ -79,6 +79,8 @@ script ACS_PLYR_REENTER ENTER
 	
 	// Ideally, all scripts are moved to named scripts.
 	ACS_NamedExecuteAlways("DisplayMarineStatsOnMarines", 0); // Displays stats on player-owned marines.
+	
+	ACS_NamedExecuteAlways("LeapySalty", player); // Salty-specific script.
     
     //hadFirstSpawn[player] = true;
 }

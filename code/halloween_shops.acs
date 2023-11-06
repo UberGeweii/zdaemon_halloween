@@ -68,6 +68,8 @@
 #define ITEM_ARTIDARKSERVANT	  60
 #define UPGRADE_HEALTH300		  61
 #define UPGRADE_HEALTH400		  62
+#define PET_DEADIMP		  		  63
+#define PET_SELLPET	  		  	  64
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
@@ -146,6 +148,10 @@ script ACS_WRLD_CREATESHOPITMS OPEN
 	
 	CreateItem(UPGRADE_HEALTH300			, "Marine 300 HP Upgrade"			, 20000	 );
 	CreateItem(UPGRADE_HEALTH400			, "Marine 400 HP Upgrade"			, 40000	 );
+	
+    CreateItem(PET_DEADIMP     				, "Deadimp Pet"						,   200000 	);
+	
+    CreateItem(PET_SELLPET     				, "Sell your pet"					,   0 	);	
 
 }
 
@@ -413,6 +419,15 @@ script 175 (int item)
             case UPGRADE_HEALTH400:
                 BuyMarineUpgrade(item, player, 0, 400, cost);
                 break;  
+				
+            case PET_DEADIMP:
+                BuyPet(item, player, 19, cost);
+                break;
+				
+            case PET_SELLPET:
+                SellPet(player);
+                break;
+
 
 		}
 	}

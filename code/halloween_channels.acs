@@ -96,5 +96,8 @@
 // Set size: 20 (channels 100..120 are used)
 #define CHNL_MONEYEFFECTSETSTART 100
 
+// Pet hudmessage, positioning is calculated.
+#define CHNL_PETINFO 250
+
 
 
