@@ -1,0 +1,3 @@
+- Rain didn't always work on some clients.
+- Some maps exited out directly at the start.
+- Take all loot in slender man mode.
