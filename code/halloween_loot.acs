@@ -100,10 +100,19 @@ script ACS_WRLD_DEFINELOOTTABLES OPEN
 	AddLoot(LOOTTABLE_SMALL, "Cell"             ,  4);
 	AddLoot(LOOTTABLE_SMALL, "GoldWandAmmo"     ,  15);
 	AddLoot(LOOTTABLE_SMALL, "PhoenixRodAmmo"   ,  15);
+	AddLoot(LOOTTABLE_SMALL, "CrossbowAmmo"     ,  15);
     
     // Powerups
     AddLoot(LOOTTABLE_SMALL, "ArmorBonus"       ,  10);
     AddLoot(LOOTTABLE_SMALL, "HealthBonus"      ,  10);
+    AddLoot(LOOTTABLE_SMALL, "Stimpack"         ,  8);
+    AddLoot(LOOTTABLE_SMALL, "GreenArmor"       ,  1);
+    AddLoot(LOOTTABLE_SMALL, "Berserk"          ,  2);
+    AddLoot(LOOTTABLE_SMALL, "ArtiPoisonBag"    ,  8);
+    AddLoot(LOOTTABLE_SMALL, "ArtiBlastRadius"  ,  2);
+	
+	// Troll
+	AddLoot(LOOTTABLE_SMALL, "LostSoul"         ,  1);
     
     // Inventory
     if(GetCvar("sv_alwaysdropmoney") == 0) 
@@ -113,6 +122,9 @@ script ACS_WRLD_DEFINELOOTTABLES OPEN
     
  	AddLoot(LOOTTABLE_SMALL, "PuzzBook1"           ,  1);
  	AddLoot(LOOTTABLE_SMALL, "PuzzBook2"           ,  1);
+	
+	// Weapons
+	AddLoot(LOOTTABLE_SMALL, "Shotgun"     		   ,  5);
     
     // ------------------------- 
     // -- [MEDIUM LOOT TABLE] --
@@ -124,6 +136,7 @@ script ACS_WRLD_DEFINELOOTTABLES OPEN
 	AddLoot(LOOTTABLE_MEDIUM, "Shell"           ,  8);
 	AddLoot(LOOTTABLE_MEDIUM, "RocketAmmo"      ,  10);
 	AddLoot(LOOTTABLE_MEDIUM, "Cell"            ,  10);
+	AddLoot(LOOTTABLE_MEDIUM, "CrossbowAmmo"    ,  10);
     
 	AddLoot(LOOTTABLE_MEDIUM, "GoldWandAmmo"     ,  6);
 	AddLoot(LOOTTABLE_MEDIUM, "PhoenixRodAmmo"   ,  10);
@@ -137,8 +150,22 @@ script ACS_WRLD_DEFINELOOTTABLES OPEN
 	AddLoot(LOOTTABLE_MEDIUM, "PhoenixRodHefty"   ,  30);
     
     // Powerups
-    //AddLoot(LOOTTABLE_MEDIUM, "ArmorBonus"      ,  15);
-    //AddLoot(LOOTTABLE_MEDIUM, "HealthBonus"     ,  15);
+    AddLoot(LOOTTABLE_MEDIUM, "ArmorBonus"         ,  5);
+    AddLoot(LOOTTABLE_MEDIUM, "HealthBonus"        ,  5);
+    AddLoot(LOOTTABLE_MEDIUM, "Stimpack"           ,  15);
+    AddLoot(LOOTTABLE_MEDIUM, "GreenArmor"         ,  5);
+    AddLoot(LOOTTABLE_MEDIUM, "Berserk"            ,  5);
+    AddLoot(LOOTTABLE_MEDIUM, "Soulsphere"         ,  1);
+    AddLoot(LOOTTABLE_MEDIUM, "Allmap"             ,  1);
+	AddLoot(LOOTTABLE_MEDIUM, "RadSuit" 		   ,  1);
+	AddLoot(LOOTTABLE_MEDIUM, "ArtiTorch" 		   ,  1);
+	AddLoot(LOOTTABLE_MEDIUM, "ArtiHealth" 		   ,  5);
+	AddLoot(LOOTTABLE_MEDIUM, "ArtiSuperHealth"    ,  2);
+    AddLoot(LOOTTABLE_MEDIUM, "ArtiInvisibility"   ,  10);
+	AddLoot(LOOTTABLE_MEDIUM, "PuzzGemBlue1" 	   ,  1);
+    AddLoot(LOOTTABLE_MEDIUM, "ArtiPoisonBag"      ,  10);
+    AddLoot(LOOTTABLE_MEDIUM, "ArtiBlastRadius"    ,  5);
+	AddLoot(LOOTTABLE_MEDIUM, "ArtiDarkServant"    ,  5);
     
     // Inventory
     if(GetCvar("sv_alwaysdropmoney") == 0) 
@@ -147,55 +174,78 @@ script ACS_WRLD_DEFINELOOTTABLES OPEN
         AddLoot(LOOTTABLE_MEDIUM, "BlasterHefty"    ,  35); 
     }
     
- 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear1"        ,  5);
- 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear2"        ,  5);
- 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear3"        ,  5);
- 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear4"        ,  5);    
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear1"        ,  1);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear2"        ,  1);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear3"        ,  1);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzGear4"        ,  1);    
 
- 	AddLoot(LOOTTABLE_MEDIUM, "PuzzBook1"           ,  3);
- 	AddLoot(LOOTTABLE_MEDIUM, "PuzzBook2"           ,  3);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzBook1"           ,  2);
+ 	AddLoot(LOOTTABLE_MEDIUM, "PuzzBook2"           ,  2);
  	AddLoot(LOOTTABLE_MEDIUM, "PuzzGemBig"          ,  2);
     
  	AddLoot(LOOTTABLE_MEDIUM, "PuzzSkull"           ,  1);
     
-    
+   	// Weapons
+	AddLoot(LOOTTABLE_MEDIUM, "Shotgun"     		,  10);
+	
     // ------------------------ 
     // -- [LARGE LOOT TABLE] --
     // ------------------------	
 	AddLoot(LOOTTABLE_LARGE, LOOT_NOTHING       ,  2); 
     // Ammo   
-	AddLoot(LOOTTABLE_LARGE, "ClipBox"          ,  5);
-	AddLoot(LOOTTABLE_LARGE, "ShellBox"         ,  5);
-	AddLoot(LOOTTABLE_LARGE, "RocketBox"        ,  5);
-	AddLoot(LOOTTABLE_LARGE, "CellPack"         ,  2);
+	AddLoot(LOOTTABLE_LARGE, "ClipBox"          ,  20);
+	AddLoot(LOOTTABLE_LARGE, "ShellBox"         ,  20);
+	AddLoot(LOOTTABLE_LARGE, "RocketBox"        ,  20);
+	AddLoot(LOOTTABLE_LARGE, "CellPack"         ,  20);
     
 	AddLoot(LOOTTABLE_LARGE, "GoldWandHefty"     ,  8);
 	AddLoot(LOOTTABLE_LARGE, "PhoenixRodHefty"   ,  8);
     
     // Powerups
-    //AddLoot(LOOTTABLE_LARGE, "ArmorBonus"       ,  5);
-    //AddLoot(LOOTTABLE_LARGE, "HealthBonus"      ,  5);
-    
+    //AddLoot(LOOTTABLE_LARGE, "ArmorBonus"          ,  5);
+    //AddLoot(LOOTTABLE_LARGE, "HealthBonus"         ,  5);
+    AddLoot(LOOTTABLE_LARGE, "Stimpack"              ,  5);
+    AddLoot(LOOTTABLE_LARGE, "GreenArmor"            ,  10);
+    AddLoot(LOOTTABLE_LARGE, "Berserk"               ,  15);
+    AddLoot(LOOTTABLE_LARGE, "Medikit"               ,  20);
+    AddLoot(LOOTTABLE_LARGE, "BlueArmor"             ,  5);
+    AddLoot(LOOTTABLE_LARGE, "Soulsphere"            ,  4);
+    AddLoot(LOOTTABLE_LARGE, "Megasphere"            ,  1);
+    AddLoot(LOOTTABLE_LARGE, "Allmap"                ,  4);
+    AddLoot(LOOTTABLE_LARGE, "ArtiInvulnerability"   ,  1);
+    AddLoot(LOOTTABLE_LARGE, "ArtiInvisibility"      ,  10);
+	AddLoot(LOOTTABLE_LARGE, "RadSuit" 				 ,  5);
+	AddLoot(LOOTTABLE_LARGE, "ArtiTorch" 		     ,  10);
+	AddLoot(LOOTTABLE_LARGE, "ArtiHealth" 		     ,  15);
+	AddLoot(LOOTTABLE_LARGE, "ArtiSuperHealth" 		 ,  5);
+	AddLoot(LOOTTABLE_LARGE, "PuzzGemBlue1" 		 ,  2);
+    AddLoot(LOOTTABLE_LARGE, "ArtiPoisonBag"         ,  8);
+    AddLoot(LOOTTABLE_LARGE, "ArtiBlastRadius"       ,  8);
+	AddLoot(LOOTTABLE_LARGE, "ArtiDarkServant"       ,  8);
+	 
     // Inventory
     if(GetCvar("sv_alwaysdropmoney") == 0) 
     {
-        AddLoot(LOOTTABLE_LARGE, "BlasterHefty"     ,  15);
-        AddLoot(LOOTTABLE_LARGE, "BlasterAmmo"      ,  10);
+        AddLoot(LOOTTABLE_LARGE, "BlasterHefty"     ,  25);
+        AddLoot(LOOTTABLE_LARGE, "BlasterAmmo"      ,  20);
     }
- 	AddLoot(LOOTTABLE_LARGE, "PuzzBook1"       ,  20);
- 	AddLoot(LOOTTABLE_LARGE, "PuzzBook2"       ,  20);
- 	AddLoot(LOOTTABLE_LARGE, "PuzzGemBig"       ,  15);
- 	AddLoot(LOOTTABLE_LARGE, "PuzzGear1"        ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "PuzzGear2"        ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "PuzzGear3"        ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "PuzzGear4"        ,  10);
- 	AddLoot(LOOTTABLE_LARGE, "PuzzSkull"        ,  15);
- 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece1"    ,  25);
- 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece2"    ,  25);
- 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece3"    ,  25);
- 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece1"    ,  25);
- 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece2"    ,  25);
- 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece3"    ,  25);  
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzBook1"       ,  8);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzBook2"       ,  8);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGemBig"       ,  5);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear1"        ,  2);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear2"        ,  2);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear3"        ,  2);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzGear4"        ,  2);
+ 	AddLoot(LOOTTABLE_LARGE, "PuzzSkull"        ,  5);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece1"    ,  5);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece2"    ,  5);
+ 	AddLoot(LOOTTABLE_LARGE, "FWeaponPiece3"    ,  5);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece1"    ,  5);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece2"    ,  5);
+ 	AddLoot(LOOTTABLE_LARGE, "CWeaponPiece3"    ,  5);  
+	
+   	// Weapons
+	AddLoot(LOOTTABLE_LARGE, "Railgun"     		,  10);
 }
 
 function void GrantLoot(str classname, int minval, int maxval, int tableid, str itemdesc)
@@ -233,3 +283,65 @@ function void GrantLoot(str classname, int minval, int maxval, int tableid, str 
             SpawnSpot (classname, 0, 0, 0);
     }
 }
+
+// Upgrade buying function.
+function void BuyChestUpgrade(int item, int player, int value, int cost)
+{
+	str msg = StrParam(n:player+1);    
+	int slot = DataSlot(msg);
+
+	// Player present in database?
+	if (slot == -1)
+	{
+		Log(s:"[ERROR] ",s:msg,s:" wanted to buy on the shop but has no database ID!");
+		return;
+	}
+
+	// Now fetch the item name.
+	int itemName = GetItemDesc(item);
+	
+	if (value != Data[(DATASIZE*(slot+1))-CHESTUPGRADEDATA])
+	{
+		if (value < Data[(DATASIZE*(slot+1))-CHESTUPGRADEDATA])
+		{
+			HudMessage (s:"\ceYou already have a higher tier upgrade!";
+			HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+			return;
+		}
+		else
+		{
+			Data[(DATASIZE*(slot+1))-CHESTUPGRADEDATA] = value;
+		}
+	}
+	else
+	{
+		HudMessage (s:"\ceYou already have ",s:itemName,s:"!";
+		HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+		return;	
+	} 
+	
+	TakeMoney(player, cost);
+
+	//print(s:"\cdYou bought ",s:GetItemDesc(item),s:".");
+	SetFont("GARGWING");
+	HudMessage (s:"\cdYou bought ",s:itemName,s:".";
+		HUDMSG_FADEINOUT, CHNL_INTERACT2, NONE, 0.5, 0.55, 1.5, 0.3, 0.3);
+}
+
+// Get chest upgrade function.
+function int GetChestUpgrade(int player)
+{
+	str msg = StrParam(n:player+1);    
+	int slot = DataSlot(msg);
+
+	// Player present in database?
+	if (slot == -1)
+	{
+		Log(s:"[ERROR] ",s:msg,s:" wanted to access their chest upgrade has no database ID!");
+		return -1;
+	}
+	
+	int value = Data[(DATASIZE*(slot+1))-CHESTUPGRADEDATA];	
+	return value;
+}
+

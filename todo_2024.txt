@@ -1,3 +1,0 @@
-
-- Proper formatting for the ACS files.
-- Something awfully wrong with acs_always_preserve_globals.

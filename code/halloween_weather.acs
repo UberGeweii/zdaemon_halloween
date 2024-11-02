@@ -1,0 +1,204 @@
+#define RAIN_TID_BASE       64000
+#define RAIN_MAX_HEIGHT     500
+#define T_RAINDROP          232
+
+// WARNING: This should always be at least 1.
+#define DEFAULT_RAIN_MIN_SPEED   	1
+
+#define DEFAULT_RAIN_MIN_DENSITY 	30
+#define DEFAULT_RAIN_MAX_DENSITY	500
+#define DEFAULT_RAIN_CAP_DENSITY	1000
+
+#define DEFAULT_RAIN_DRAW_DIST   	512    
+#define DEFAULT_RAIN_MIN_DRAW_DIST 	128
+
+#define DEFAULT_RAIN_MIN_HEIGHT  	64
+
+#define MAX_RAIN_VARS        5
+#define RV_SPAWN_RAIN        0
+#define RV_RAIN_FALL_SPEED   1
+#define RV_RAIN_DRAW_DIST    2
+#define RV_RAIN_MIN_HEIGHT   3
+#define RV_RAIN_DENSITY      4
+int RV_rainVars[MAX_RAIN_VARS];
+
+// Used to save the old status.
+int RV_rainTempVars[MAX_RAIN_VARS];
+
+bool RV_RainInitDone = false;
+
+// Adjust density calculation based on speed
+function int CalculateDensity(int speed)
+{
+    // Scale the density inversely with speed, clamped within the min and max range
+    int density = DEFAULT_RAIN_CAP_DENSITY / speed;
+
+    // Ensure density falls within minimum and cap limits
+    if (density < DEFAULT_RAIN_MIN_DENSITY) {
+        density = DEFAULT_RAIN_MIN_DENSITY;
+    }
+    else if (density > DEFAULT_RAIN_CAP_DENSITY) {
+        density = DEFAULT_RAIN_CAP_DENSITY;
+    }
+
+    return density;
+}
+
+function bool UpdateClientRainVar(int varNum, int newValue)
+{
+    Client_NamedExecuteAlways(-1, "Rain_UpdateClients", 0, varNum, newValue);
+    return true;
+}
+
+// Updated Rain_ChangeVars script
+script "Rain_ChangeVars" (int speed, int drawDist, int minHeight)
+{
+    delay(1);
+    
+    // Speed
+    if (speed >= DEFAULT_RAIN_MIN_SPEED)
+        RV_rainVars[RV_RAIN_FALL_SPEED] = speed;
+    else
+        Log(s:"\ca[ERROR] Input for speed: '", d:speed, s:"' too low! Minimum: ", d:DEFAULT_RAIN_MIN_SPEED);
+
+    // Calculate and set density based on speed
+    RV_rainVars[RV_RAIN_DENSITY] = CalculateDensity(speed);
+    
+    // Draw distance
+    if (drawDist >= DEFAULT_RAIN_MIN_DRAW_DIST)
+        RV_rainVars[RV_RAIN_DRAW_DIST] = drawDist;
+    else
+        Log(s:"\ca[ERROR] Input for drawDist: '", d:drawDist, s:"' too low! Minimum: ", d:DEFAULT_RAIN_MIN_DRAW_DIST);
+    
+    // Height
+    if (minHeight >= DEFAULT_RAIN_MIN_HEIGHT)
+        RV_rainVars[RV_RAIN_MIN_HEIGHT] = minHeight;
+    else
+        Log(s:"\ca[ERROR] Input for minHeight: '", d:minHeight, s:"' too low! Minimum: ", d:DEFAULT_RAIN_MIN_HEIGHT);
+
+    Log(s:"Rain variables have been changed, rainSpeed: ", 
+        d:RV_rainVars[RV_RAIN_FALL_SPEED], s:", rainDrawDist: ",
+        d:RV_rainVars[RV_RAIN_DRAW_DIST], s:", rainMinHeight: ", 
+        d:RV_rainVars[RV_RAIN_MIN_HEIGHT], s:", calculatedRainDensity: ",
+	d:RV_rainVars[RV_RAIN_DENSITY] ,s:".");
+}
+
+// Update clients loop.
+script "Rain_UpdateClientsLoop" open
+{    
+    Delay(2);
+    
+    // Initialize values.
+    RV_rainVars[RV_SPAWN_RAIN] = zd_rand(0,1);
+    RV_rainVars[RV_RAIN_FALL_SPEED] = zd_rand(8,16);
+    RV_rainVars[RV_RAIN_DRAW_DIST] = DEFAULT_RAIN_DRAW_DIST;
+    RV_rainVars[RV_RAIN_MIN_HEIGHT] = DEFAULT_RAIN_MIN_HEIGHT;
+    RV_rainVars[RV_RAIN_DENSITY] = CalculateDensity(RV_rainVars[RV_RAIN_FALL_SPEED]);
+
+    int oldRainState = RV_rainVars[RV_SPAWN_RAIN];
+    
+    // These need to be transmitted on first iteration.
+    RV_rainTempVars[RV_SPAWN_RAIN] = -1;
+    RV_rainTempVars[RV_RAIN_FALL_SPEED] = -1;
+    RV_rainTempVars[RV_RAIN_DENSITY] = -1;
+    
+    // These have a default value, no need to transmit at first iteration.
+    RV_rainTempVars[RV_RAIN_DRAW_DIST] = RV_rainVars[RV_RAIN_DRAW_DIST];
+    RV_rainTempVars[RV_RAIN_MIN_HEIGHT] = RV_rainVars[RV_RAIN_MIN_HEIGHT];
+    
+    RV_RainInitDone = true;
+    
+    while (true)
+    {
+        if (GetCVar("sv_alwaysrain") > 0)
+        {
+            oldRainState = RV_rainVars[RV_SPAWN_RAIN];
+            RV_rainVars[RV_SPAWN_RAIN] = 1;
+        }
+        else if (GetCVar("sv_disablerain") > 0)
+        {
+            // Restore.
+            RV_rainVars[RV_SPAWN_RAIN] = 0;
+        }    
+        
+        // Cycle through all possible variables.
+        for (int varNum = 0; varNum <= MAX_RAIN_VARS; varNum++)
+        {
+            if (RV_rainVars[varNum] != RV_rainTempVars[varNum]) 
+            {        
+                UpdateClientRainVar(varNum, RV_rainVars[varNum]);
+                RV_rainTempVars[varNum] = RV_rainVars[varNum];
+            }
+        }
+        Delay(2);
+    }
+}
+
+//#define MAX_RAIN_VARS      4
+#define CS_SPAWN_RAIN       0
+#define CS_RAIN_FALL_SPEED  1
+#define CS_RAIN_DRAW_DIST   2
+#define CS_RAIN_MIN_HEIGHT  3
+#define CS_RAIN_DENSITY     4
+
+int CS_rainVars[MAX_RAIN_VARS];
+
+// Don't ever puke this script!
+// It gets activated for every client that joins.
+script "Rain_ClientEnter" (void)
+{
+    int player = PlayerNumber();
+    delay(2);
+    
+    while (!RV_RainInitDone)
+        Delay(5);
+    
+    Client_NamedExecute(player, "Rain_MainClientLoop", 0, 0, 0, 0);
+}
+
+// Update clients with new data.
+script "Rain_UpdateClients" (int varNum, int newValue)
+{
+    if (GetCvar("sv_debugmode") > 0)
+        Log(s:"\cd[RAIN DEBUG] Information received from server.. varNum: ", d:varNum, s:" newValue: ", d:newValue);
+    
+    // Assign new value.
+    CS_rainVars[varNum] = newValue;
+}
+
+// Spawn rain for the client.
+script "Rain_MainClientLoop" (void)
+{
+    int x, y, z;
+    int player = PlayerNumber();     
+    
+    // Default vars at start.
+    CS_rainVars[RV_RAIN_DRAW_DIST] = DEFAULT_RAIN_DRAW_DIST;
+    CS_rainVars[RV_RAIN_MIN_HEIGHT] = DEFAULT_RAIN_MIN_HEIGHT;
+    
+    while (PlayerAlive(player))
+    {
+        if (CS_rainVars[CS_SPAWN_RAIN] > 0)
+        {
+            for (int i = RAIN_TID_BASE; i < RAIN_TID_BASE + CS_rainVars[CS_RAIN_DENSITY]; i++)
+            {
+                x = GetActorX(0) + (ZD_rand(-CS_rainVars[CS_RAIN_DRAW_DIST], CS_rainVars[CS_RAIN_DRAW_DIST]) << 16);
+                y = GetActorY(0) + (ZD_rand(-CS_rainVars[CS_RAIN_DRAW_DIST], CS_rainVars[CS_RAIN_DRAW_DIST]) << 16);
+                z = GetActorZ(0) + (ZD_rand(CS_rainVars[CS_RAIN_MIN_HEIGHT], RAIN_MAX_HEIGHT) << 16);
+                
+                Spawn("MapSpot", x, y, z, i, 0);
+                
+                if (CheckActorCeilingTexture(i, "F_SKY1"))
+                    Thing_Projectile(i, T_RAINDROP, 0, ZD_rand(-1, -2), -96);
+                        
+                Thing_Remove(i);
+            }
+        }
+        
+        // Protection.
+        if (CS_rainVars[CS_RAIN_FALL_SPEED] < 1)
+            CS_rainVars[CS_RAIN_FALL_SPEED] = 5;
+        
+        Delay(CS_rainVars[CS_RAIN_FALL_SPEED]);
+    }
+}

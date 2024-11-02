@@ -68,3 +68,137 @@ Script MONSTER_RANDDROP (int tableid)
     if(GetCvar("sv_disabledloot") == 0)    
         GrantLoot(foundloot, 1, 1, tableid, "");    
 }
+
+Script RADIAL_RANDDROP (void) 
+{
+  
+}
+
+////////////////////////////////////////
+/*
+    === ARTI EXECUTION ===
+*/
+////////////////////////////////////////
+
+Script "ArtiScriptInit" OPEN
+{
+	//Log(s:"Arti scripts initialized.");
+	Arti_Execute("PuzzGemBlue1", 305);
+}
+
+Script 305 (void)
+{
+    int player = PlayerNumber();
+    
+    // Get the actor's position and angle
+    int x = GetActorX(PlayerTag(player));
+    int y = GetActorY(PlayerTag(player));
+    int z = GetActorZ(PlayerTag(player));
+    int angle = GetActorAngle(PlayerTag(player));
+	int lootTable, randAmount;
+	str foundLoot;
+    
+    // Calculate the spawn position in front of the actor
+    int spawnX = x + FixedMul(64 << 16, cos(angle));
+    int spawnY = y + FixedMul(64 << 16, sin(angle));
+    int spawnZ = z; // Same height as the actor
+
+	int crateAlreadyExists = ThingCount(0, PLAYERCHESTTIDBASE+player);
+	
+	if (!crateAlreadyExists)
+    {
+		// Spawn the item
+		int spawned = Spawn("ZRockBrown1", spawnX, spawnY, spawnZ, PLAYERCHESTTIDBASE+player, 0);
+    
+		// Check if the item was spawned successfully
+		if (!spawned)
+		{
+			Print(s:"Failed to spawn loot chest");
+			GiveActorInventory(PlayerTag(player), "PuzzGemBlue1", 1);
+		}
+		else
+		{		
+			randAmount = ZD_Rand(5, (GetChestUpgrade(player) + 1) * 4);
+			lootTable = GetChestUpgrade(player);
+			
+			//Print(s:"lootTable: ", d:lootTable);
+			
+			if (lootTable > -1)
+			{
+				ThingSound(PlayerTag(player), "misc/chestopen", 127);
+				
+				for(int i = 0; i < randAmount; i++)
+				{
+					foundLoot = RetrieveLoot(lootTable);
+					SpawnProjectile(PLAYERCHESTTIDBASE+player, foundLoot, ZD_Rand(0, 255), ZD_Rand(16, 32), ZD_Rand(8, 32), 1, 0);
+					Delay(5);
+				}  
+			}
+		}
+	}
+	else
+	{
+		Print(s:"Wait for your current crate to disappear!");
+		GiveActorInventory(PlayerTag(player), "PuzzGemBlue1", 1);
+	}
+}
+
+// Constants for radius and angle
+#define FIXED_POINT 65536 // Represents 1.0 in fixed-point
+
+script 304 (int orbitingObjectTid, int maxRadius, int speed) {
+    int player = PlayerNumber();
+    int minRadius = 16 << 16; // Minimum radius (fixed-point)
+    int middle_tid = PlayerTag(player); // Assign this TID to the object being orbited
+
+    // Spawn the orbiting object (replace "ArmorBonus" with the correct actor)
+    SpawnProjectile(0, "ArmorBonus", GetActorAngle(0) >> 8, 20, 0, 0, orbitingObjectTid);
+
+    // Confirm the activator with middle_tid is valid
+    if (!SetActivator(middle_tid)) {
+        Log(s:"Orbit script: Couldn't set activator to TID ", i:middle_tid);
+        terminate;
+    }
+
+    // Set a random orbit radius between minRadius and maxRadius, converted to fixed-point
+    int radius = random(minRadius, maxRadius << 16); // Fixed-point radius
+
+    // Starting angle (fixed-point: 0 to 65536 represents 0° to 360°)
+    int angle = random(0, 65536);
+
+    // Angular velocity in fixed-point: a small increment per tick for smooth orbiting
+    int ang_vel = (speed * FIXED_POINT) / 255; // Convert speed to a fixed-point value
+
+    // Ensure the orbiting object exists
+    bool orbiting = false;
+    if (SetActivator(orbitingObjectTid)) {
+        orbiting = true;
+    } else {
+        Log(s:"Orbit script: Couldn't set activator to TID ", i:orbitingObjectTid);
+        terminate;
+    }
+
+while (orbiting && ThingCount(0, orbitingObjectTid) > 0) {
+    // Update angle, wrap around if it exceeds a full circle
+    angle = (angle + ang_vel) % FIXED_POINT;
+
+    // Calculate the new position using trigonometric functions
+    int centerX = GetActorX(middle_tid); // X position of the activator
+    int centerY = GetActorY(middle_tid); // Y position of the activator
+    int centerZ = GetActorZ(middle_tid); // Z position of the activator
+
+    // Calculate offsets using fixed-point trigonometry
+    int offsetX = FixedMul(radius, Cos(angle * 3.14159 / 32768)); // Cos in radians
+    int offsetY = FixedMul(radius, Sin(angle * 3.14159 / 32768)); // Sin in radians
+
+    // Log the positions for debugging
+    Log(s:"CenterX: ", i:centerX >> 16, s:", CenterY: ", i:centerY >> 16, s:", OffsetX: ", i:offsetX >> 16, s:", OffsetY: ", i:offsetY >> 16);
+    
+    // Update the orbiting object's position, ensuring Z is constant
+    SetActorPosition(orbitingObjectTid, centerX + offsetX, centerY + offsetY, centerZ, false);
+
+    // Delay for smooth animation
+    Delay(15);
+}
+}
+

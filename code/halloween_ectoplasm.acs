@@ -241,7 +241,7 @@ function str GetItemDesc(int item)
 
 function int GetItemCost(int item)
 {
-    return m_itemcost[item];
+	return m_itemcost[item];
 }
 
 ////////////////////////////////////////

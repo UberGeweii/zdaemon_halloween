@@ -20,7 +20,7 @@ Str MarineWeapons[MAXMARINEWEAPONS] = {
 	"BFG"
 };
 
-#define MAX_INV_ITEM_NAMES 61
+#define MAX_INV_ITEM_NAMES 63
 str inv_item_names[MAX_INV_ITEM_NAMES] = {
 	"Clip",
 	"RocketAmmo",
@@ -78,7 +78,9 @@ str inv_item_names[MAX_INV_ITEM_NAMES] = {
 	"ArtiBlastRadius",
 	"ArtiDarkServant",
 	"ArtiFly",
-	"Railgun"
+	"Railgun",
+	"ArtiPoisonBag",
+	"PuzzGemBlue1"
 };
 
 #define THING 888

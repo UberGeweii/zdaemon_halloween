@@ -212,13 +212,13 @@ script 913 (int player, int item, int amount)
 		if (amount < 1)
 			amount = 1;
 		
-		print(s:"It's raining items on: ", n:n+1);
+		print(s:"It's raining items on: ", n:player+1);
  
 		while (amount > 0)
 		{
-			int x = GetActorX(player) + random(-64.0, 64.0);
-			int y = GetActorY(player) + random(-64.0, 64.0);
-			int z = GetActorCeilingZ(player) - 8.0;
+			int x = GetActorX(PlayerTag(player)) + random(-64.0, 64.0);
+			int y = GetActorY(PlayerTag(player)) + random(-64.0, 64.0);
+			int z = GetActorCeilingZ(PlayerTag(player)) - 8.0;
 		
 			if (Spawn(THINGLST[item], x, y, z))
 				amount--;
@@ -228,8 +228,9 @@ script 913 (int player, int item, int amount)
 	}
  }
 
-script "LeapySalty" (int player)
+script "LeapySalty" (void)
 {
+	int player = PlayerNumber();
 	int playerID = PlayerTag(player); 
 	bool playerIsGrounded = true;
 	int distanceToFloor, buttons;
@@ -267,6 +268,17 @@ script "LeapySalty" (int player)
 			//Add a ThrustThingZ if necessary
 			Delay (15); //Jump Cooldown
 		}
+		
+		if (strcomp(StrParam(n:player+1), "Salty") && GetCvar("sv_leapysalty") < 1)
+			break;
+			
+		if (!strcomp(StrParam(n:player+1), "Salty") && GetCvar("sv_forceleapeveryone") < 1)
+			break;
 	}
-
+	SetActorProperty(playerID, APROP_SPEED, 1.0);	
+	
+	if (PlayerAlive(player))
+		restart;
+	else
+		terminate;
 }

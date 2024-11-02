@@ -156,8 +156,8 @@ script ACS_DBASE_DISTRDATA (void)
 		m_tmplevelplayer[player] = Data[(DATASIZE*(place+1))-LEVELDATA];
     
 		Delay(1);
-    
-		GrantPlayerLevel(player, GetPlayerLevel(player));
 	}
+
+	GrantPlayerLevel(player, GetPlayerLevel(player));
 }
 

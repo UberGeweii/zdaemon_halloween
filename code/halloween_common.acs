@@ -14,6 +14,7 @@
 #define MONSTER_SETSPEED            300
 #define MONSTER_LIGHTNINGATTACK     301
 #define MONSTER_RANDDROP            302
+#define RADIAL_RANDDROP             303
  
 #define WEAPON_ECTOPLASM            350
 
@@ -55,12 +56,6 @@
 #define ACS_WRLD_CVARCHECKER        756
 #define ACS_WRLD_MUSICPLAYER        757
 
-// Darkness level code
-#define ACS_DLVL_MAIN               851
-#define ACS_DLBL_SET                852
-#define ACS_DLBL_SEC                853
-#define ACS_DLBL_HALT               854
-
 #define ACS_ADMIN_PLAYERPET         904
 #define ACS_ADMN_CHANGEMUSIC        920
 
@@ -81,6 +76,8 @@
 
 // [#] Need to check TID bases all around the lib for next year.
 #define PLAYERMARINETIDBASE		15000
+
+#define PLAYERCHESTTIDBASE		15200
 
 #define JUSTLEFT_MONEYSYSTEM    0
 
@@ -122,6 +119,7 @@ global int 3:Data[];
 #define MARINESKINDATA		8
 #define MARINEDAMAGEDATA	7
 #define MARINECOLORDATA		6
+#define CHESTUPGRADEDATA    5
 
 global int 4:InvData[];
 
@@ -183,7 +181,8 @@ int playerInQuestMenu[MAXPLAYERS];
 #include "halloween_admin.acs" 
 #include "halloween_dehackedcoupler.acs"
 
-#include "halloween_dlevel.acs"  
+#include "halloween_weather.acs"
+#include "halloween_atmospheric50.acs"
 
 ////////////////////////////////////////
 /*
@@ -910,6 +909,8 @@ script 214 (void)
 
 		HudMessage(s:"\cjKing: \n\cjOh my lord! All the gears! *geargasm*";
 		HUDMSG_FADEINOUT, CHNL_INTERACT1, CR_WHITE, 1.50, 0.40, 3.0, 0.2, 0.2);
+
+		Delay(2*SEC);
 
 		GiveMoney(player, rand_amount);
 

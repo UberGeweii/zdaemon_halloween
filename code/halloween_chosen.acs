@@ -203,6 +203,7 @@ str StepSound[MaxStepSounds][2] = {
 	// Dirt
 	{ "RROCK16", "player/dirtstep" },
 	{ "RROCK19", "player/dirtstep" },
+	{ "FLOOR6_4", "player/dirtstep" },
 	// Gravel
 	{ "FLOOR6_1", "player/gravelstep" },
 	{ "FLOOR6_2", "player/gravelstep" },
@@ -295,10 +296,13 @@ str StepSound[MaxStepSounds][2] = {
 	{ "DEM1_6", "player/tilebstep" },
 	{ "TILESBW", "player/tilebstep" },
 	{ "FLOOR4_8", "player/tilebstep" },
+	{ "TMARFL0", "player/tilebstep" },
 	// Wood
 	{ "CEIL1_1", "player/woodstep" },
 	{ "FLAT5_1", "player/woodstep" },
 	{ "FLAT5_2", "player/woodstep" },
+	{ "TWDTFL02", "player/woodstep" },
+	{ "HOUT2", "player/woodstep" },
 	// Slime
 	{ "NUKAGE1", "player/slimestep" },
 	{ "NUKAGE2", "player/slimestep" },
@@ -983,13 +987,11 @@ script 805 (void)
 Script 806 (void)
 {
 	int player = PlayerNumber();
-
-	delay(1);
-
-	SetActorProperty(0, APROP_Speed, DEFAULT_PLAYER_SPEED);
-	
 	customGamemode = true;
 	
+	Delay(1);
+	SetActorProperty(0, APROP_Speed, DEFAULT_PLAYER_SPEED);
+
 	while(!inventorySaved[player])
 		delay(1);
 		
@@ -1153,7 +1155,7 @@ script 810 (void)
 		{
 			for (int i=0; i<=65536; i++)
 			{
-				if (Sector_SetColor(i, 30, 30, 30, 0));
+				if (Sector_SetColor(i, 40, 40, 40, 0));
 				if(i > 65535)
 				{
 					brightness_set = true;

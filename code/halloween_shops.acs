@@ -70,6 +70,9 @@
 #define UPGRADE_HEALTH400		  62
 #define PET_DEADIMP		  		  63
 #define PET_SELLPET	  		  	  64
+#define UPGRADE_CHEST1  		  65
+#define UPGRADE_CHEST2	  		  66
+#define ITEM_LOOTCHEST	  		  67
 
 // Item cost initialization
 script ACS_WRLD_CREATESHOPITMS OPEN
@@ -151,7 +154,11 @@ script ACS_WRLD_CREATESHOPITMS OPEN
 	
     CreateItem(PET_DEADIMP     				, "Deadimp Pet"						,   200000 	);
 	
-    CreateItem(PET_SELLPET     				, "Sell your pet"					,   0 	);	
+    CreateItem(PET_SELLPET     				, "Sell your pet"					,   0 	);
+	
+    CreateItem(UPGRADE_CHEST1     		    , "Better loot from chests I"	,   5000 	);
+    CreateItem(UPGRADE_CHEST2     		    , "Better loot from chests II"	,   50000 	);
+    CreateItem(ITEM_LOOTCHEST     			, "Loot Chest"					,   500 	);		
 
 }
 
@@ -427,8 +434,18 @@ script 175 (int item)
             case PET_SELLPET:
                 SellPet(player);
                 break;
+				
+            case UPGRADE_CHEST1:
+                BuyChestUpgrade(item, player, 1, cost);
+                break;
+				
+            case UPGRADE_CHEST2:
+                BuyChestUpgrade(item, player, 2, cost);
+                break;
 
-
+            case ITEM_LOOTCHEST:
+                BuyLimit("PuzzGemBlue1", 1, 25, player, item, cost);
+                break;
 		}
 	}
     else

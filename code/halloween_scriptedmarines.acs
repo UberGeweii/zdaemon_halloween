@@ -9,7 +9,7 @@
 #define MARINECOLORDATA		6
 */
 
-script "DisplayMarineStatsOnMarines" enter
+script "DisplayMarineStatsOnMarines" (void)
 {
 	int player = PlayerNumber();
 	

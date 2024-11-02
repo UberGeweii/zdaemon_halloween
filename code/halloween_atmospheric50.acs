@@ -1,0 +1,389 @@
+
+#define ATMS_ENABLE             "atms_enable"
+#define ATMS_MODES              "atms_modes"
+#define ATMS_RANDOM_ENABLE      "atms_random_enable"
+#define ATMS_DARK_LEVEL_LOW     "atms_dark_level_low"
+#define ATMS_DARK_LEVEL_HIGH    "atms_dark_level_high"
+#define ATMS_LIGHT_VARIABILITY  "atms_light_variability"
+#define ATMS_FOG_FADE_LEVEL     "atms_fog_fade_level"
+#define ATMS_LOOP_DELAY         "atms_loop_delay"
+
+//-----------------------------------------------------------------------
+// Revision: 50
+// Date: 2024-11-01
+//-----------------------------------------------------------------------
+
+//-----------------------------------------------------------------------
+//
+// Console Variables:
+//
+// atms_enable             - Enable the script functionality.
+// atms_modes              - Set the modes to enable (this is a mask).
+// atms_random_enable      - Enable random lower and upper dark level
+//                           based on the atms_dark_level_low and
+//                           atms_dark_level_high variables.
+// atms_dark_level_low     - The dark level used in non-randomised mode and the
+//                           lower-range used with the randomiser
+//                           enabled.
+// atms_dark_level_high    - The dark level upper-level used with the
+//                           randomiser enabled.
+// atms_light_variability  - light level variable setting
+// atms_fog_fade_level     - fade level for the "fog"
+// atms_loop_delay         - The background loop delay between sector property
+//                           adjustments.
+//
+//-----------------------------------------------------------------------
+
+// Code by AF-Domains. Refactored for consistency, etc.
+
+#define COLOR   1
+#define LIGHT   2
+#define FADE    4
+
+#define MIN_VALUE                       20
+#define MAX_VALUE                      254
+#define DEFAULT_DARK_LEVEL_DIFFERENCE   50
+#define UPPER_LIMIT_CHECK_VALUE         MAX_VALUE - DEFAULT_DARK_LEVEL_DIFFERENCE
+#define DEFAULT_LOWER_DARK_LEVEL        40
+#define DEFAULT_UPPER_DARK_LEVEL        90
+
+#define TIC_RATE                  35
+#define MIN_DELAY                  5
+#define MAX_DELAY                900
+#define MAX_SECTOR_COUNT       65536
+#define RANDOM_UPDATE_INTERVAL   512
+
+#define FUNCTION_DELAY             1
+
+int  global_mode_mask                 = 0;
+int  tagged_sectors[MAX_SECTOR_COUNT] = { -1 };
+bool was_color                        = FALSE;
+bool was_fade                         = FALSE;
+
+function bool PlayersActive(void) {
+	int pnum;
+
+	for (pnum = 0; pnum <= PlayerTopIndex(); pnum++) {
+		if (GetPlayerInfo(pnum, PLAYERINFO_SSDCLIENT) == 0) {
+			// As long as there's one active player, return TRUE.
+			if (PlayerInGame(pnum)) {
+				return TRUE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+function int get_dark_constraints(void) {
+	int dark_level, user_set_dark_level;
+
+	user_set_dark_level = GetCvar(ATMS_DARK_LEVEL_LOW);
+	if (GetCvar(ATMS_RANDOM_ENABLE) == 1) {
+		int lower_level = user_set_dark_level;
+		if (lower_level < MIN_VALUE)      lower_level = DEFAULT_LOWER_DARK_LEVEL;
+		else if (lower_level > MAX_VALUE) lower_level = MAX_VALUE;
+
+		int upper_level = GetCvar(ATMS_DARK_LEVEL_HIGH);
+		if (upper_level < MIN_VALUE)      upper_level = DEFAULT_UPPER_DARK_LEVEL;
+		else if (upper_level > MAX_VALUE) upper_level = MAX_VALUE;
+
+		if (lower_level >= upper_level) {
+			if (lower_level > UPPER_LIMIT_CHECK_VALUE) {
+				lower_level = DEFAULT_LOWER_DARK_LEVEL;
+			}
+			upper_level = (lower_level + DEFAULT_DARK_LEVEL_DIFFERENCE);
+		}
+		dark_level = ZD_rand(lower_level, upper_level);
+	} else {
+		dark_level = user_set_dark_level;
+		if (dark_level < MIN_VALUE)      dark_level = DEFAULT_LOWER_DARK_LEVEL;
+		else if (dark_level > MAX_VALUE) dark_level = MAX_VALUE;
+	}
+
+	return dark_level;
+}
+
+function int get_fade_constraints(void) {
+	int fade_level;
+
+	fade_level = GetCvar(ATMS_FOG_FADE_LEVEL);
+	if (fade_level <= 0) return 0;
+	else {
+		if (fade_level < 30)       fade_level = 30;
+		else if (fade_level > 200) fade_level = 200;
+	}
+
+	return fade_level;
+}
+
+function void set_sector_fade(int sector_tag, bool negate, int decrement) {
+	int fade_level, red, green, blue;
+
+	red = 0;
+	green = 0;
+	blue = 0;
+
+	if (!negate) {
+		fade_level = get_fade_constraints();
+		if (fade_level > 0) {
+			red = fade_level - decrement;
+			if (red < 0)           red = 0;
+			else if (red > 255)    red = 255;
+			green = fade_level - decrement;
+			if (green < 0)         green = 0;
+			else if (green > 255)  green = 255;
+			blue = (fade_level + 10) - decrement;
+			if (blue < 0)          blue = 0;
+			else if (blue > 255)   blue = 255;
+		}
+	}
+
+	//Log(s:"SetFade (", d:sector_tag, s:") (", d:red, s:" ", d:green, s:" ", d:blue, s:")");
+	Sector_SetFade(sector_tag, red, green, blue);
+}
+
+function void set_sector_color(int sector_tag, int color_value) {
+	int red = color_value;
+	int green = color_value;
+	int blue = color_value;
+	//Log(s:"SetColor (", d:sector_tag, s:") (", d:red, s:" ", d:green, s:" ", d:blue, s:")");
+	Sector_SetColor(sector_tag, red, green, blue, 0);
+}
+
+function int get_light_constraints(void) {
+	int light_level;
+
+	light_level = GetCvar(ATMS_LIGHT_VARIABILITY);
+	if (light_level < 1)       light_level = 1;
+	else if (light_level > 24) light_level = 24;
+
+	return light_level;
+}
+
+function void set_sector_light(int sector_tag, int step_count) {
+	int light_constraints, light_level, base_light_level, value_to_set;
+
+	light_constraints = get_light_constraints();
+
+	light_level = step_count + 1;
+	base_light_level = GetSectorLightLevel(sector_tag);
+	if (base_light_level != -1) {
+		if (base_light_level > 200) base_light_level = 127;
+		value_to_set = base_light_level;
+		if (light_level <= 5) {
+			if (value_to_set > 0) value_to_set = base_light_level - light_constraints;
+			if (value_to_set < 0) value_to_set = base_light_level;
+		} else {
+			if (value_to_set < 255) value_to_set = base_light_level + light_constraints;
+			if (value_to_set > 255) value_to_set = base_light_level;
+		}
+
+		Light_ChangeToValue(sector_tag, value_to_set);
+	}
+}
+
+function int get_mode_mask(void) {
+	int mask = 0;
+
+	int current_modes  = GetCvar(ATMS_MODES);
+	if (current_modes & COLOR) {
+		mask |= COLOR;
+
+		was_color = FALSE;
+	} else {
+		if (global_mode_mask & COLOR) {
+			was_color = TRUE;
+		}
+	}
+
+	if (current_modes & LIGHT) {
+		mask |= LIGHT;
+	}
+
+	if (current_modes & FADE) {
+		mask |= FADE;
+
+		was_fade = FALSE;
+	} else {
+		if (global_mode_mask & FADE) {
+			was_fade = TRUE;
+		}
+	}
+
+	if (mask != global_mode_mask) {
+		if (is_enabled() == 1) {
+			Log(
+				s:"(", d:mask,
+				s:") (Color: ", d:((mask & COLOR) != 0),
+				s:") (Light: ", d:((mask & LIGHT) != 0),
+				s:") (Fade: ", d:((mask & FADE) != 0), s:")"
+			);
+		}
+	}
+
+	return mask;
+}
+
+function int is_enabled(void) {
+	int enabled = GetCVar(ATMS_ENABLE);
+	if (enabled > 0) return 1;
+
+	return 0;
+}
+
+function int get_background_loop_delay(void) {
+	int delay_in_seconds = GetCvar(ATMS_LOOP_DELAY);
+	if (delay_in_seconds < MIN_DELAY)      delay_in_seconds = MIN_DELAY;
+	else if (delay_in_seconds > MAX_DELAY) delay_in_seconds = MAX_DELAY;
+
+	// The range is 5-900 seconds (5 seconds to 15 minutes).
+	return TIC_RATE * delay_in_seconds;
+}
+
+function void reset_was_bits(void) {
+	if (was_fade)  was_fade = FALSE;
+	if (was_color) was_color = FALSE;
+}
+
+script "Atmosphere_Background" OPEN {
+	int tag,
+		sector_tag,
+		number_of_tagged_sectors = 0,
+		step_count = 0,
+		reset = -1;
+
+	tagged_sectors[0] = -1; // Set the first to -1 so it isn't valid.
+	for (tag = 0; tag < MAX_SECTOR_COUNT; tag++) {
+		int sector_light_level = GetSectorLightLevel(tag);
+		if (sector_light_level >= 0) {
+			tagged_sectors[number_of_tagged_sectors] = tag;
+			number_of_tagged_sectors++;
+		}
+	}
+
+	// Set the value after the last tagged sector to -1 as a termination point.
+	tagged_sectors[number_of_tagged_sectors] = -1;
+
+	//for (tag = 0; tag < number_of_tagged_sectors; tag++) {
+	//	sector_tag = tagged_sectors[tag];
+	//	if (sector_tag < 0) break;
+	//
+	//	Log(s:"Tagged Sector: ", d:sector_tag);
+	//}
+
+	while (TRUE) {
+		int set_color_value;
+
+		// Set the delay to a default of TIC_RATE (35).
+		int loop_delay = TIC_RATE;
+
+		// If the main cvar is enabled and there are players active then
+		// 'reset' will be set back to 0, otherwise if already 0 and either of
+		// the above cases aren't met 'reset' is set to 1, it then hits the if
+		// check much further down and resets the fade and color back to a
+		// close approximation of the original state (close approximation since
+		// the prior values cannot be fetched).
+		if (reset == 0) reset = 1;
+
+		// Get the bits from the bitmask stored within the mode cvar and store
+		// that retrieved mask in the global variable.
+		int mode_mask = get_mode_mask();
+		global_mode_mask = mode_mask;
+
+		// This call is present here as well so the main logic is only executed
+		// when the cvar is enabled, while it will still loop if disabled after
+		// being initialised.
+		if (is_enabled() == 1) {
+			if (PlayersActive()) {
+				int dark_level,
+					change_in_color_value = 0,
+					color_value = 0;
+
+				if (mode_mask > 0) {
+					// Adjust the delay to the desired number of seconds if the
+					// main cvar is enabled and there are players active.
+					loop_delay = get_background_loop_delay();
+
+					// Set to 0 since it's not necessary for the fade and color
+					// to be reset while players are active.
+					reset = 0;
+
+					// Get the darkness level based on the following:
+					// a) If randomisation is available get a picked
+					//    random value between a sanity checked upper
+					//    and lower value.
+					// b) In non-randomised get the current lower value.
+					dark_level = get_dark_constraints();
+
+					if (step_count >= 10) step_count = 0;
+
+					for (tag = 0; tag < number_of_tagged_sectors; tag++) {
+						sector_tag = tagged_sectors[tag];
+						if (sector_tag < 0) break;
+
+						if (change_in_color_value > 10) change_in_color_value = 0;
+
+						if (dark_level > 128) color_value = dark_level + change_in_color_value;
+						else                  color_value = dark_level - change_in_color_value;
+
+						if (color_value < 0)              color_value = MIN_VALUE;
+						else if (color_value > MAX_VALUE) color_value = MAX_VALUE;
+
+						if (mode_mask & FADE || was_fade) {
+							int negate = TRUE;
+
+							if (!was_fade)  negate = FALSE;
+							set_sector_fade(sector_tag, negate, step_count);
+							Delay(FUNCTION_DELAY);
+						}
+						if (mode_mask & COLOR || was_color) {
+							set_color_value = 255;
+
+							if (!was_color) set_color_value = color_value;
+							set_sector_color(sector_tag, set_color_value);
+							Delay(FUNCTION_DELAY);
+						}
+						if (mode_mask & LIGHT) {
+							set_sector_light(sector_tag, step_count);
+							Delay(FUNCTION_DELAY);
+						}
+
+						change_in_color_value++;
+					}
+
+					reset_was_bits();
+
+					step_count++;
+				}
+			}
+		}
+
+		if (reset == 1) {
+			for (tag = 0; tag < number_of_tagged_sectors; tag++) {
+				sector_tag = tagged_sectors[tag];
+				if (sector_tag < 0) break;
+
+				if (mode_mask & FADE || was_fade) {
+					set_sector_fade(sector_tag, 1, 0);
+					Delay(FUNCTION_DELAY);
+				}
+				if (mode_mask & COLOR || was_color) {
+					set_color_value = 255;
+
+					set_sector_color(sector_tag, set_color_value);
+					Delay(FUNCTION_DELAY);
+				}
+			}
+
+			reset_was_bits();
+
+			// Set to -1 so when it hits the beginning of this while loop it
+			// won't re-run this case unless it hits the "is_enabled",
+			// "PlayersActive" and "mode_mask > 0" case again.
+			reset = -1;
+		}
+
+		Delay(loop_delay);
+	}
+}
